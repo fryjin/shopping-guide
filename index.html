@@ -55,24 +55,28 @@
         .step-container.active { opacity: 1; transform: translateX(0); pointer-events: all; }
         .step-container.prev { opacity: 0; transform: translateX(-100px); }
         
+        /* 标题区 - 压缩 */
         .step-header {
             flex-shrink: 0;
             background: white;
             position: relative;
             z-index: 10;
+            padding: 0.75rem 1.25rem 0.5rem;
         }
         
+        /* 卡片列表区 - 放大 */
         .step-scroll {
             flex: 1;
             overflow-y: auto;
             overflow-x: hidden;
             -webkit-overflow-scrolling: touch;
-            padding-bottom: calc(11rem + env(safe-area-inset-bottom));
+            padding: 0 1.25rem 0.5rem;
         }
         
         .step-scroll::-webkit-scrollbar { display: none; }
         .step-scroll { -ms-overflow-style: none; scrollbar-width: none; }
         
+        /* 底部进度条 - 压缩 */
         .bottom-progress-container {
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             padding-bottom: env(safe-area-inset-bottom);
@@ -196,16 +200,18 @@
         .progress-clickable:hover { opacity: 0.8; }
         .progress-clickable:active { transform: scale(0.95); }
     </style>
+<base target="_blank">
+<base target="_blank">
 </head>
 <body class="bg-white text-primary antialiased">
     <div id="app" class="relative h-screen flex flex-col overflow-hidden">
-        <!-- 顶部导航栏 -->
-        <header id="header" class="flex-shrink-0 h-16 bg-white/90 backdrop-blur-md border-b border-gray-100 z-40 flex items-center justify-between px-5">
-            <button id="backBtn" class="back-btn w-10 h-10 flex items-center justify-center rounded-full hover:bg-gray-50 opacity-0 pointer-events-none transition-opacity">
-                <i class="fas fa-arrow-left text-lg text-primary"></i>
+        <!-- 顶部导航栏 - 压缩 -->
+        <header id="header" class="flex-shrink-0 h-14 bg-white/90 backdrop-blur-md border-b border-gray-100 z-40 flex items-center justify-between px-5">
+            <button id="backBtn" class="back-btn w-9 h-9 flex items-center justify-center rounded-full hover:bg-gray-50 opacity-0 pointer-events-none transition-opacity">
+                <i class="fas fa-arrow-left text-base text-primary"></i>
             </button>
-            <h1 id="pageTitle" class="text-lg font-semibold tracking-wide">定制选购</h1>
-            <div class="w-10"></div>
+            <h1 id="pageTitle" class="text-base font-semibold tracking-wide">定制选购</h1>
+            <div class="w-9"></div>
         </header>
 
         <!-- 主内容区域 -->
@@ -213,66 +219,66 @@
             <!-- 欢迎页 -->
             <div id="welcomeStep" class="step-container active">
                 <div class="step-scroll flex flex-col items-center justify-center px-8">
-                    <div class="text-center mb-12">
-                        <div class="w-20 h-20 mx-auto mb-8 rounded-full bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
-                            <i class="fas fa-gem text-3xl text-accent"></i>
+                    <div class="text-center mb-10">
+                        <div class="w-16 h-16 mx-auto mb-6 rounded-full bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
+                            <i class="fas fa-gem text-2xl text-accent"></i>
                         </div>
-                        <h1 class="welcome-title text-3xl font-bold mb-4 tracking-tight">欢迎来到<br>高级定制选购</h1>
-                        <p class="welcome-subtitle text-secondary text-base leading-relaxed max-w-xs mx-auto">
+                        <h1 class="welcome-title text-2xl font-bold mb-3 tracking-tight">欢迎来到<br>高级定制选购</h1>
+                        <p class="welcome-subtitle text-secondary text-sm leading-relaxed max-w-xs mx-auto">
                             为您量身打造的专属购物体验<br>每一步都精心为您设计
                         </p>
                     </div>
-                    <button onclick="goToStep(1)" class="welcome-btn btn-primary w-full max-w-xs py-4 rounded-2xl text-white font-medium text-lg shadow-lg shadow-gray-900/10">
+                    <button onclick="goToStep(1)" class="welcome-btn btn-primary w-full max-w-xs py-3.5 rounded-xl text-white font-medium text-base shadow-lg shadow-gray-900/10">
                         开始选购
                     </button>
-                    <p class="welcome-subtitle text-xs text-gray-400 mt-6">预计用时 2 分钟</p>
+                    <p class="welcome-subtitle text-xs text-gray-400 mt-4">预计用时 2 分钟</p>
                 </div>
             </div>
 
             <!-- 步骤1: 购买类型 -->
             <div id="step1" class="step-container">
-                <div class="step-header px-5 pt-6 pb-4">
-                    <span class="step-badge text-white text-xs px-3 py-1 rounded-full font-medium">步骤 1/7</span>
-                    <h2 class="text-2xl font-bold mt-3">选择购买类型</h2>
-                    <p class="text-secondary text-sm mt-1">请选择适合您的购买方式</p>
+                <div class="step-header">
+                    <span class="step-badge text-white text-[10px] px-2.5 py-0.5 rounded-full font-medium">步骤 1/7</span>
+                    <h2 class="text-xl font-bold mt-2">选择购买类型</h2>
+                    <p class="text-secondary text-xs mt-0.5">请选择适合您的购买方式</p>
                 </div>
-                <div class="step-scroll px-5 space-y-4">
-                    <div class="option-card bg-surface border-2 border-transparent rounded-2xl p-5 cursor-pointer" onclick="selectOption(1, 'type', 'wholesale', this)">
-                        <div class="flex items-start gap-4">
-                            <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center flex-shrink-0">
-                                <i class="fas fa-boxes-stacked text-xl text-primary"></i>
+                <div class="step-scroll space-y-3">
+                    <div class="option-card bg-surface border-2 border-transparent rounded-xl p-4 cursor-pointer" onclick="selectOption(1, 'type', 'wholesale', this)">
+                        <div class="flex items-start gap-3">
+                            <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-boxes-stacked text-lg text-primary"></i>
                             </div>
                             <div class="flex-1 min-w-0">
                                 <div class="flex items-center justify-between">
-                                    <h3 class="font-semibold text-lg">批发采购</h3>
-                                    <div class="check-icon w-6 h-6 rounded-full bg-accent flex items-center justify-center flex-shrink-0 ml-2">
-                                        <i class="fas fa-check text-white text-xs"></i>
+                                    <h3 class="font-semibold text-base">批发采购</h3>
+                                    <div class="check-icon w-5 h-5 rounded-full bg-accent flex items-center justify-center flex-shrink-0 ml-2">
+                                        <i class="fas fa-check text-white text-[10px]"></i>
                                     </div>
                                 </div>
-                                <p class="text-secondary text-sm mt-1">适合商家批量进货，享受优惠价格</p>
-                                <div class="mt-3 flex items-center gap-2 flex-wrap">
-                                    <span class="text-xs bg-gray-100 px-2 py-1 rounded-md text-secondary">起订量: 50件</span>
-                                    <span class="text-xs bg-accent/10 text-accent px-2 py-1 rounded-md font-medium">享9折</span>
+                                <p class="text-secondary text-xs mt-0.5">适合商家批量进货，享受优惠价格</p>
+                                <div class="mt-2 flex items-center gap-1.5 flex-wrap">
+                                    <span class="text-[10px] bg-gray-100 px-1.5 py-0.5 rounded text-secondary">起订量: 50件</span>
+                                    <span class="text-[10px] bg-accent/10 text-accent px-1.5 py-0.5 rounded font-medium">享9折</span>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="option-card bg-surface border-2 border-transparent rounded-2xl p-5 cursor-pointer" onclick="selectOption(1, 'type', 'retail', this)">
-                        <div class="flex items-start gap-4">
-                            <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center flex-shrink-0">
-                                <i class="fas fa-bag-shopping text-xl text-primary"></i>
+                    <div class="option-card bg-surface border-2 border-transparent rounded-xl p-4 cursor-pointer" onclick="selectOption(1, 'type', 'retail', this)">
+                        <div class="flex items-start gap-3">
+                            <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-bag-shopping text-lg text-primary"></i>
                             </div>
                             <div class="flex-1 min-w-0">
                                 <div class="flex items-center justify-between">
-                                    <h3 class="font-semibold text-lg">普通购买</h3>
-                                    <div class="check-icon w-6 h-6 rounded-full bg-accent flex items-center justify-center flex-shrink-0 ml-2">
-                                        <i class="fas fa-check text-white text-xs"></i>
+                                    <h3 class="font-semibold text-base">普通购买</h3>
+                                    <div class="check-icon w-5 h-5 rounded-full bg-accent flex items-center justify-center flex-shrink-0 ml-2">
+                                        <i class="fas fa-check text-white text-[10px]"></i>
                                     </div>
                                 </div>
-                                <p class="text-secondary text-sm mt-1">个人用户零售购买，灵活选择</p>
-                                <div class="mt-3 flex items-center gap-2 flex-wrap">
-                                    <span class="text-xs bg-gray-100 px-2 py-1 rounded-md text-secondary">无起订量</span>
-                                    <span class="text-xs bg-gray-100 px-2 py-1 rounded-md text-secondary">单件起售</span>
+                                <p class="text-secondary text-xs mt-0.5">个人用户零售购买，灵活选择</p>
+                                <div class="mt-2 flex items-center gap-1.5 flex-wrap">
+                                    <span class="text-[10px] bg-gray-100 px-1.5 py-0.5 rounded text-secondary">无起订量</span>
+                                    <span class="text-[10px] bg-gray-100 px-1.5 py-0.5 rounded text-secondary">单件起售</span>
                                 </div>
                             </div>
                         </div>
@@ -282,74 +288,74 @@
 
             <!-- 步骤2: 尺码 -->
             <div id="step2" class="step-container">
-                <div class="step-header px-5 pt-6 pb-4">
-                    <span class="step-badge text-white text-xs px-3 py-1 rounded-full font-medium">步骤 2/7</span>
-                    <h2 class="text-2xl font-bold mt-3">选择尺码</h2>
-                    <p class="text-secondary text-sm mt-1">不同尺码对应不同款式可选</p>
+                <div class="step-header">
+                    <span class="step-badge text-white text-[10px] px-2.5 py-0.5 rounded-full font-medium">步骤 2/7</span>
+                    <h2 class="text-xl font-bold mt-2">选择尺码</h2>
+                    <p class="text-secondary text-xs mt-0.5">不同尺码对应不同款式可选</p>
                 </div>
-                <div class="step-scroll px-5">
-                    <div class="grid grid-cols-2 gap-4" id="sizeContainer"></div>
+                <div class="step-scroll">
+                    <div class="flex flex-col gap-3 p-2" id="sizeContainer"></div>
                 </div>
             </div>
 
             <!-- 步骤3: 款式 -->
             <div id="step3" class="step-container">
-                <div class="step-header px-5 pt-6 pb-4">
-                    <span class="step-badge text-white text-xs px-3 py-1 rounded-full font-medium">步骤 3/7</span>
-                    <h2 class="text-2xl font-bold mt-3">选择款式</h2>
-                    <p class="text-secondary text-sm mt-1" id="styleSubtitle">当前尺码专属款式</p>
+                <div class="step-header">
+                    <span class="step-badge text-white text-[10px] px-2.5 py-0.5 rounded-full font-medium">步骤 3/7</span>
+                    <h2 class="text-xl font-bold mt-2">选择款式</h2>
+                    <p class="text-secondary text-xs mt-0.5" id="styleSubtitle">当前尺码专属款式</p>
                 </div>
-                <div class="step-scroll px-5 space-y-4" id="styleContainer"></div>
+                <div class="step-scroll space-y-3" id="styleContainer"></div>
             </div>
 
             <!-- 步骤4: 配色 -->
             <div id="step4" class="step-container">
-                <div class="step-header px-5 pt-6 pb-4">
-                    <span class="step-badge text-white text-xs px-3 py-1 rounded-full font-medium">步骤 4/7</span>
-                    <h2 class="text-2xl font-bold mt-3">选择配色</h2>
-                    <p class="text-secondary text-sm mt-1">为您的款式选择心仪色彩</p>
+                <div class="step-header">
+                    <span class="step-badge text-white text-[10px] px-2.5 py-0.5 rounded-full font-medium">步骤 4/7</span>
+                    <h2 class="text-xl font-bold mt-2">选择配色</h2>
+                    <p class="text-secondary text-xs mt-0.5">为您的款式选择心仪色彩</p>
                 </div>
-                <div class="step-scroll px-5 space-y-4" id="colorContainer"></div>
+                <div class="step-scroll space-y-3" id="colorContainer"></div>
             </div>
 
             <!-- 步骤5: 数量 -->
             <div id="step5" class="step-container">
-                <div class="step-header px-5 pt-6 pb-4">
-                    <span class="step-badge text-white text-xs px-3 py-1 rounded-full font-medium">步骤 5/7</span>
-                    <h2 class="text-2xl font-bold mt-3">输入购买数量</h2>
-                    <p class="text-secondary text-sm mt-1">选择您需要的数量</p>
+                <div class="step-header">
+                    <span class="step-badge text-white text-[10px] px-2.5 py-0.5 rounded-full font-medium">步骤 5/7</span>
+                    <h2 class="text-xl font-bold mt-2">输入购买数量</h2>
+                    <p class="text-secondary text-xs mt-0.5">选择您需要的数量</p>
                 </div>
-                <div class="step-scroll px-5 space-y-4">
-                    <div class="bg-surface rounded-2xl p-8 text-center">
-                        <div class="flex items-center justify-center gap-6 mb-6">
-                            <button class="qty-btn w-14 h-14 rounded-full bg-white border-2 border-gray-200 flex items-center justify-center text-xl font-semibold" onclick="changeQty(-1)">
-                                <i class="fas fa-minus text-sm"></i>
+                <div class="step-scroll space-y-3">
+                    <div class="bg-surface rounded-xl p-6 text-center">
+                        <div class="flex items-center justify-center gap-5 mb-4">
+                            <button class="qty-btn w-12 h-12 rounded-full bg-white border-2 border-gray-200 flex items-center justify-center font-semibold" onclick="changeQty(-1)">
+                                <i class="fas fa-minus text-xs"></i>
                             </button>
-                            <div class="w-24 text-center">
-                                <span id="qtyDisplay" class="text-4xl font-bold">1</span>
-                                <p class="text-xs text-secondary mt-1">件</p>
+                            <div class="w-20 text-center">
+                                <span id="qtyDisplay" class="text-3xl font-bold">1</span>
+                                <p class="text-xs text-secondary mt-0.5">件</p>
                             </div>
-                            <button class="qty-btn w-14 h-14 rounded-full bg-white border-2 border-gray-200 flex items-center justify-center text-xl font-semibold" onclick="changeQty(1)">
-                                <i class="fas fa-plus text-sm"></i>
+                            <button class="qty-btn w-12 h-12 rounded-full bg-white border-2 border-gray-200 flex items-center justify-center font-semibold" onclick="changeQty(1)">
+                                <i class="fas fa-plus text-xs"></i>
                             </button>
                         </div>
                         <div id="qtyWarning" class="text-xs text-accent hidden">
                             <i class="fas fa-info-circle mr-1"></i>批发采购最低50件起
                         </div>
                     </div>
-                    <div class="bg-surface rounded-2xl p-5">
-                        <div class="flex justify-between items-center mb-2">
-                            <span class="text-secondary text-sm">单价</span>
-                            <span class="font-semibold">¥299.00</span>
+                    <div class="bg-surface rounded-xl p-4">
+                        <div class="flex justify-between items-center mb-1.5">
+                            <span class="text-secondary text-xs">单价</span>
+                            <span class="font-semibold text-sm">¥299.00</span>
                         </div>
-                        <div class="flex justify-between items-center mb-2">
-                            <span class="text-secondary text-sm">数量</span>
-                            <span class="font-semibold" id="qtySummary">1</span>
+                        <div class="flex justify-between items-center mb-1.5">
+                            <span class="text-secondary text-xs">数量</span>
+                            <span class="font-semibold text-sm" id="qtySummary">1</span>
                         </div>
-                        <div class="border-t border-gray-200 my-3"></div>
+                        <div class="border-t border-gray-200 my-2"></div>
                         <div class="flex justify-between items-center">
-                            <span class="font-semibold">小计</span>
-                            <span class="text-xl font-bold text-accent" id="totalPrice">¥299.00</span>
+                            <span class="font-semibold text-sm">小计</span>
+                            <span class="text-lg font-bold text-accent" id="totalPrice">¥299.00</span>
                         </div>
                     </div>
                 </div>
@@ -357,53 +363,53 @@
 
             <!-- 步骤6: 个人信息 -->
             <div id="step6" class="step-container">
-                <div class="step-header px-5 pt-6 pb-4">
-                    <span class="step-badge text-white text-xs px-3 py-1 rounded-full font-medium">步骤 6/7</span>
-                    <h2 class="text-2xl font-bold mt-3">输入个人信息</h2>
-                    <p class="text-secondary text-sm mt-1">用于订单配送与联系</p>
+                <div class="step-header">
+                    <span class="step-badge text-white text-[10px] px-2.5 py-0.5 rounded-full font-medium">步骤 6/7</span>
+                    <h2 class="text-xl font-bold mt-2">输入个人信息</h2>
+                    <p class="text-secondary text-xs mt-0.5">用于订单配送与联系</p>
                 </div>
-                <div class="step-scroll px-5 space-y-5">
+                <div class="step-scroll space-y-4">
                     <div>
-                        <label class="block text-sm font-medium mb-2">收件人姓名</label>
-                        <input type="text" id="nameInput" class="custom-input w-full px-4 py-3.5 rounded-xl bg-surface text-base outline-none" placeholder="请输入收件人姓名" oninput="validateStep6()">
+                        <label class="block text-xs font-medium mb-1.5">收件人姓名</label>
+                        <input type="text" id="nameInput" class="custom-input w-full px-3.5 py-3 rounded-xl bg-surface text-sm outline-none" placeholder="请输入收件人姓名" oninput="validateStep6()">
                     </div>
                     <div>
-                        <label class="block text-sm font-medium mb-2">联系电话</label>
-                        <input type="tel" id="phoneInput" class="custom-input w-full px-4 py-3.5 rounded-xl bg-surface text-base outline-none" placeholder="请输入11位手机号" maxlength="11" oninput="validateStep6()">
+                        <label class="block text-xs font-medium mb-1.5">联系电话</label>
+                        <input type="tel" id="phoneInput" class="custom-input w-full px-3.5 py-3 rounded-xl bg-surface text-sm outline-none" placeholder="请输入11位手机号" maxlength="11" oninput="validateStep6()">
                     </div>
                     <div>
-                        <label class="block text-sm font-medium mb-2">收货地址</label>
-                        <textarea id="addressInput" class="custom-input w-full px-4 py-3.5 rounded-xl bg-surface text-base outline-none resize-none h-24" placeholder="请输入详细收货地址" oninput="validateStep6()"></textarea>
+                        <label class="block text-xs font-medium mb-1.5">收货地址</label>
+                        <textarea id="addressInput" class="custom-input w-full px-3.5 py-3 rounded-xl bg-surface text-sm outline-none resize-none h-20" placeholder="请输入详细收货地址" oninput="validateStep6()"></textarea>
                     </div>
                 </div>
             </div>
 
             <!-- 步骤7: 确认信息 -->
             <div id="step7" class="step-container">
-                <div class="step-header px-5 pt-6 pb-4">
-                    <span class="step-badge text-white text-xs px-3 py-1 rounded-full font-medium">步骤 7/7</span>
-                    <h2 class="text-2xl font-bold mt-3">确认订单信息</h2>
-                    <p class="text-secondary text-sm mt-1">请核对以下信息，确认无误后提交</p>
+                <div class="step-header">
+                    <span class="step-badge text-white text-[10px] px-2.5 py-0.5 rounded-full font-medium">步骤 7/7</span>
+                    <h2 class="text-xl font-bold mt-2">确认订单信息</h2>
+                    <p class="text-secondary text-xs mt-0.5">请核对以下信息，确认无误后提交</p>
                 </div>
-                <div class="step-scroll px-5 space-y-4" id="summaryContent"></div>
+                <div class="step-scroll space-y-3" id="summaryContent"></div>
             </div>
 
             <!-- 步骤8: 成功页 -->
             <div id="step8" class="step-container">
                 <div class="step-scroll flex flex-col items-center justify-center px-8">
-                    <div class="success-circle w-24 h-24 rounded-full bg-gradient-to-br from-accent to-amber-600 flex items-center justify-center mb-6 shadow-lg shadow-accent/30">
-                        <svg class="w-12 h-12 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <div class="success-circle w-20 h-20 rounded-full bg-gradient-to-br from-accent to-amber-600 flex items-center justify-center mb-5 shadow-lg shadow-accent/30">
+                        <svg class="w-10 h-10 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
                             <polyline class="success-check" points="20 6 9 17 4 12"></polyline>
                         </svg>
                     </div>
-                    <h2 class="text-2xl font-bold mb-2">订单提交成功</h2>
-                    <p class="text-secondary text-center mb-8">您的订单已生成，我们将尽快为您处理</p>
-                    <div class="w-full max-w-xs bg-surface rounded-2xl p-5 mb-8">
-                        <div class="text-center mb-4">
+                    <h2 class="text-xl font-bold mb-1.5">订单提交成功</h2>
+                    <p class="text-secondary text-center text-sm mb-6">您的订单已生成，商家将尽快与您联系</p>
+                    <div class="w-full max-w-xs bg-surface rounded-xl p-4 mb-6">
+                        <div class="text-center mb-3">
                             <p class="text-xs text-secondary">订单编号</p>
-                            <p class="font-mono font-semibold text-lg mt-1" id="orderId">ORD-20260421-001</p>
+                            <p class="font-mono font-semibold text-base mt-0.5" id="orderId">ORD-20260421-001</p>
                         </div>
-                        <div class="border-t border-gray-200 pt-4 space-y-2 text-sm">
+                        <div class="border-t border-gray-200 pt-3 space-y-1.5 text-xs">
                             <div class="flex justify-between"><span class="text-secondary">购买类型</span><span id="successType">-</span></div>
                             <div class="flex justify-between"><span class="text-secondary">尺码</span><span id="successSize">-</span></div>
                             <div class="flex justify-between"><span class="text-secondary">款式</span><span id="successStyle">-</span></div>
@@ -411,91 +417,93 @@
                             <div class="flex justify-between"><span class="text-secondary">数量</span><span id="successQty">-</span></div>
                         </div>
                     </div>
-                    <button onclick="location.reload()" class="btn-primary w-full max-w-xs py-4 rounded-2xl text-white font-medium shadow-lg">
+                    
+                    <button onclick="location.reload()" class="btn-primary w-full max-w-xs py-3 rounded-xl text-white font-medium text-sm shadow-lg">
                         再次购买
                     </button>
                 </div>
             </div>
         </main>
 
-        <!-- 底部进度条导航 -->
+        <!-- 底部进度条导航 - 压缩 -->
         <div id="bottomProgress" class="bottom-progress-container fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-gray-100 opacity-0 pointer-events-none transition-all duration-500">
-            <div class="px-5 pt-4 pb-2">
-                <div class="flex items-center gap-1.5 mb-3">
-                    <div class="progress-segment progress-clickable h-1.5 flex-1 rounded-full bg-gray-200" data-step="1" onclick="jumpToStep(1)">
+            <div class="px-3 pt-1 pb-0.5">
+                <div class="flex items-center gap-1 mb-1.5">
+                    <div class="progress-segment progress-clickable h-1 flex-1 rounded-full bg-gray-200" data-step="1" onclick="jumpToStep(1)">
                         <div class="h-full rounded-full bg-accent transition-all duration-500" style="width: 0%"></div>
                     </div>
-                    <div class="progress-segment progress-clickable h-1.5 flex-1 rounded-full bg-gray-200" data-step="2" onclick="jumpToStep(2)">
+                    <div class="progress-segment progress-clickable h-1 flex-1 rounded-full bg-gray-200" data-step="2" onclick="jumpToStep(2)">
                         <div class="h-full rounded-full bg-accent transition-all duration-500" style="width: 0%"></div>
                     </div>
-                    <div class="progress-segment progress-clickable h-1.5 flex-1 rounded-full bg-gray-200" data-step="3" onclick="jumpToStep(3)">
+                    <div class="progress-segment progress-clickable h-1 flex-1 rounded-full bg-gray-200" data-step="3" onclick="jumpToStep(3)">
                         <div class="h-full rounded-full bg-accent transition-all duration-500" style="width: 0%"></div>
                     </div>
-                    <div class="progress-segment progress-clickable h-1.5 flex-1 rounded-full bg-gray-200" data-step="4" onclick="jumpToStep(4)">
+                    <div class="progress-segment progress-clickable h-1 flex-1 rounded-full bg-gray-200" data-step="4" onclick="jumpToStep(4)">
                         <div class="h-full rounded-full bg-accent transition-all duration-500" style="width: 0%"></div>
                     </div>
-                    <div class="progress-segment progress-clickable h-1.5 flex-1 rounded-full bg-gray-200" data-step="5" onclick="jumpToStep(5)">
+                    <div class="progress-segment progress-clickable h-1 flex-1 rounded-full bg-gray-200" data-step="5" onclick="jumpToStep(5)">
                         <div class="h-full rounded-full bg-accent transition-all duration-500" style="width: 0%"></div>
                     </div>
-                    <div class="progress-segment progress-clickable h-1.5 flex-1 rounded-full bg-gray-200" data-step="6" onclick="jumpToStep(6)">
+                    <div class="progress-segment progress-clickable h-1 flex-1 rounded-full bg-gray-200" data-step="6" onclick="jumpToStep(6)">
                         <div class="h-full rounded-full bg-accent transition-all duration-500" style="width: 0%"></div>
                     </div>
-                    <div class="progress-segment progress-clickable h-1.5 flex-1 rounded-full bg-gray-200" data-step="7" onclick="jumpToStep(7)">
+                    <div class="progress-segment progress-clickable h-1 flex-1 rounded-full bg-gray-200" data-step="7" onclick="jumpToStep(7)">
                         <div class="h-full rounded-full bg-accent transition-all duration-500" style="width: 0%"></div>
                     </div>
                 </div>
-                <div class="flex items-center justify-between px-1">
-                    <div class="flex flex-col items-center gap-1 progress-clickable" data-step="1" onclick="jumpToStep(1)">
-                        <div class="step-dot w-5 h-5 rounded-full border-2 border-gray-300 bg-white flex items-center justify-center" data-step="1">
-                            <i class="fas fa-check text-[8px] text-white opacity-0 transition-opacity" data-step="1"></i>
+                <div class="flex items-center justify-between px-0.5">
+                    <div class="flex flex-col items-center gap-0.5 progress-clickable" data-step="1" onclick="jumpToStep(1)">
+                        <div class="step-dot w-4 h-4 rounded-full border-2 border-gray-300 bg-white flex items-center justify-center" data-step="1">
+                            <i class="fas fa-check text-[7px] text-white opacity-0 transition-opacity" data-step="1"></i>
                         </div>
-                        <span class="step-label text-[10px] text-gray-400" data-step="1">类型</span>
+                        <span class="step-label text-[9px] text-gray-400" data-step="1">类型</span>
                     </div>
-                    <div class="flex flex-col items-center gap-1 progress-clickable" data-step="2" onclick="jumpToStep(2)">
-                        <div class="step-dot w-5 h-5 rounded-full border-2 border-gray-300 bg-white flex items-center justify-center" data-step="2">
-                            <i class="fas fa-check text-[8px] text-white opacity-0 transition-opacity" data-step="2"></i>
+                    <div class="flex flex-col items-center gap-0.5 progress-clickable" data-step="2" onclick="jumpToStep(2)">
+                        <div class="step-dot w-4 h-4 rounded-full border-2 border-gray-300 bg-white flex items-center justify-center" data-step="2">
+                            <i class="fas fa-check text-[7px] text-white opacity-0 transition-opacity" data-step="2"></i>
                         </div>
-                        <span class="step-label text-[10px] text-gray-400" data-step="2">尺码</span>
+                        <span class="step-label text-[9px] text-gray-400" data-step="2">尺码</span>
                     </div>
-                    <div class="flex flex-col items-center gap-1 progress-clickable" data-step="3" onclick="jumpToStep(3)">
-                        <div class="step-dot w-5 h-5 rounded-full border-2 border-gray-300 bg-white flex items-center justify-center" data-step="3">
-                            <i class="fas fa-check text-[8px] text-white opacity-0 transition-opacity" data-step="3"></i>
+                    <div class="flex flex-col items-center gap-0.5 progress-clickable" data-step="3" onclick="jumpToStep(3)">
+                        <div class="step-dot w-4 h-4 rounded-full border-2 border-gray-300 bg-white flex items-center justify-center" data-step="3">
+                            <i class="fas fa-check text-[7px] text-white opacity-0 transition-opacity" data-step="3"></i>
                         </div>
-                        <span class="step-label text-[10px] text-gray-400" data-step="3">款式</span>
+                        <span class="step-label text-[9px] text-gray-400" data-step="3">款式</span>
                     </div>
-                    <div class="flex flex-col items-center gap-1 progress-clickable" data-step="4" onclick="jumpToStep(4)">
-                        <div class="step-dot w-5 h-5 rounded-full border-2 border-gray-300 bg-white flex items-center justify-center" data-step="4">
-                            <i class="fas fa-check text-[8px] text-white opacity-0 transition-opacity" data-step="4"></i>
+                    <div class="flex flex-col items-center gap-0.5 progress-clickable" data-step="4" onclick="jumpToStep(4)">
+                        <div class="step-dot w-4 h-4 rounded-full border-2 border-gray-300 bg-white flex items-center justify-center" data-step="4">
+                            <i class="fas fa-check text-[7px] text-white opacity-0 transition-opacity" data-step="4"></i>
                         </div>
-                        <span class="step-label text-[10px] text-gray-400" data-step="4">配色</span>
+                        <span class="step-label text-[9px] text-gray-400" data-step="4">配色</span>
                     </div>
-                    <div class="flex flex-col items-center gap-1 progress-clickable" data-step="5" onclick="jumpToStep(5)">
-                        <div class="step-dot w-5 h-5 rounded-full border-2 border-gray-300 bg-white flex items-center justify-center" data-step="5">
-                            <i class="fas fa-check text-[8px] text-white opacity-0 transition-opacity" data-step="5"></i>
+                    <div class="flex flex-col items-center gap-0.5 progress-clickable" data-step="5" onclick="jumpToStep(5)">
+                        <div class="step-dot w-4 h-4 rounded-full border-2 border-gray-300 bg-white flex items-center justify-center" data-step="5">
+                            <i class="fas fa-check text-[7px] text-white opacity-0 transition-opacity" data-step="5"></i>
                         </div>
-                        <span class="step-label text-[10px] text-gray-400" data-step="5">数量</span>
+                        <span class="step-label text-[9px] text-gray-400" data-step="5">数量</span>
                     </div>
-                    <div class="flex flex-col items-center gap-1 progress-clickable" data-step="6" onclick="jumpToStep(6)">
-                        <div class="step-dot w-5 h-5 rounded-full border-2 border-gray-300 bg-white flex items-center justify-center" data-step="6">
-                            <i class="fas fa-check text-[8px] text-white opacity-0 transition-opacity" data-step="6"></i>
+                    <div class="flex flex-col items-center gap-0.5 progress-clickable" data-step="6" onclick="jumpToStep(6)">
+                        <div class="step-dot w-4 h-4 rounded-full border-2 border-gray-300 bg-white flex items-center justify-center" data-step="6">
+                            <i class="fas fa-check text-[7px] text-white opacity-0 transition-opacity" data-step="6"></i>
                         </div>
-                        <span class="step-label text-[10px] text-gray-400" data-step="6">信息</span>
+                        <span class="step-label text-[9px] text-gray-400" data-step="6">信息</span>
                     </div>
-                    <div class="flex flex-col items-center gap-1 progress-clickable" data-step="7" onclick="jumpToStep(7)">
-                        <div class="step-dot w-5 h-5 rounded-full border-2 border-gray-300 bg-white flex items-center justify-center" data-step="7">
-                            <i class="fas fa-check text-[8px] text-white opacity-0 transition-opacity" data-step="7"></i>
+                    <div class="flex flex-col items-center gap-0.5 progress-clickable" data-step="7" onclick="jumpToStep(7)">
+                        <div class="step-dot w-4 h-4 rounded-full border-2 border-gray-300 bg-white flex items-center justify-center" data-step="7">
+                            <i class="fas fa-check text-[7px] text-white opacity-0 transition-opacity" data-step="7"></i>
                         </div>
-                        <span class="step-label text-[10px] text-gray-400" data-step="7">确认</span>
+                        <span class="step-label text-[9px] text-gray-400" data-step="7">确认</span>
                     </div>
                 </div>
             </div>
-            <div class="px-5 pb-4 pt-2">
-                <div class="flex items-center gap-3">
+            <!-- 底部操作按钮 - 压缩 -->
+            <div class="px-3 pb-2 pt-0.5">
+                <div class="flex items-center gap-2">
                     <div class="flex-1">
-                        <p class="text-xs text-secondary" id="bottomHint">请选择一项</p>
+                        <p class="text-[10px] text-secondary" id="bottomHint">请选择一项</p>
                     </div>
-                    <button id="nextBtn" class="btn-primary px-6 py-3 rounded-xl text-white font-medium text-sm disabled:opacity-40 disabled:cursor-not-allowed" disabled onclick="nextStep()">
-                        下一步 <i class="fas fa-arrow-right ml-1 text-xs"></i>
+                    <button id="nextBtn" class="btn-primary px-5 py-2 rounded-lg text-white font-medium text-xs disabled:opacity-40 disabled:cursor-not-allowed" disabled onclick="nextStep()">
+                        下一步 <i class="fas fa-arrow-right ml-1 text-[10px]"></i>
                     </button>
                 </div>
             </div>
@@ -568,16 +576,16 @@
             Object.entries(CONFIG.sizes).forEach(([key, item]) => {
                 const isSelected = state.selections.size === key ? 'selected' : '';
                 container.innerHTML += `
-                    <div class="option-card bg-surface border-2 border-transparent rounded-2xl p-6 text-center cursor-pointer relative overflow-hidden ${isSelected}" 
+                    <div class="option-card bg-surface border-2 border-transparent rounded-xl p-5 text-center cursor-pointer relative overflow-hidden ${isSelected}" 
                          onclick="selectOption(2, 'size', '${key}', this)" data-size="${key}">
-                        <div class="check-icon absolute top-3 right-3 w-6 h-6 rounded-full bg-accent flex items-center justify-center">
-                            <i class="fas fa-check text-white text-xs"></i>
+                        <div class="check-icon absolute top-2.5 right-2.5 w-5 h-5 rounded-full bg-accent flex items-center justify-center">
+                            <i class="fas fa-check text-white text-[10px]"></i>
                         </div>
-                        <div class="w-12 h-12 mx-auto mb-3 rounded-full bg-gray-100 flex items-center justify-center">
-                            <span class="font-bold text-lg">${key}</span>
+                        <div class="w-11 h-11 mx-auto mb-2 rounded-full bg-gray-100 flex items-center justify-center">
+                            <span class="font-bold text-base">${key}</span>
                         </div>
                         <p class="text-xs text-secondary">${item.label}</p>
-                        <p class="text-xs text-gray-400 mt-1">${item.height}</p>
+                        <p class="text-xs text-gray-400 mt-0.5">${item.height}</p>
                     </div>`;
             });
         }
@@ -593,27 +601,27 @@
                 const item = CONFIG.styles[key];
                 const isSelected = state.selections.style === key ? 'selected' : '';
                 container.innerHTML += `
-                    <div class="option-card bg-surface border-2 border-transparent rounded-2xl overflow-hidden cursor-pointer ${isSelected}" 
+                    <div class="option-card bg-surface border-2 border-transparent rounded-xl overflow-hidden cursor-pointer ${isSelected}" 
                          onclick="selectOption(3, 'style', '${key}', this)" data-style="${key}">
-                        <div class="relative h-48 bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center" 
+                        <div class="relative h-40 bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center" 
                              onclick="event.stopPropagation(); openImageModal('${item.full}')">
                             <div class="skeleton absolute inset-0"></div>
                             <img src="${item.thumb}" alt="${item.name}" 
                                  class="relative z-10 w-full h-full object-cover" loading="lazy" 
                                  onerror="this.style.display='none'; this.previousElementSibling.style.display='block'"
                                  onload="this.previousElementSibling.style.display='none'">
-                            <div class="absolute bottom-3 right-3 z-20 w-8 h-8 bg-black/50 backdrop-blur-sm rounded-full flex items-center justify-center">
-                                <i class="fas fa-expand text-white text-xs"></i>
+                            <div class="absolute bottom-2.5 right-2.5 z-20 w-7 h-7 bg-black/50 backdrop-blur-sm rounded-full flex items-center justify-center">
+                                <i class="fas fa-expand text-white text-[10px]"></i>
                             </div>
                         </div>
-                        <div class="p-4">
+                        <div class="p-3">
                             <div class="flex items-center justify-between">
                                 <div>
-                                    <h3 class="font-semibold text-lg">${item.name}</h3>
-                                    <p class="text-secondary text-sm">${item.desc}</p>
+                                    <h3 class="font-semibold text-base">${item.name}</h3>
+                                    <p class="text-secondary text-xs">${item.desc}</p>
                                 </div>
-                                <div class="check-icon w-6 h-6 rounded-full bg-accent flex items-center justify-center flex-shrink-0 ml-2">
-                                    <i class="fas fa-check text-white text-xs"></i>
+                                <div class="check-icon w-5 h-5 rounded-full bg-accent flex items-center justify-center flex-shrink-0 ml-2">
+                                    <i class="fas fa-check text-white text-[10px]"></i>
                                 </div>
                             </div>
                         </div>
@@ -627,18 +635,18 @@
             Object.entries(CONFIG.colors).forEach(([key, item]) => {
                 const isSelected = state.selections.color === key ? 'selected' : '';
                 container.innerHTML += `
-                    <div class="option-card bg-surface border-2 border-transparent rounded-2xl p-5 cursor-pointer ${isSelected}" 
+                    <div class="option-card bg-surface border-2 border-transparent rounded-xl p-4 cursor-pointer ${isSelected}" 
                          onclick="selectOption(4, 'color', '${key}', this)" data-color="${key}">
-                        <div class="flex items-center gap-4">
-                            <div class="w-16 h-16 rounded-xl shadow-lg flex-shrink-0" style="background: ${item.bg}"></div>
+                        <div class="flex items-center gap-3">
+                            <div class="w-14 h-14 rounded-lg shadow-md flex-shrink-0" style="background: ${item.bg}"></div>
                             <div class="flex-1 min-w-0">
                                 <div class="flex items-center justify-between">
                                     <div>
-                                        <h3 class="font-semibold text-lg">${item.name}</h3>
-                                        <p class="text-secondary text-sm">${item.desc}</p>
+                                        <h3 class="font-semibold text-base">${item.name}</h3>
+                                        <p class="text-secondary text-xs">${item.desc}</p>
                                     </div>
-                                    <div class="check-icon w-6 h-6 rounded-full bg-accent flex items-center justify-center flex-shrink-0 ml-2">
-                                        <i class="fas fa-check text-white text-xs"></i>
+                                    <div class="check-icon w-5 h-5 rounded-full bg-accent flex items-center justify-center flex-shrink-0 ml-2">
+                                        <i class="fas fa-check text-white text-[10px]"></i>
                                     </div>
                                 </div>
                             </div>
@@ -656,9 +664,7 @@
         function goToStep(step) {
             const prevStep = state.currentStep;
             state.currentStep = step;
-            document.querySelectorAll('.step-container').forEach(el => {
-                el.classList.remove('active', 'prev');
-            });
+            document.querySelectorAll('.step-container').forEach(el => el.classList.remove('active', 'prev'));
             const targetId = step === 0 ? 'welcomeStep' : `step${step}`;
             const targetEl = document.getElementById(targetId);
             if (targetEl) {
@@ -721,7 +727,7 @@
             const name = document.getElementById('nameInput').value.trim();
             const phone = document.getElementById('phoneInput').value.trim();
             const address = document.getElementById('addressInput').value.trim();
-            const isValid = name.length > 0 && phone.length === 11 && /^1[3-9]\\d{9}$/.test(phone) && address.length > 5;
+            const isValid = name.length > 0 && phone.length === 11 && /^1[3-9][0-9]{9}$/.test(phone) && address.length > 5;
             document.getElementById('nextBtn').disabled = !isValid;
             document.getElementById('bottomHint').textContent = isValid ? '信息完整，可以下一步' : '请填写完整的个人信息';
             if (isValid) state.personalInfo = { name, phone, address };
@@ -734,22 +740,22 @@
             const styleItem = CONFIG.styles[s.style] || {};
             const colorItem = CONFIG.colors[s.color] || {};
             container.innerHTML = `
-                <div class="summary-card bg-surface rounded-2xl p-5">
-                    <h3 class="font-semibold mb-4 flex items-center gap-2"><i class="fas fa-shopping-bag text-accent text-sm"></i> 商品信息</h3>
-                    <div class="space-y-3 text-sm">
-                        <div class="flex justify-between items-center py-2 border-b border-gray-100"><span class="text-secondary">购买类型</span><span class="font-medium">${optionMap.type[s.type] || '-'}</span></div>
-                        <div class="flex justify-between items-center py-2 border-b border-gray-100"><span class="text-secondary">尺码</span><span class="font-medium">${optionMap.size[s.size] || '-'}</span></div>
-                        <div class="flex justify-between items-center py-2 border-b border-gray-100"><span class="text-secondary">款式</span><span class="font-medium">${styleItem.name || '-'}</span></div>
-                        <div class="flex justify-between items-center py-2 border-b border-gray-100"><span class="text-secondary">配色</span><span class="font-medium">${colorItem.name || '-'}</span></div>
-                        <div class="flex justify-between items-center py-2"><span class="text-secondary">数量</span><span class="font-medium">${state.quantity} 件</span></div>
+                <div class="summary-card bg-surface rounded-xl p-4">
+                    <h3 class="font-semibold mb-3 flex items-center gap-2 text-sm"><i class="fas fa-shopping-bag text-accent text-xs"></i> 商品信息</h3>
+                    <div class="space-y-2 text-xs">
+                        <div class="flex justify-between items-center py-1.5 border-b border-gray-100"><span class="text-secondary">购买类型</span><span class="font-medium">${optionMap.type[s.type] || '-'}</span></div>
+                        <div class="flex justify-between items-center py-1.5 border-b border-gray-100"><span class="text-secondary">尺码</span><span class="font-medium">${optionMap.size[s.size] || '-'}</span></div>
+                        <div class="flex justify-between items-center py-1.5 border-b border-gray-100"><span class="text-secondary">款式</span><span class="font-medium">${styleItem.name || '-'}</span></div>
+                        <div class="flex justify-between items-center py-1.5 border-b border-gray-100"><span class="text-secondary">配色</span><span class="font-medium">${colorItem.name || '-'}</span></div>
+                        <div class="flex justify-between items-center py-1.5"><span class="text-secondary">数量</span><span class="font-medium">${state.quantity} 件</span></div>
                     </div>
                 </div>
-                <div class="summary-card bg-surface rounded-2xl p-5" style="animation-delay: 0.1s">
-                    <h3 class="font-semibold mb-4 flex items-center gap-2"><i class="fas fa-user text-accent text-sm"></i> 收货信息</h3>
-                    <div class="space-y-3 text-sm">
-                        <div class="flex justify-between items-center py-2 border-b border-gray-100"><span class="text-secondary">收件人</span><span class="font-medium">${info.name || '-'}</span></div>
-                        <div class="flex justify-between items-center py-2 border-b border-gray-100"><span class="text-secondary">联系电话</span><span class="font-medium">${info.phone || '-'}</span></div>
-                        <div class="flex justify-between items-start py-2"><span class="text-secondary flex-shrink-0">收货地址</span><span class="font-medium text-right ml-4">${info.address || '-'}</span></div>
+                <div class="summary-card bg-surface rounded-xl p-4" style="animation-delay: 0.1s">
+                    <h3 class="font-semibold mb-3 flex items-center gap-2 text-sm"><i class="fas fa-user text-accent text-xs"></i> 收货信息</h3>
+                    <div class="space-y-2 text-xs">
+                        <div class="flex justify-between items-center py-1.5 border-b border-gray-100"><span class="text-secondary">收件人</span><span class="font-medium">${info.name || '-'}</span></div>
+                        <div class="flex justify-between items-center py-1.5 border-b border-gray-100"><span class="text-secondary">联系电话</span><span class="font-medium">${info.phone || '-'}</span></div>
+                        <div class="flex justify-between items-start py-1.5"><span class="text-secondary flex-shrink-0">收货地址</span><span class="font-medium text-right ml-4">${info.address || '-'}</span></div>
                     </div>
                 </div>`;
             document.getElementById('successType').textContent = optionMap.type[s.type] || '-';
@@ -758,6 +764,22 @@
             document.getElementById('successColor').textContent = colorItem.name || '-';
             document.getElementById('successQty').textContent = state.quantity + ' 件';
             document.getElementById('orderId').textContent = 'ORD-' + new Date().toISOString().slice(0,10).replace(/-/g,'') + '-' + String(Math.floor(Math.random()*900)+100).padStart(3,'0');
+
+            // 保存订单到本地存储
+            const orderData = {
+                orderId: document.getElementById('orderId')?.textContent || '-',
+                type: optionMap.type[s.type] || '-',
+                size: optionMap.size[s.size] || '-',
+                style: (CONFIG.styles[s.style] || {}).name || '-',
+                color: (CONFIG.colors[s.color] || {}).name || '-',
+                quantity: state.quantity,
+                personalInfo: state.personalInfo,
+                totalPrice: document.getElementById('finalTotal')?.textContent || '-',
+                timestamp: new Date().toISOString()
+            };
+            // 提交订单到 Formspree 云端
+            submitOrderToCloud(orderData);
+
         }
 
         function jumpToStep(targetStep) {
@@ -798,14 +820,15 @@
                     validateStep6();
                 } else if (step === 7) {
                     generateSummary();
-                    nextBtn.innerHTML = '确认提交 <i class="fas fa-check ml-1 text-xs"></i>';
+                    nextBtn.innerHTML = '确认提交 <i class="fas fa-check ml-1 text-[10px]"></i>';
                     nextBtn.disabled = false;
+                    nextBtn.onclick = submitFinalOrder;
                     document.getElementById('bottomHint').textContent = '请确认信息无误';
                 } else {
                     const key = ['', 'type', 'size', 'style', 'color'][step];
                     const hasSelection = state.selections[key];
                     nextBtn.disabled = !hasSelection;
-                    nextBtn.innerHTML = '下一步 <i class="fas fa-arrow-right ml-1 text-xs"></i>';
+                    nextBtn.innerHTML = '下一步 <i class="fas fa-arrow-right ml-1 text-[10px]"></i>';
                     document.getElementById('bottomHint').textContent = hasSelection ? '已选择，点击下一步继续' : '请选择一项';
                 }
             } else {
@@ -852,7 +875,67 @@
             document.body.style.overflow = '';
         }
 
-        function scrollToTop() {
+        
+
+        // Formspree 配置：请修改为你的表单 ID
+        // 注册地址：https://formspree.io/register
+        const FORMSPREE_CONFIG = {
+            formId: 'maqalqlj',  // ← 替换为你的 Formspree 表单 ID，如 xxxxxxxx
+            endpoint: 'https://formspree.io/f/'  // Formspree 提交地址
+        };
+
+        // 提交订单到 Formspree 云端
+        async function submitOrderToCloud(orderData) {
+            const submitBtn = document.getElementById('nextBtn');
+            const originalText = submitBtn ? submitBtn.innerHTML : '';
+
+            if (submitBtn) {
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-1"></i>提交中...';
+            }
+
+            try {
+                const response = await fetch(FORMSPREE_CONFIG.endpoint + FORMSPREE_CONFIG.formId, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        _subject: '【新订单】' + orderData.orderId,
+                        orderId: orderData.orderId,
+                        type: orderData.type,
+                        size: orderData.size,
+                        style: orderData.style,
+                        color: orderData.color,
+                        quantity: orderData.quantity,
+                        totalPrice: orderData.totalPrice,
+                        name: orderData.personalInfo?.name || '',
+                        phone: orderData.personalInfo?.phone || '',
+                        address: orderData.personalInfo?.address || '',
+                        timestamp: orderData.timestamp
+                    })
+                });
+
+                if (response.ok) {
+                    console.log('订单已提交到云端');
+                    return true;
+                } else {
+                    console.error('提交失败:', response.status);
+                    return false;
+                }
+            } catch (error) {
+                console.error('网络错误:', error);
+                return false;
+            } finally {
+                if (submitBtn) {
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = originalText;
+                }
+            }
+        }
+
+function scrollToTop() {
             const activeStep = document.querySelector('.step-container.active .step-scroll');
             if (activeStep) activeStep.scrollTop = 0;
         }
