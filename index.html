@@ -55,7 +55,6 @@
         .step-container.active { opacity: 1; transform: translateX(0); pointer-events: all; }
         .step-container.prev { opacity: 0; transform: translateX(-100px); }
         
-        /* 标题区 - 压缩 */
         .step-header {
             flex-shrink: 0;
             background: white;
@@ -64,19 +63,19 @@
             padding: 0.75rem 1.25rem 0.5rem;
         }
         
-        /* 卡片列表区 - 放大 */
         .step-scroll {
             flex: 1;
             overflow-y: auto;
             overflow-x: hidden;
             -webkit-overflow-scrolling: touch;
             padding: 0 1.25rem 0.5rem;
+            min-height: 0;
+            position: relative;
         }
         
         .step-scroll::-webkit-scrollbar { display: none; }
         .step-scroll { -ms-overflow-style: none; scrollbar-width: none; }
         
-        /* 底部进度条 - 压缩 */
         .bottom-progress-container {
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             padding-bottom: env(safe-area-inset-bottom);
@@ -201,11 +200,10 @@
         .progress-clickable:active { transform: scale(0.95); }
     </style>
 <base target="_blank">
-<base target="_blank">
 </head>
 <body class="bg-white text-primary antialiased">
     <div id="app" class="relative h-screen flex flex-col overflow-hidden">
-        <!-- 顶部导航栏 - 压缩 -->
+        <!-- 顶部导航栏 -->
         <header id="header" class="flex-shrink-0 h-14 bg-white/90 backdrop-blur-md border-b border-gray-100 z-40 flex items-center justify-between px-5">
             <button id="backBtn" class="back-btn w-9 h-9 flex items-center justify-center rounded-full hover:bg-gray-50 opacity-0 pointer-events-none transition-opacity">
                 <i class="fas fa-arrow-left text-base text-primary"></i>
@@ -294,7 +292,7 @@
                     <p class="text-secondary text-xs mt-0.5">不同尺码对应不同款式可选</p>
                 </div>
                 <div class="step-scroll">
-                    <div class="flex flex-col gap-3 p-2" id="sizeContainer"></div>
+                    <div id="sizeContainer"></div>
                 </div>
             </div>
 
@@ -305,7 +303,9 @@
                     <h2 class="text-xl font-bold mt-2">选择款式</h2>
                     <p class="text-secondary text-xs mt-0.5" id="styleSubtitle">当前尺码专属款式</p>
                 </div>
-                <div class="step-scroll space-y-3" id="styleContainer"></div>
+                <div class="step-scroll">
+                    <div id="styleContainer"></div>
+                </div>
             </div>
 
             <!-- 步骤4: 配色 -->
@@ -403,7 +403,7 @@
                         </svg>
                     </div>
                     <h2 class="text-xl font-bold mb-1.5">订单提交成功</h2>
-                    <p class="text-secondary text-center text-sm mb-6">您的订单已生成，商家将尽快与您联系</p>
+                    <p class="text-secondary text-center text-sm mb-6">您的订单已生成，我们将尽快为您处理</p>
                     <div class="w-full max-w-xs bg-surface rounded-xl p-4 mb-6">
                         <div class="text-center mb-3">
                             <p class="text-xs text-secondary">订单编号</p>
@@ -417,7 +417,6 @@
                             <div class="flex justify-between"><span class="text-secondary">数量</span><span id="successQty">-</span></div>
                         </div>
                     </div>
-                    
                     <button onclick="location.reload()" class="btn-primary w-full max-w-xs py-3 rounded-xl text-white font-medium text-sm shadow-lg">
                         再次购买
                     </button>
@@ -425,9 +424,9 @@
             </div>
         </main>
 
-        <!-- 底部进度条导航 - 压缩 -->
+        <!-- 底部进度条导航 -->
         <div id="bottomProgress" class="bottom-progress-container fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-gray-100 opacity-0 pointer-events-none transition-all duration-500">
-            <div class="px-3 pt-1 pb-0.5">
+            <div class="px-4 pt-2 pb-1">
                 <div class="flex items-center gap-1 mb-1.5">
                     <div class="progress-segment progress-clickable h-1 flex-1 rounded-full bg-gray-200" data-step="1" onclick="jumpToStep(1)">
                         <div class="h-full rounded-full bg-accent transition-all duration-500" style="width: 0%"></div>
@@ -496,8 +495,8 @@
                     </div>
                 </div>
             </div>
-            <!-- 底部操作按钮 - 压缩 -->
-            <div class="px-3 pb-2 pt-0.5">
+            <!-- 底部操作按钮 -->
+            <div class="px-4 pb-3 pt-1">
                 <div class="flex items-center gap-2">
                     <div class="flex-1">
                         <p class="text-[10px] text-secondary" id="bottomHint">请选择一项</p>
@@ -520,27 +519,31 @@
     </div>
 
     <script>
+        // ==================== FORMSPREE 配置 ====================
+        // 请替换为你从 https://formspree.io 注册后获得的表单 ID
+        const FORMSPREE_ENDPOINT = 'https://formspree.io/f/maqalqlj';
+
         // ==================== 图片配置中心 ====================
         const CONFIG = {
             sizes: {
-                S: { name: 'S码', label: '小号', height: '155-165cm' },
-                M: { name: 'M码', label: '中号', height: '165-175cm' },
-                L: { name: 'L码', label: '大号', height: '175-185cm' },
-                XL: { name: 'XL码', label: '加大号', height: '185cm+' }
+                S: { name: 'S码', label: '小号', height: '155-165cm', image: './images/sizes/S.jpg' },
+                M: { name: 'M码', label: '中号', height: '165-175cm', image: './images/sizes/M.jpg' },
+                L: { name: 'L码', label: '大号', height: '175-185cm', image: './images/sizes/L.jpg' },
+                XL: { name: 'XL码', label: '加大号', height: '185cm+', image: './images/sizes/XL.jpg' }
             },
             styles: {
-                S1: { name: 'S-经典款', desc: '小号专属经典版型，修身剪裁', thumb: './images/styles/S1-thumb.jpg', full: './images/styles/S1-full.jpg' },
-                S2: { name: 'S-时尚款', desc: '小号专属潮流设计，精致细节', thumb: './images/styles/S2-thumb.jpg', full: './images/styles/S2-full.jpg' },
-                S3: { name: 'S-运动款', desc: '小号专属运动版型，灵活舒适', thumb: './images/styles/S3-thumb.jpg', full: './images/styles/S3-full.jpg' },
-                M1: { name: 'M-经典款', desc: '中号专属经典版型，标准剪裁', thumb: './images/styles/M1-thumb.jpg', full: './images/styles/M1-full.jpg' },
-                M2: { name: 'M-时尚款', desc: '中号专属潮流设计，都市风格', thumb: './images/styles/M2-thumb.jpg', full: './images/styles/M2-full.jpg' },
-                M3: { name: 'M-运动款', desc: '中号专属运动版型，活力动感', thumb: './images/styles/M3-thumb.jpg', full: './images/styles/M3-full.jpg' },
-                L1: { name: 'L-经典款', desc: '大号专属经典版型，宽松舒适', thumb: './images/styles/L1-thumb.jpg', full: './images/styles/L1-full.jpg' },
-                L2: { name: 'L-时尚款', desc: '大号专属潮流设计，气场十足', thumb: './images/styles/L2-thumb.jpg', full: './images/styles/L2-full.jpg' },
-                L3: { name: 'L-运动款', desc: '大号专属运动版型，舒展自如', thumb: './images/styles/L3-thumb.jpg', full: './images/styles/L3-full.jpg' },
-                XL1: { name: 'XL-经典款', desc: '加大号专属经典版型，大气从容', thumb: './images/styles/XL1-thumb.jpg', full: './images/styles/XL1-full.jpg' },
-                XL2: { name: 'XL-时尚款', desc: '加大号专属潮流设计，个性张扬', thumb: './images/styles/XL2-thumb.jpg', full: './images/styles/XL2-full.jpg' },
-                XL3: { name: 'XL-运动款', desc: '加大号专属运动版型，力量感强', thumb: './images/styles/XL3-thumb.jpg', full: './images/styles/XL3-full.jpg' }
+                S1: { name: 'S-经典款', desc: '小号专属经典版型，修身剪裁', thumb: './images/styles/S1-thumb.webp', full: './images/styles/S1-full.webp' },
+                S2: { name: 'S-时尚款', desc: '小号专属潮流设计，精致细节', thumb: './images/styles/S2-thumb.webp', full: './images/styles/S2-full.webp' },
+                S3: { name: 'S-运动款', desc: '小号专属运动版型，灵活舒适', thumb: './images/styles/S3-thumb.webp', full: './images/styles/S3-full.webp' },
+                M1: { name: 'M-经典款', desc: '中号专属经典版型，标准剪裁', thumb: './images/styles/M1-thumb.webp', full: './images/styles/M1-full.webp' },
+                M2: { name: 'M-时尚款', desc: '中号专属潮流设计，都市风格', thumb: './images/styles/M2-thumb.webp', full: './images/styles/M2-full.webp' },
+                M3: { name: 'M-运动款', desc: '中号专属运动版型，活力动感', thumb: './images/styles/M3-thumb.webp', full: './images/styles/M3-full.webp' },
+                L1: { name: 'L-经典款', desc: '大号专属经典版型，宽松舒适', thumb: './images/styles/L1-thumb.webp', full: './images/styles/L1-full.webp' },
+                L2: { name: 'L-时尚款', desc: '大号专属潮流设计，气场十足', thumb: './images/styles/L2-thumb.webp', full: './images/styles/L2-full.webp' },
+                L3: { name: 'L-运动款', desc: '大号专属运动版型，舒展自如', thumb: './images/styles/L3-thumb.webp', full: './images/styles/L3-full.webp' },
+                XL1: { name: 'XL-经典款', desc: '加大号专属经典版型，大气从容', thumb: './images/styles/XL1-thumb.webp', full: './images/styles/XL1-full.webp' },
+                XL2: { name: 'XL-时尚款', desc: '加大号专属潮流设计，个性张扬', thumb: './images/styles/XL2-thumb.webp', full: './images/styles/XL2-full.webp' },
+                XL3: { name: 'XL-运动款', desc: '加大号专属运动版型，力量感强', thumb: './images/styles/XL3-thumb.webp', full: './images/styles/XL3-full.webp' }
             },
             colors: {
                 color1: { name: '经典黑', desc: '沉稳大气，永不过时', thumb: './images/colors/color1.jpg', bg: 'linear-gradient(135deg, #2d2d2d 0%, #1a1a1a 100%)' },
@@ -573,37 +576,52 @@
         function renderSizes() {
             const container = document.getElementById('sizeContainer');
             container.innerHTML = '';
+            container.className = 'flex flex-col gap-3';
+            
             Object.entries(CONFIG.sizes).forEach(([key, item]) => {
                 const isSelected = state.selections.size === key ? 'selected' : '';
                 container.innerHTML += `
-                    <div class="option-card bg-surface border-2 border-transparent rounded-xl p-5 text-center cursor-pointer relative overflow-hidden ${isSelected}" 
+                    <div class="option-card bg-surface border-2 border-transparent rounded-xl p-3 cursor-pointer flex items-center gap-4 ${isSelected}" 
                          onclick="selectOption(2, 'size', '${key}', this)" data-size="${key}">
-                        <div class="check-icon absolute top-2.5 right-2.5 w-5 h-5 rounded-full bg-accent flex items-center justify-center">
-                            <i class="fas fa-check text-white text-[10px]"></i>
+                        <div class="w-16 h-16 rounded-lg bg-gray-100 flex-shrink-0 overflow-hidden relative">
+                            <div class="skeleton absolute inset-0"></div>
+                            <img src="${item.image}" alt="${item.name}" 
+                                 class="relative z-10 w-full h-full object-cover" loading="lazy"
+                                 onerror="this.style.display='none'; this.previousElementSibling.style.display='block'"
+                                 onload="this.previousElementSibling.style.display='none'">
                         </div>
-                        <div class="w-11 h-11 mx-auto mb-2 rounded-full bg-gray-100 flex items-center justify-center">
-                            <span class="font-bold text-base">${key}</span>
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <h3 class="font-semibold text-base">${item.name}</h3>
+                                    <p class="text-secondary text-xs mt-0.5">${item.label} · ${item.height}</p>
+                                </div>
+                                <div class="check-icon w-5 h-5 rounded-full bg-accent flex items-center justify-center flex-shrink-0 ml-2">
+                                    <i class="fas fa-check text-white text-[10px]"></i>
+                                </div>
+                            </div>
                         </div>
-                        <p class="text-xs text-secondary">${item.label}</p>
-                        <p class="text-xs text-gray-400 mt-0.5">${item.height}</p>
                     </div>`;
             });
         }
 
         function renderStyles() {
             const container = document.getElementById('styleContainer');
-            const size = state.selections.size;
             container.innerHTML = '';
+            container.className = 'space-y-3';
+            
+            const size = state.selections.size;
             if (!size) return;
             document.getElementById('styleSubtitle').textContent = `${CONFIG.sizes[size].name} 专属款式（3种可选）`;
             const styleKeys = [`${size}1`, `${size}2`, `${size}3`];
+            
             styleKeys.forEach(key => {
                 const item = CONFIG.styles[key];
                 const isSelected = state.selections.style === key ? 'selected' : '';
                 container.innerHTML += `
                     <div class="option-card bg-surface border-2 border-transparent rounded-xl overflow-hidden cursor-pointer ${isSelected}" 
                          onclick="selectOption(3, 'style', '${key}', this)" data-style="${key}">
-                        <div class="relative h-40 bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center" 
+                        <div class="relative w-full h-32 bg-gradient-to-br from-gray-100 to-gray-200" 
                              onclick="event.stopPropagation(); openImageModal('${item.full}')">
                             <div class="skeleton absolute inset-0"></div>
                             <img src="${item.thumb}" alt="${item.name}" 
@@ -616,9 +634,9 @@
                         </div>
                         <div class="p-3">
                             <div class="flex items-center justify-between">
-                                <div>
-                                    <h3 class="font-semibold text-base">${item.name}</h3>
-                                    <p class="text-secondary text-xs">${item.desc}</p>
+                                <div class="min-w-0">
+                                    <h3 class="font-semibold text-sm truncate">${item.name}</h3>
+                                    <p class="text-secondary text-xs truncate">${item.desc}</p>
                                 </div>
                                 <div class="check-icon w-5 h-5 rounded-full bg-accent flex items-center justify-center flex-shrink-0 ml-2">
                                     <i class="fas fa-check text-white text-[10px]"></i>
@@ -686,6 +704,10 @@
         }
 
         function nextStep() {
+            if (state.currentStep === 7) {
+                submitOrder();
+                return;
+            }
             if (state.currentStep < state.totalSteps) goToStep(state.currentStep + 1);
         }
 
@@ -719,7 +741,6 @@
             document.getElementById('qtySummary').textContent = newQty;
             const total = 299 * newQty;
             document.getElementById('totalPrice').textContent = `¥${total.toLocaleString()}.00`;
-            document.getElementById('finalTotal').textContent = `¥${total.toLocaleString()}.00`;
             document.getElementById('nextBtn').disabled = false;
         }
 
@@ -727,7 +748,7 @@
             const name = document.getElementById('nameInput').value.trim();
             const phone = document.getElementById('phoneInput').value.trim();
             const address = document.getElementById('addressInput').value.trim();
-            const isValid = name.length > 0 && phone.length === 11 && /^1[3-9][0-9]{9}$/.test(phone) && address.length > 5;
+            const isValid = name.length > 0 && phone.length === 11 && /^1[3-9]\d{9}$/.test(phone) && address.length > 5;
             document.getElementById('nextBtn').disabled = !isValid;
             document.getElementById('bottomHint').textContent = isValid ? '信息完整，可以下一步' : '请填写完整的个人信息';
             if (isValid) state.personalInfo = { name, phone, address };
@@ -739,6 +760,8 @@
             const info = state.personalInfo;
             const styleItem = CONFIG.styles[s.style] || {};
             const colorItem = CONFIG.colors[s.color] || {};
+            const orderId = 'ORD-' + new Date().toISOString().slice(0,10).replace(/-/g,'') + '-' + String(Math.floor(Math.random()*900)+100).padStart(3,'0');
+            
             container.innerHTML = `
                 <div class="summary-card bg-surface rounded-xl p-4">
                     <h3 class="font-semibold mb-3 flex items-center gap-2 text-sm"><i class="fas fa-shopping-bag text-accent text-xs"></i> 商品信息</h3>
@@ -758,28 +781,69 @@
                         <div class="flex justify-between items-start py-1.5"><span class="text-secondary flex-shrink-0">收货地址</span><span class="font-medium text-right ml-4">${info.address || '-'}</span></div>
                     </div>
                 </div>`;
+            
+            document.getElementById('orderId').textContent = orderId;
             document.getElementById('successType').textContent = optionMap.type[s.type] || '-';
             document.getElementById('successSize').textContent = optionMap.size[s.size] || '-';
             document.getElementById('successStyle').textContent = styleItem.name || '-';
             document.getElementById('successColor').textContent = colorItem.name || '-';
             document.getElementById('successQty').textContent = state.quantity + ' 件';
-            document.getElementById('orderId').textContent = 'ORD-' + new Date().toISOString().slice(0,10).replace(/-/g,'') + '-' + String(Math.floor(Math.random()*900)+100).padStart(3,'0');
+            
+            return orderId;
+        }
 
-            // 保存订单到本地存储
-            const orderData = {
-                orderId: document.getElementById('orderId')?.textContent || '-',
+        // ==================== FORMSPREE 提交 ====================
+        async function submitOrder() {
+            const btn = document.getElementById('nextBtn');
+            const originalText = btn.innerHTML;
+            
+            // 防止重复提交
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-circle-notch fa-spin mr-1"></i> 提交中...';
+            
+            // 确保订单号和摘要已生成
+            const orderId = generateSummary();
+            const s = state.selections;
+            const info = state.personalInfo;
+            const styleItem = CONFIG.styles[s.style] || {};
+            const colorItem = CONFIG.colors[s.color] || {};
+            
+            const payload = {
+                order_id: orderId,
                 type: optionMap.type[s.type] || '-',
                 size: optionMap.size[s.size] || '-',
-                style: (CONFIG.styles[s.style] || {}).name || '-',
-                color: (CONFIG.colors[s.color] || {}).name || '-',
+                style: styleItem.name || '-',
+                color: colorItem.name || '-',
                 quantity: state.quantity,
-                personalInfo: state.personalInfo,
-                totalPrice: document.getElementById('finalTotal')?.textContent || '-',
+                unit_price: 299,
+                total_price: 299 * state.quantity,
+                name: info.name,
+                phone: info.phone,
+                address: info.address,
                 timestamp: new Date().toISOString()
             };
-            // 提交订单到 Formspree 云端
-            submitOrderToCloud(orderData);
-
+            
+            try {
+                const response = await fetch(FORMSPREE_ENDPOINT, {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(payload)
+                });
+                
+                if (response.ok) {
+                    goToStep(8);
+                } else {
+                    const data = await response.json();
+                    throw new Error(data.error || '提交失败，请稍后重试');
+                }
+            } catch (err) {
+                alert('订单提交失败：' + err.message + '\n请检查网络连接或联系客服。');
+                btn.disabled = false;
+                btn.innerHTML = originalText;
+            }
         }
 
         function jumpToStep(targetStep) {
@@ -822,7 +886,6 @@
                     generateSummary();
                     nextBtn.innerHTML = '确认提交 <i class="fas fa-check ml-1 text-[10px]"></i>';
                     nextBtn.disabled = false;
-                    nextBtn.onclick = submitFinalOrder;
                     document.getElementById('bottomHint').textContent = '请确认信息无误';
                 } else {
                     const key = ['', 'type', 'size', 'style', 'color'][step];
@@ -875,78 +938,26 @@
             document.body.style.overflow = '';
         }
 
-        
-
-        // Formspree 配置：请修改为你的表单 ID
-        // 注册地址：https://formspree.io/register
-        const FORMSPREE_CONFIG = {
-            formId: 'maqalqlj',  // ← 替换为你的 Formspree 表单 ID，如 xxxxxxxx
-            endpoint: 'https://formspree.io/f/'  // Formspree 提交地址
-        };
-
-        // 提交订单到 Formspree 云端
-        async function submitOrderToCloud(orderData) {
-            const submitBtn = document.getElementById('nextBtn');
-            const originalText = submitBtn ? submitBtn.innerHTML : '';
-
-            if (submitBtn) {
-                submitBtn.disabled = true;
-                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-1"></i>提交中...';
-            }
-
-            try {
-                const response = await fetch(FORMSPREE_CONFIG.endpoint + FORMSPREE_CONFIG.formId, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        _subject: '【新订单】' + orderData.orderId,
-                        orderId: orderData.orderId,
-                        type: orderData.type,
-                        size: orderData.size,
-                        style: orderData.style,
-                        color: orderData.color,
-                        quantity: orderData.quantity,
-                        totalPrice: orderData.totalPrice,
-                        name: orderData.personalInfo?.name || '',
-                        phone: orderData.personalInfo?.phone || '',
-                        address: orderData.personalInfo?.address || '',
-                        timestamp: orderData.timestamp
-                    })
-                });
-
-                if (response.ok) {
-                    console.log('订单已提交到云端');
-                    return true;
-                } else {
-                    console.error('提交失败:', response.status);
-                    return false;
-                }
-            } catch (error) {
-                console.error('网络错误:', error);
-                return false;
-            } finally {
-                if (submitBtn) {
-                    submitBtn.disabled = false;
-                    submitBtn.innerHTML = originalText;
-                }
-            }
-        }
-
-function scrollToTop() {
+        function scrollToTop() {
             const activeStep = document.querySelector('.step-container.active .step-scroll');
             if (activeStep) activeStep.scrollTop = 0;
         }
 
         // 触摸滑动
         let touchStartX = 0;
-        document.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].screenX; }, { passive: true });
+        let touchStartY = 0;
+        document.addEventListener('touchstart', e => { 
+            touchStartX = e.changedTouches[0].screenX; 
+            touchStartY = e.changedTouches[0].screenY; 
+        }, { passive: true });
         document.addEventListener('touchend', e => {
-            const diff = touchStartX - e.changedTouches[0].screenX;
+            const diffX = touchStartX - e.changedTouches[0].screenX;
+            const diffY = touchStartY - e.changedTouches[0].screenY;
             const threshold = 80;
-            if (diff > threshold && state.currentStep > 0 && state.currentStep < 7) {
+            
+            if (Math.abs(diffY) > Math.abs(diffX)) return;
+            
+            if (diffX > threshold && state.currentStep > 0 && state.currentStep < 7) {
                 const key = ['', 'type', 'size', 'style', 'color'][state.currentStep];
                 if (state.selections[key] || state.currentStep === 5 || state.currentStep === 6) {
                     if (state.currentStep === 6) {
@@ -956,7 +967,7 @@ function scrollToTop() {
                         if (n && p.length === 11 && a) nextStep();
                     } else { nextStep(); }
                 }
-            } else if (diff < -threshold && state.currentStep > 0 && state.currentStep < 8) {
+            } else if (diffX < -threshold && state.currentStep > 0 && state.currentStep < 8) {
                 prevStep();
             }
         }, { passive: true });
