@@ -41,13 +41,6 @@
             --primary: var(--brand-emerald);
             --shadow: rgba(139, 111, 92, 0.08);
             --overlay: rgba(139, 111, 92, 0.35);
-            --btn-primary-bg: #1B1E23;
-            --btn-primary-text: #FFFFFF;
-            --btn-secondary-border: #F1F2F4;
-            --btn-secondary-text: #1B1E23;
-            --input-bg: #FFFFFF;
-            --input-border: #F1F2F4;
-            --badge-bg: #D1D5DB;
             --hint-color: #D1D5DB;
         }
 
@@ -64,13 +57,6 @@
             --primary: var(--brand-emerald);
             --shadow: rgba(31, 41, 55, 0.15);
             --overlay: rgba(31, 41, 55, 0.45);
-            --btn-primary-bg: #6B7280;
-            --btn-primary-text: #FFFFFF;
-            --btn-secondary-border: #D1D5DB;
-            --btn-secondary-text: #1F2937;
-            --input-bg: #FFFFFF;
-            --input-border: #D1D5DB;
-            --badge-bg: #8A9BA8;
             --hint-color: #8A9BA8;
         }
 
@@ -87,13 +73,6 @@
             --primary: var(--brand-emerald);
             --shadow: rgba(0, 0, 0, 0.4);
             --overlay: rgba(0, 0, 0, 0.6);
-            --btn-primary-bg: #8B6239;
-            --btn-primary-text: #FFFFFF;
-            --btn-secondary-border: #3D3229;
-            --btn-secondary-text: #E5DDD5;
-            --input-bg: rgba(255,255,255,0.05);
-            --input-border: #3D3229;
-            --badge-bg: #8B6239;
             --hint-color: #C8A97E;
         }
 
@@ -134,6 +113,11 @@
             opacity: 1;
             visibility: visible;
             pointer-events: auto;
+        }
+
+        .app-screen {
+            padding-top: 110px;
+            padding-bottom: 90px;
         }
 
         .app-screen.active, .form-screen.active, .cart-confirm-screen.active {
@@ -533,24 +517,23 @@
             color: var(--text);
         }
 
+        /* 修改：副标题行布局，按钮放在右侧 */
+        .card-desc-row {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 8px;
+        }
+
         .card-subtitle {
             font-size: 11px;
             color: var(--text-secondary);
             line-height: 1.4;
-            margin-bottom: 10px;
-        }
-
-        .card-meta {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .card-sizes {
-            font-size: 10px;
-            color: var(--text-secondary);
-            opacity: 0.7;
-            letter-spacing: 0.3px;
+            flex: 1;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
         }
 
         .card-add-btn {
@@ -566,6 +549,8 @@
             cursor: pointer;
             color: var(--text);
             transition: all 0.2s ease;
+            flex-shrink: 0;
+            margin-top: -2px;
         }
 
         .card-add-btn:active {
@@ -575,7 +560,7 @@
             color: #fff;
         }
 
-        /* ==================== BOTTOM BAR (Product Only) ==================== */
+        /* ==================== BOTTOM BAR (Product) ==================== */
         .bottom-bar {
             position: fixed;
             bottom: 0;
@@ -789,7 +774,7 @@
             font-weight: 500;
         }
 
-        /* ==================== PRODUCT MODAL ==================== */
+        /* ==================== PRODUCT MODAL (with Carousel) ==================== */
         .modal-overlay {
             position: fixed;
             inset: 0;
@@ -809,7 +794,7 @@
 
         .modal-sheet {
             width: 100%;
-            max-height: 85vh;
+            max-height: 90vh;
             background: var(--surface);
             border-radius: 24px 24px 0 0;
             overflow-y: auto;
@@ -823,10 +808,73 @@
             transform: translateY(0);
         }
 
-        .modal-image {
+        /* Carousel */
+        .modal-carousel {
+            position: relative;
             width: 100%;
             aspect-ratio: 1/1;
+            overflow: hidden;
+            background: linear-gradient(135deg, rgba(0,0,0,0.02) 0%, rgba(0,0,0,0.05) 100%);
+        }
+
+        .carousel-track {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .carousel-slide {
+            width: 100%;
+            height: 100%;
+            flex-shrink: 0;
+            position: relative;
+        }
+
+        .carousel-slide img {
+            width: 100%;
+            height: 100%;
             object-fit: cover;
+        }
+
+        .carousel-indicators {
+            position: absolute;
+            bottom: 16px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+            z-index: 10;
+        }
+
+        .carousel-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.4);
+            border: 1px solid rgba(255,255,255,0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .carousel-dot.active {
+            background: #fff;
+            width: 24px;
+            border-radius: 4px;
+        }
+
+        .carousel-label {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            padding: 6px 12px;
+            background: rgba(0,0,0,0.5);
+            color: #fff;
+            font-size: 11px;
+            letter-spacing: 1px;
+            border-radius: 20px;
+            backdrop-filter: blur(4px);
+            z-index: 10;
         }
 
         .modal-body {
@@ -884,12 +932,32 @@
         }
 
         .modal-size-chip {
-            padding: 6px 14px;
+            padding: 8px 16px;
             border-radius: 8px;
             border: 1px solid var(--border);
             font-size: 12px;
             color: var(--text);
             background: transparent;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .modal-size-chip:active {
+            transform: scale(0.95);
+        }
+
+        .modal-size-chip.selected {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: #fff;
+        }
+
+        .modal-size-chip .size-label {
+            font-size: 10px;
+            opacity: 0.7;
+            margin-top: 2px;
+            display: block;
         }
 
         .modal-actions {
@@ -924,6 +992,66 @@
             font-family: var(--font-sans);
             cursor: pointer;
             font-weight: 500;
+        }
+
+        /* ==================== IMAGE ZOOM OVERLAY ==================== */
+        .zoom-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.95);
+            z-index: 500;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .zoom-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .zoom-image {
+            max-width: 95vw;
+            max-height: 85vh;
+            object-fit: contain;
+            border-radius: 8px;
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+
+        .zoom-overlay.active .zoom-image {
+            transform: scale(1);
+        }
+
+        .zoom-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+            border: none;
+            color: #fff;
+            font-size: 24px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(4px);
+        }
+
+        .zoom-caption {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(255,255,255,0.8);
+            font-size: 13px;
+            letter-spacing: 2px;
+            text-align: center;
         }
 
         /* ==================== CART CONFIRM SCREEN ==================== */
@@ -1051,10 +1179,10 @@
             width: 100%;
             padding: 14px 16px;
             border-radius: 12px;
-            border: 1px solid var(--input-border);
+            border: 1px solid var(--border);
             font-size: 15px;
             font-family: var(--font-sans);
-            background: var(--input-bg);
+            background: var(--surface-elevated);
             color: var(--text);
             transition: all 0.3s ease;
             -webkit-appearance: none;
@@ -1599,10 +1727,16 @@
         <button class="submit-btn-designed" id="bottomSubmitBtn">提交意向</button>
     </div>
 
-    <!-- ==================== PRODUCT MODAL ==================== -->
+    <!-- ==================== PRODUCT MODAL with Carousel ==================== -->
     <div class="modal-overlay" id="productModal">
         <div class="modal-sheet" id="modalSheet">
-            <img class="modal-image" id="modalImage" src="" alt="">
+            <!-- Carousel -->
+            <div class="modal-carousel" id="modalCarousel">
+                <div class="carousel-track" id="carouselTrack"></div>
+                <div class="carousel-indicators" id="carouselIndicators"></div>
+                <div class="carousel-label" id="carouselLabel">全尺寸合照</div>
+            </div>
+            
             <div class="modal-body">
                 <div class="modal-series" id="modalSeries">经典系列</div>
                 <h3 class="modal-title" id="modalTitle">产品名称</h3>
@@ -1625,6 +1759,13 @@
                 </div>
             </div>
         </div>
+    </div>
+
+    <!-- ==================== IMAGE ZOOM OVERLAY ==================== -->
+    <div class="zoom-overlay" id="zoomOverlay">
+        <button class="zoom-close" id="zoomCloseBtn">✕</button>
+        <img class="zoom-image" id="zoomImage" src="" alt="">
+        <div class="zoom-caption" id="zoomCaption"></div>
     </div>
 
     <!-- ==================== QTY MODAL ==================== -->
@@ -1667,32 +1808,286 @@
             }
         };
 
+        // 产品数据：每个产品包含6张图片（全尺寸合照、包装展示、S、M、L、XL）
         const products = [
-            { id: 'c1', series: 'classic', style: 'Heritage 经典', color: '奶油珍珠', colorHex: '#FBFBFC', image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600&h=800&fit=crop', concept: '以奶油珍珠白为画布，融入极简主义设计。温润如手工艺术纸的触感，呈现无攻击性的治愈视觉。', material: '316L精钢 / 蓝宝石玻璃 / 亚麻衬里表带 / 瑞士石英机芯', sizes: ['36mm','38mm','40mm','42mm'] },
-            { id: 'c2', series: 'classic', style: 'Heritage 经典', color: '黄油燕麦', colorHex: '#F1F2F4', image: 'https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?w=600&h=800&fit=crop', concept: '黄油燕麦色调如同午后阳光洒在原木桌面上，温暖而不张扬，是经典系列中最具亲和力的配色。', material: '316L精钢 / 矿物强化玻璃 / 小牛皮 / 自动机械机芯', sizes: ['36mm','38mm','40mm','42mm'] },
-            { id: 'c3', series: 'classic', style: 'Heritage 经典', color: '浅陶土色', colorHex: '#D1D5DB', image: 'https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3?w=600&h=800&fit=crop', concept: '浅陶土色汲取自未经上釉的素陶，带有泥土的呼吸感与手作温度，适配各种家居风格的底色。', material: '玫瑰金PVD / 蓝宝石玻璃 / 绢丝带 / 瑞士石英机芯', sizes: ['36mm','38mm','40mm','42mm'] },
-            { id: 'c4', series: 'classic', style: 'Heritage 经典', color: '原木灰褐', colorHex: '#1B1E23', image: 'https://images.unsplash.com/photo-1547996663-b8308d6e161c?w=600&h=800&fit=crop', concept: '原木灰褐如同陈年橡木的切面，沉淀着时间的温润。低饱和度的棕灰调诠释低调的尊贵。', material: '18K金PVD / 蓝宝石玻璃 / 鳄鱼皮 / 自动机械机芯', sizes: ['36mm','38mm','40mm','42mm'] },
-            { id: 'c5', series: 'classic', style: 'Heritage 传承', color: '奶油珍珠', colorHex: '#FBFBFC', image: 'https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?w=600&h=800&fit=crop', concept: '传承款以奶油珍珠白为基底，加入更细腻的表盘纹理，如手工纸的纤维触感般值得近观。', material: '316L精钢 / 穹面蓝宝石 / 意大利小牛皮 / 瑞士石英机芯', sizes: ['36mm','38mm','40mm','42mm'] },
-            { id: 'c6', series: 'classic', style: 'Heritage 传承', color: '黄油燕麦', colorHex: '#F1F2F4', image: 'https://images.unsplash.com/photo-1434056886845-dbd8f7e6c0a1?w=600&h=800&fit=crop', concept: '黄油燕麦传承款采用做旧工艺表壳，如同被岁月包浆的古物，散发着独特的历史韵味。', material: '青铜 / 矿物玻璃 / 皮革带 / 手动上链机芯', sizes: ['36mm','38mm','40mm','42mm'] },
-            { id: 'c7', series: 'classic', style: 'Heritage 传承', color: '浅陶土色', colorHex: '#D1D5DB', image: 'https://images.unsplash.com/photo-1614164185128-e4ec99c436d7?w=600&h=800&fit=crop', concept: '浅陶土传承款搭配亚麻编织表带，将手工艺的温度从表盘延伸至佩戴体验，治愈而自然。', material: '316L精钢 / 蓝宝石玻璃 / 亚麻织物带 / 瑞士石英机芯', sizes: ['36mm','38mm','40mm','42mm'] },
-            { id: 'c8', series: 'classic', style: 'Heritage 传承', color: '原木灰褐', colorHex: '#1B1E23', image: 'https://images.unsplash.com/photo-1539874754764-5a96559165b0?w=600&h=800&fit=crop', concept: '原木灰褐传承款是经典系列的沉稳之选，深棕色调如同老书房的胡桃木书架，安静而有分量。', material: '钛合金 / 蓝宝石玻璃 / 橡胶带 / 自动机械机芯', sizes: ['36mm','38mm','40mm','42mm'] },
-            { id: 'e1', series: 'evolution', style: 'Evolve 先锋', color: '鼠尾草薄荷', colorHex: '#A8B5A0', image: 'https://images.unsplash.com/photo-1619134778706-7015533a6150?w=600&h=800&fit=crop', concept: '鼠尾草薄荷代表进化系列的冷色基因，低饱和绿灰调彰显现代工业美学的理性与克制。', material: '钛合金 / 蓝宝石玻璃 / 钛金属链带 / 智能机芯', sizes: ['40mm','42mm','44mm','46mm'] },
-            { id: 'e2', series: 'evolution', style: 'Evolve 先锋', color: '迷雾蓝灰', colorHex: '#8A9BA8', image: 'https://images.unsplash.com/photo-1524592094714-0f0654e20314?w=600&h=800&fit=crop', concept: '迷雾蓝灰如同清晨山间的薄雾，冷峻而通透。这款配色强调雕刻的立体线条感与几何美学。', material: '钛合金 / 蓝宝石玻璃 / 氟橡胶带 / 智能机芯', sizes: ['40mm','42mm','44mm','46mm'] },
-            { id: 'e3', series: 'evolution', style: 'Evolve 先锋', color: '冷岩灰', colorHex: '#6B7280', image: 'https://images.unsplash.com/photo-1612817159949-195b6eb9e31a?w=600&h=800&fit=crop', concept: '冷岩灰是工作室水泥地面的颜色，硬朗、极简、不加修饰。适合追求纯粹功能主义的佩戴者。', material: 'DLC钛合金 / 蓝宝石玻璃 / 碳纤维带 / 智能机芯', sizes: ['40mm','42mm','44mm','46mm'] },
-            { id: 'e4', series: 'evolution', style: 'Evolve 先锋', color: '松烟黑', colorHex: '#1F2937', image: 'https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3?w=600&h=800&fit=crop', concept: '松烟黑不是纯黑，而是带有微弱蓝灰底的深邃色调，如同松木燃烧后的余烬，冷静而神秘。', material: '锻造碳 / 穹面蓝宝石 / 尼龙带 / 混合机芯', sizes: ['40mm','42mm','44mm','46mm'] },
-            { id: 'e5', series: 'evolution', style: 'Evolve 突破', color: '鼠尾草薄荷', colorHex: '#A8B5A0', image: 'https://images.unsplash.com/photo-1434056886845-dbd8f7e6c0a1?w=600&h=800&fit=crop', concept: '突破款鼠尾草薄荷采用磨砂陶瓷表壳，将冷色几何美学推向极致，触感如细腻的石灰岩。', material: '陶瓷 / 蓝宝石玻璃 / 织物带 / 混合机芯', sizes: ['40mm','42mm','44mm','46mm'] },
-            { id: 'e6', series: 'evolution', style: 'Evolve 突破', color: '迷雾蓝灰', colorHex: '#8A9BA8', image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600&h=800&fit=crop', concept: '迷雾蓝灰突破款搭配液态金属表圈，在不同光线下呈现微妙的蓝灰渐变，如同天气的万千气象。', material: '液态金属 / 蓝宝石玻璃 / 金属链带 / 混合机芯', sizes: ['40mm','42mm','44mm','46mm'] },
-            { id: 'e7', series: 'evolution', style: 'Evolve 突破', color: '冷岩灰', colorHex: '#6B7280', image: 'https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?w=600&h=800&fit=crop', concept: '冷岩灰突破款以全拉丝钛合金打造，表面纹理如同混凝土的浇筑痕迹，粗犷而精致。', material: '拉丝钛合金 / 蓝宝石玻璃 / 皮革带 / 混合机芯', sizes: ['40mm','42mm','44mm','46mm'] },
-            { id: 'e8', series: 'evolution', style: 'Evolve 突破', color: '松烟黑', colorHex: '#1F2937', image: 'https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?w=600&h=800&fit=crop', concept: '松烟黑突破款采用全黑化PVD工艺，连表冠与表扣都融入黑暗之中，展现极致的简约美学。', material: '全黑PVD精钢 / 蓝宝石玻璃 / 橡胶带 / 陀飞轮机芯', sizes: ['40mm','42mm','44mm','46mm'] },
-            { id: 'a1', series: 'artisan', style: 'Master 大师', color: '曜石深咖', colorHex: '#2C1810', image: 'https://images.unsplash.com/photo-1619134778706-7015533a6150?w=600&h=800&fit=crop', concept: '曜石深咖是匠作系列的灵魂，如同火山玻璃与陈年咖啡豆的融合，深邃而带有微弱的暖棕底。', material: '锻造碳 / 穹面蓝宝石 / 鳄鱼皮 / 手动上链机芯', sizes: ['38mm','40mm','42mm','44mm'] },
-            { id: 'a2', series: 'artisan', style: 'Master 大师', color: '暗金古铜', colorHex: '#8B6239', image: 'https://images.unsplash.com/photo-1524592094714-0f0654e20314?w=600&h=800&fit=crop', concept: '暗金古铜不是闪亮的黄金，而是博物馆中青铜器氧化后的沉稳色泽，昂贵而不张扬。', material: '青铜 / 穹面蓝宝石 / 皮革带 / 手动上链机芯', sizes: ['38mm','40mm','42mm','44mm'] },
-            { id: 'a3', series: 'artisan', style: 'Master 大师', color: '午夜靛青', colorHex: '#1E293B', image: 'https://images.unsplash.com/photo-1547996663-b8308d6e161c?w=600&h=800&fit=crop', concept: '午夜靛青介于墨蓝与炭黑之间，如同深夜图书馆的丝绒窗帘，沉稳中藏着知识的重量。', material: '陶瓷 / 穹面蓝宝石 / 绢丝带 / 陀飞轮机芯', sizes: ['38mm','40mm','42mm','44mm'] },
-            { id: 'a4', series: 'artisan', style: 'Master 大师', color: '烟熏绛红', colorHex: '#4A1821', image: 'https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?w=600&h=800&fit=crop', concept: '烟熏绛红如同陈酿波特酒的颜色，在低调中散发着致命的吸引力，适合最私密的收藏。', material: '陶瓷 / 穹面蓝宝石 / 鳄鱼皮 / 陀飞轮机芯', sizes: ['38mm','40mm','42mm','44mm'] },
-            { id: 'a5', series: 'artisan', style: 'Master 极致', color: '曜石深咖', colorHex: '#2C1810', image: 'https://images.unsplash.com/photo-1612817159949-195b6eb9e31a?w=600&h=800&fit=crop', concept: '极致款曜石深咖采用锻造碳表壳，每一枚的纹理都是独一无二的，如同指纹般不可复制。', material: '锻造碳 / 矿物玻璃 / 橡胶带 / 陀飞轮机芯', sizes: ['38mm','40mm','42mm','44mm'] },
-            { id: 'a6', series: 'artisan', style: 'Master 极致', color: '暗金古铜', colorHex: '#8B6239', image: 'https://images.unsplash.com/photo-1434056886845-dbd8f7e6c0a1?w=600&h=800&fit=crop', concept: '极致款暗金古铜会随佩戴者体温与汗液产生独特的氧化包浆，成为佩戴者个人历史的见证。', material: '青铜 / 穹面蓝宝石 / 皮革带 / 陀飞轮机芯', sizes: ['38mm','40mm','42mm','44mm'] },
-            { id: 'a7', series: 'artisan', style: 'Master 极致', color: '午夜靛青', colorHex: '#1E293B', image: 'https://images.unsplash.com/photo-1539874754764-5a96559165b0?w=600&h=800&fit=crop', concept: '极致款午夜靛青采用多层珐琅工艺，表盘在不同角度下呈现从墨蓝到炭黑的深邃变化。', material: '珐琅陶瓷 / 穹面蓝宝石 / 鳄鱼皮 / 陀飞轮机芯', sizes: ['38mm','40mm','42mm','44mm'] },
-            { id: 'a8', series: 'artisan', style: 'Master 极致', color: '烟熏绛红', colorHex: '#4A1821', image: 'https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?w=600&h=800&fit=crop', concept: '极致款烟熏绛红是匠作系列的封顶之作，采用稀有红铜合金，全球限量，博物馆级藏品。', material: '红铜合金 / 穹面蓝宝石 / 天鹅绒衬里带 / 陀飞轮机芯', sizes: ['38mm','40mm','42mm','44mm'] }
+            { id: 'c1', series: 'classic', style: 'Heritage 经典', color: '奶油珍珠', colorHex: '#FBFBFC', 
+              images: [
+                'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600&h=800&fit=crop',
+                'https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?w=600&h=800&fit=crop',
+                'https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3?w=600&h=800&fit=crop',
+                'https://images.unsplash.com/photo-1547996663-b8308d6e161c?w=600&h=800&fit=crop',
+                'https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?w=600&h=800&fit=crop'
+              ],
+              concept: '以奶油珍珠白为画布，融入极简主义设计。温润如手工艺术纸的触感，呈现无攻击性的治愈视觉。', 
+              material: '316L精钢 / 蓝宝石玻璃 / 亚麻衬里表带 / 瑞士石英机芯', 
+              sizes: ['36mm','38mm','40mm','42mm'] },
+            { id: 'c2', series: 'classic', style: 'Heritage 经典', color: '黄油燕麦', colorHex: '#F1F2F4', 
+              images: [
+                'https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?w=600&h=800&fit=crop',
+                'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600&h=800&fit=crop',
+                'https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3?w=600&h=800&fit=crop',
+                'https://images.unsplash.com/photo-1547996663-b8308d6e161c?w=600&h=800&fit=crop',
+                'https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?w=600&h=800&fit=crop'
+              ],
+              concept: '黄油燕麦色调如同午后阳光洒在原木桌面上，温暖而不张扬，是经典系列中最具亲和力的配色。', 
+              material: '316L精钢 / 矿物强化玻璃 / 小牛皮 / 自动机械机芯', 
+              sizes: ['36mm','38mm','40mm','42mm'] },
+            { id: 'c3', series: 'classic', style: 'Heritage 经典', color: '浅陶土色', colorHex: '#D1D5DB', 
+              images: [
+                'https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3?w=600&h=800&fit=crop',
+                'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600&h=800&fit=crop',
+                'https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?w=600&h=800&fit=crop',
+                'https://images.unsplash.com/photo-1547996663-b8308d6e161c?w=600&h=800&fit=crop',
+                'https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?w=600&h=800&fit=crop'
+              ],
+              concept: '浅陶土色汲取自未经上釉的素陶，带有泥土的呼吸感与手作温度，适配各种家居风格的底色。', 
+              material: '玫瑰金PVD / 蓝宝石玻璃 / 绢丝带 / 瑞士石英机芯', 
+              sizes: ['36mm','38mm','40mm','42mm'] },
+            { id: 'c4', series: 'classic', style: 'Heritage 经典', color: '原木灰褐', colorHex: '#1B1E23', 
+              images: [
+                'https://images.unsplash.com/photo-1547996663-b8308d6e161c?w=600&h=800&fit=crop',
+                'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600&h=800&fit=crop',
+                'https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?w=600&h=800&fit=crop',
+                'https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3?w=600&h=800&fit=crop',
+                'https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?w=600&h=800&fit=crop'
+              ],
+              concept: '原木灰褐如同陈年橡木的切面，沉淀着时间的温润。低饱和度的棕灰调诠释低调的尊贵。', 
+              material: '18K金PVD / 蓝宝石玻璃 / 鳄鱼皮 / 自动机械机芯', 
+              sizes: ['36mm','38mm','40mm','42mm'] },
+            { id: 'c5', series: 'classic', style: 'Heritage 传承', color: '奶油珍珠', colorHex: '#FBFBFC', 
+              images: [
+                'https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?w=600&h=800&fit=crop',
+                'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600&h=800&fit=crop',
+                'https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?w=600&h=800&fit=crop',
+                'https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3?w=600&h=800&fit=crop',
+                'https://images.unsplash.com/photo-1547996663-b8308d6e161c?w=600&h=800&fit=crop'
+              ],
+              concept: '传承款以奶油珍珠白为基底，加入更细腻的表盘纹理，如手工纸的纤维触感般值得近观。', 
+              material: '316L精钢 / 穹面蓝宝石 / 意大利小牛皮 / 瑞士石英机芯', 
+              sizes: ['36mm','38mm','40mm','42mm'] },
+            { id: 'c6', series: 'classic', style: 'Heritage 传承', color: '黄油燕麦', colorHex: '#F1F2F4', 
+              images: [
+                'https://images.unsplash.com/photo-1434056886845-dbd8f7e6c0a1?w=600&h=800&fit=crop',
+                'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600&h=800&fit=crop',
+                'https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?w=600&h=800&fit=crop',
+                'https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3?w=600&h=800&fit=crop',
+                'https://images.unsplash.com/photo-1547996663-b8308d6e161c?w=600&h=800&fit=crop'
+              ],
+              concept: '黄油燕麦传承款采用做旧工艺表壳，如同被岁月包浆的古物，散发着独特的历史韵味。', 
+              material: '青铜 / 矿物玻璃 / 皮革带 / 手动上链机芯', 
+              sizes: ['36mm','38mm','40mm','42mm'] },
+            { id: 'c7', series: 'classic', style: 'Heritage 传承', color: '浅陶土色', colorHex: '#D1D5DB', 
+              images: [
+                'https://images.unsplash.com/photo-1614164185128-e4ec99c436d7?w=600&h=800&fit=crop',
+                'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600&h=800&fit=crop',
+                'https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?w=600&h=800&fit=crop',
+                'https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3?w=600&h=800&fit=crop',
+                'https://images.unsplash.com/photo-1547996663-b8308d6e161c?w=600&h=800&fit=crop'
+              ],
+              concept: '浅陶土传承款搭配亚麻编织表带，将手工艺的温度从表盘延伸至佩戴体验，治愈而自然。', 
+              material: '316L精钢 / 蓝宝石玻璃 / 亚麻织物带 / 瑞士石英机芯', 
+              sizes: ['36mm','38mm','40mm','42mm'] },
+            { id: 'c8', series: 'classic', style: 'Heritage 传承', color: '原木灰褐', colorHex: '#1B1E23', 
+              images: [
+                'https://images.unsplash.com/photo-1539874754764-5a96559165b0?w=600&h=800&fit=crop',
+                'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600&h=800&fit=crop',
+                'https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?w=600&h=800&fit=crop',
+                'https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3?w=600&h=800&fit=crop',
+                'https://images.unsplash.com/photo-1547996663-b8308d6e161c?w=600&h=800&fit=crop'
+              ],
+              concept: '原木灰褐传承款是经典系列的沉稳之选，深棕色调如同老书房的胡桃木书架，安静而有分量。', 
+              material: '钛合金 / 蓝宝石玻璃 / 橡胶带 / 自动机械机芯', 
+              sizes: ['36mm','38mm','40mm','42mm'] },
+            { id: 'e1', series: 'evolution', style: 'Evolve 先锋', color: '鼠尾草薄荷', colorHex: '#A8B5A0', 
+              images: [
+                'https://images.unsplash.com/photo-1619134778706-7015533a6150?w=600&h=800&fit=crop',
+                'https://images.unsplash.com/photo-1524592094714-0f0654e20314?w=600&h=800&fit=crop',
+                'https://images.unsplash.com/photo-1612817159949-195b6eb9e31a?w=600&h=800&fit=crop',
+                'https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3?w=600&h=800&fit=crop',
+                'https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?w=600&h=800&fit=crop'
+              ],
+              concept: '鼠尾草薄荷代表进化系列的冷色基因，低饱和绿灰调彰显现代工业美学的理性与克制。', 
+              material: '钛合金 / 蓝宝石玻璃 / 钛金属链带 / 智能机芯', 
+              sizes: ['40mm','42mm','44mm','46mm'] },
+            { id: 'e2', series: 'evolution', style: 'Evolve 先锋', color: '迷雾蓝灰', colorHex: '#8A9BA8', 
+              images: [
+                'https://images.unsplash.com/photo-1524592094714-0f0654e20314?w=600&h=800&fit=crop',
+                'https://images.unsplash.com/photo-1619134778706-7015533a6150?w=600&h=800&fit=crop',
+                'https://images.unsplash.com/photo-1612817159949-195b6eb9e31a?w=600&h=800&fit=crop',
+                'https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3?w=600&h=800&fit=crop',
+                'https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?w=600&h=800&fit=crop'
+              ],
+              concept: '迷雾蓝灰如同清晨山间的薄雾，冷峻而通透。这款配色强调雕刻的立体线条感与几何美学。', 
+              material: '钛合金 / 蓝宝石玻璃 / 氟橡胶带 / 智能机芯', 
+              sizes: ['40mm','42mm','44mm','46mm'] },
+            { id: 'e3', series: 'evolution', style: 'Evolve 先锋', color: '冷岩灰', colorHex: '#6B7280', 
+              images: [
+                'https://images.unsplash.com/photo-1612817159949-195b6eb9e31a?w=600&h=800&fit=crop',
+                'https://images.unsplash.com/photo-1619134778706-7015533a6150?w=600&h=800&fit=crop',
+                'https://images.unsplash.com/photo-1524592094714-0f0654e20314?w=600&h=800&fit=crop',
+                'https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3?w=600&h=800&fit=crop',
+                'https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?w=600&h=800&fit=crop'
+              ],
+              concept: '冷岩灰是工作室水泥地面的颜色，硬朗、极简、不加修饰。适合追求纯粹功能主义的佩戴者。', 
+              material: 'DLC钛合金 / 蓝宝石玻璃 / 碳纤维带 / 智能机芯', 
+              sizes: ['40mm','42mm','44mm','46mm'] },
+            { id: 'e4', series: 'evolution', style: 'Evolve 先锋', color: '松烟黑', colorHex: '#1F2937', 
+              images: [
+                'https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3?w=600&h=800&fit=crop',
+                'https://images.unsplash.com/photo-1619134778706-7015533a6150?w=600&h=800&fit=crop',
+                'https://images.unsplash.com/photo-1524592094714-0f0654e20314?w=600&h=800&fit=crop',
+                'https://images.unsplash.com/photo-1612817159949-195b6eb9e31a?w=600&h=800&fit=crop',
+                'https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?w=600&h=800&fit=crop'
+              ],
+              concept: '松烟黑不是纯黑，而是带有微弱蓝灰底的深邃色调，如同松木燃烧后的余烬，冷静而神秘。', 
+              material: '锻造碳 / 穹面蓝宝石 / 尼龙带 / 混合机芯', 
+              sizes: ['40mm','42mm','44mm','46mm'] },
+            { id: 'e5', series: 'evolution', style: 'Evolve 突破', color: '鼠尾草薄荷', colorHex: '#A8B5A0', 
+              images: [
+                'https://images.unsplash.com/photo-1434056886845-dbd8f7e6c0a1?w=600&h=800&fit=crop',
+                'https://images.unsplash.com/photo-1619134778706-7015533a6150?w=600&h=800&fit=crop',
+                'https://images.unsplash.com/photo-1524592094714-0f0654e20314?w=600&h=800&fit=crop',
+                'https://images.unsplash.com/photo-1612817159949-195b6eb9e31a?w=600&h=800&fit=crop',
+                'https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3?w=600&h=800&fit=crop'
+              ],
+              concept: '突破款鼠尾草薄荷采用磨砂陶瓷表壳，将冷色几何美学推向极致，触感如细腻的石灰岩。', 
+              material: '陶瓷 / 蓝宝石玻璃 / 织物带 / 混合机芯', 
+              sizes: ['40mm','42mm','44mm','46mm'] },
+            { id: 'e6', series: 'evolution', style: 'Evolve 突破', color: '迷雾蓝灰', colorHex: '#8A9BA8', 
+              images: [
+                'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600&h=800&fit=crop',
+                'https://images.unsplash.com/photo-1619134778706-7015533a6150?w=600&h=800&fit=crop',
+                'https://images.unsplash.com/photo-1524592094714-0f0654e20314?w=600&h=800&fit=crop',
+                'https://images.unsplash.com/photo-1612817159949-195b6eb9e31a?w=600&h=800&fit=crop',
+                'https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3?w=600&h=800&fit=crop'
+              ],
+              concept: '迷雾蓝灰突破款搭配液态金属表圈，在不同光线下呈现微妙的蓝灰渐变，如同天气的万千气象。', 
+              material: '液态金属 / 蓝宝石玻璃 / 金属链带 / 混合机芯', 
+              sizes: ['40mm','42mm','44mm','46mm'] },
+            { id: 'e7', series: 'evolution', style: 'Evolve 突破', color: '冷岩灰', colorHex: '#6B7280', 
+              images: [
+                'https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?w=600&h=800&fit=crop',
+                'https://images.unsplash.com/photo-1619134778706-7015533a6150?w=600&h=800&fit=crop',
+                'https://images.unsplash.com/photo-1524592094714-0f0654e20314?w=600&h=800&fit=crop',
+                'https://images.unsplash.com/photo-1612817159949-195b6eb9e31a?w=600&h=800&fit=crop',
+                'https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3?w=600&h=800&fit=crop'
+              ],
+              concept: '冷岩灰突破款以全拉丝钛合金打造，表面纹理如同混凝土的浇筑痕迹，粗犷而精致。', 
+              material: '拉丝钛合金 / 蓝宝石玻璃 / 皮革带 / 混合机芯', 
+              sizes: ['40mm','42mm','44mm','46mm'] },
+            { id: 'e8', series: 'evolution', style: 'Evolve 突破', color: '松烟黑', colorHex: '#1F2937', 
+              images: [
+                'https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?w=600&h=800&fit=crop',
+                'https://images.unsplash.com/photo-1619134778706-7015533a6150?w=600&h=800&fit=crop',
+                'https://images.unsplash.com/photo-1524592094714-0f0654e20314?w=600&h=800&fit=crop',
+                'https://images.unsplash.com/photo-1612817159949-195b6eb9e31a?w=600&h=800&fit=crop',
+                'https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3?w=600&h=800&fit=crop'
+              ],
+              concept: '松烟黑突破款采用全黑化PVD工艺，连表冠与表扣都融入黑暗之中，展现极致的简约美学。', 
+              material: '全黑PVD精钢 / 蓝宝石玻璃 / 橡胶带 / 陀飞轮机芯', 
+              sizes: ['40mm','42mm','44mm','46mm'] },
+            { id: 'a1', series: 'artisan', style: 'Master 大师', color: '曜石深咖', colorHex: '#2C1810', 
+              images: [
+                'https://images.unsplash.com/photo-1619134778706-7015533a6150?w=600&h=800&fit=crop',
+                'https://images.unsplash.com/photo-1524592094714-0f0654e20314?w=600&h=800&fit=crop',
+                'https://images.unsplash.com/photo-1547996663-b8308d6e161c?w=600&h=800&fit=crop',
+                'https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?w=600&h=800&fit=crop',
+                'https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?w=600&h=800&fit=crop'
+              ],
+              concept: '曜石深咖是匠作系列的灵魂，如同火山玻璃与陈年咖啡豆的融合，深邃而带有微弱的暖棕底。', 
+              material: '锻造碳 / 穹面蓝宝石 / 鳄鱼皮 / 手动上链机芯', 
+              sizes: ['38mm','40mm','42mm','44mm'] },
+            { id: 'a2', series: 'artisan', style: 'Master 大师', color: '暗金古铜', colorHex: '#8B6239', 
+              images: [
+                'https://images.unsplash.com/photo-1524592094714-0f0654e20314?w=600&h=800&fit=crop',
+                'https://images.unsplash.com/photo-1619134778706-7015533a6150?w=600&h=800&fit=crop',
+                'https://images.unsplash.com/photo-1547996663-b8308d6e161c?w=600&h=800&fit=crop',
+                'https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?w=600&h=800&fit=crop',
+                'https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?w=600&h=800&fit=crop'
+              ],
+              concept: '暗金古铜不是闪亮的黄金，而是博物馆中青铜器氧化后的沉稳色泽，昂贵而不张扬。', 
+              material: '青铜 / 穹面蓝宝石 / 皮革带 / 手动上链机芯', 
+              sizes: ['38mm','40mm','42mm','44mm'] },
+            { id: 'a3', series: 'artisan', style: 'Master 大师', color: '午夜靛青', colorHex: '#1E293B', 
+              images: [
+                'https://images.unsplash.com/photo-1547996663-b8308d6e161c?w=600&h=800&fit=crop',
+                'https://images.unsplash.com/photo-1619134778706-7015533a6150?w=600&h=800&fit=crop',
+                'https://images.unsplash.com/photo-1524592094714-0f0654e20314?w=600&h=800&fit=crop',
+                'https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?w=600&h=800&fit=crop',
+                'https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?w=600&h=800&fit=crop'
+              ],
+              concept: '午夜靛青介于墨蓝与炭黑之间，如同深夜图书馆的丝绒窗帘，沉稳中藏着知识的重量。', 
+              material: '陶瓷 / 穹面蓝宝石 / 绢丝带 / 陀飞轮机芯', 
+              sizes: ['38mm','40mm','42mm','44mm'] },
+            { id: 'a4', series: 'artisan', style: 'Master 大师', color: '烟熏绛红', colorHex: '#4A1821', 
+              images: [
+                'https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?w=600&h=800&fit=crop',
+                'https://images.unsplash.com/photo-1619134778706-7015533a6150?w=600&h=800&fit=crop',
+                'https://images.unsplash.com/photo-1524592094714-0f0654e20314?w=600&h=800&fit=crop',
+                'https://images.unsplash.com/photo-1547996663-b8308d6e161c?w=600&h=800&fit=crop',
+                'https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?w=600&h=800&fit=crop'
+              ],
+              concept: '烟熏绛红如同陈酿波特酒的颜色，在低调中散发着致命的吸引力，适合最私密的收藏。', 
+              material: '陶瓷 / 穹面蓝宝石 / 鳄鱼皮 / 陀飞轮机芯', 
+              sizes: ['38mm','40mm','42mm','44mm'] },
+            { id: 'a5', series: 'artisan', style: 'Master 极致', color: '曜石深咖', colorHex: '#2C1810', 
+              images: [
+                'https://images.unsplash.com/photo-1612817159949-195b6eb9e31a?w=600&h=800&fit=crop',
+                'https://images.unsplash.com/photo-1619134778706-7015533a6150?w=600&h=800&fit=crop',
+                'https://images.unsplash.com/photo-1524592094714-0f0654e20314?w=600&h=800&fit=crop',
+                'https://images.unsplash.com/photo-1547996663-b8308d6e161c?w=600&h=800&fit=crop',
+                'https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?w=600&h=800&fit=crop'
+              ],
+              concept: '极致款曜石深咖采用锻造碳表壳，每一枚的纹理都是独一无二的，如同指纹般不可复制。', 
+              material: '锻造碳 / 矿物玻璃 / 橡胶带 / 陀飞轮机芯', 
+              sizes: ['38mm','40mm','42mm','44mm'] },
+            { id: 'a6', series: 'artisan', style: 'Master 极致', color: '暗金古铜', colorHex: '#8B6239', 
+              images: [
+                'https://images.unsplash.com/photo-1434056886845-dbd8f7e6c0a1?w=600&h=800&fit=crop',
+                'https://images.unsplash.com/photo-1619134778706-7015533a6150?w=600&h=800&fit=crop',
+                'https://images.unsplash.com/photo-1524592094714-0f0654e20314?w=600&h=800&fit=crop',
+                'https://images.unsplash.com/photo-1547996663-b8308d6e161c?w=600&h=800&fit=crop',
+                'https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?w=600&h=800&fit=crop'
+              ],
+              concept: '极致款暗金古铜会随佩戴者体温与汗液产生独特的氧化包浆，成为佩戴者个人历史的见证。', 
+              material: '青铜 / 穹面蓝宝石 / 皮革带 / 陀飞轮机芯', 
+              sizes: ['38mm','40mm','42mm','44mm'] },
+            { id: 'a7', series: 'artisan', style: 'Master 极致', color: '午夜靛青', colorHex: '#1E293B', 
+              images: [
+                'https://images.unsplash.com/photo-1539874754764-5a96559165b0?w=600&h=800&fit=crop',
+                'https://images.unsplash.com/photo-1619134778706-7015533a6150?w=600&h=800&fit=crop',
+                'https://images.unsplash.com/photo-1524592094714-0f0654e20314?w=600&h=800&fit=crop',
+                'https://images.unsplash.com/photo-1547996663-b8308d6e161c?w=600&h=800&fit=crop',
+                'https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?w=600&h=800&fit=crop'
+              ],
+              concept: '极致款午夜靛青采用多层珐琅工艺，表盘在不同角度下呈现从墨蓝到炭黑的深邃变化。', 
+              material: '珐琅陶瓷 / 穹面蓝宝石 / 鳄鱼皮 / 陀飞轮机芯', 
+              sizes: ['38mm','40mm','42mm','44mm'] },
+            { id: 'a8', series: 'artisan', style: 'Master 极致', color: '烟熏绛红', colorHex: '#4A1821', 
+              images: [
+                'https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?w=600&h=800&fit=crop',
+                'https://images.unsplash.com/photo-1619134778706-7015533a6150?w=600&h=800&fit=crop',
+                'https://images.unsplash.com/photo-1524592094714-0f0654e20314?w=600&h=800&fit=crop',
+                'https://images.unsplash.com/photo-1547996663-b8308d6e161c?w=600&h=800&fit=crop',
+                'https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?w=600&h=800&fit=crop'
+              ],
+              concept: '极致款烟熏绛红是匠作系列的封顶之作，采用稀有红铜合金，全球限量，博物馆级藏品。', 
+              material: '红铜合金 / 穹面蓝宝石 / 天鹅绒衬里带 / 陀飞轮机芯', 
+              sizes: ['38mm','40mm','42mm','44mm'] }
         ];
+
+        // 为每个产品插入包装展示图（位置：第2张）
+        const packagingImages = [
+            'https://images.unsplash.com/photo-1607344645866-009c320b63e0?w=600&h=800&fit=crop',
+            'https://images.unsplash.com/photo-1549465220-1a8b9238cd48?w=600&h=800&fit=crop',
+            'https://images.unsplash.com/photo-1512909006721-3d6018887383?w=600&h=800&fit=crop'
+        ];
+        products.forEach((p, i) => {
+            p.images.splice(1, 0, packagingImages[i % packagingImages.length]);
+        });
+
+        // Carousel labels
+        const carouselLabels = ['全尺寸合照', '包装展示', 'S码', 'M码', 'L码', 'XL码'];
 
         // ==================== STATE ====================
         let currentSeries = 'classic';
@@ -1705,8 +2100,15 @@
         let navStack = [];
         let qtyValue = 1;
 
+        // Carousel state
+        let carouselIndex = 0;
+        let carouselTimer = null;
+        let isZoomOpen = false;
+        let selectedSizeIndex = -1;
+        const CAROUSEL_INTERVAL = 3000;
+
         // ==================== FORM CONFIG ====================
-        const FORMSPREE_ID = 'YOUR_FORM_ID';
+        const FORMSPREE_ID = 'maqalqlj';
         const FORMSPREE_URL = `https://formspree.io/f/${FORMSPREE_ID}`;
 
         // ==================== NAVIGATION ====================
@@ -1761,6 +2163,7 @@
         function goBack() {
             closeModal();
             closeQtyModal();
+            closeZoom();
 
             if (navStack.length === 0) {
                 resetApp();
@@ -1846,7 +2249,7 @@
             grid.innerHTML = items.map((p, i) => `
                 <div class="product-card" style="animation-delay: ${i * 0.04}s" data-product-id="${p.id}">
                     <div class="card-image-wrap">
-                        <img class="card-image" src="${p.image}" alt="${p.style}" loading="lazy">
+                        <img class="card-image" src="${p.images[0]}" alt="${p.style}" loading="lazy">
                         <div class="card-image-overlay"></div>
                         <div class="card-quick-view">查看详情</div>
                     </div>
@@ -1856,14 +2259,94 @@
                             <span class="card-color-name">${p.color}</span>
                         </div>
                         <h3 class="card-title">${p.style}</h3>
-                        <p class="card-subtitle">${p.concept.substring(0, 32)}...</p>
-                        <div class="card-meta">
-                            <span class="card-sizes">${p.sizes.join('/')}</span>
+                        <div class="card-desc-row">
+                            <p class="card-subtitle">${p.concept.substring(0, 32)}...</p>
                             <button class="card-add-btn" data-add-id="${p.id}">+</button>
                         </div>
                     </div>
                 </div>
             `).join('');
+        }
+
+        // ==================== CAROUSEL ====================
+        function initCarousel() {
+            const track = document.getElementById('carouselTrack');
+            const indicators = document.getElementById('carouselIndicators');
+            
+            if (!currentProduct) return;
+            
+            track.innerHTML = currentProduct.images.map((img, i) => `
+                <div class="carousel-slide" data-index="${i}">
+                    <img src="${img}" alt="${carouselLabels[i]}" loading="lazy">
+                </div>
+            `).join('');
+            
+            indicators.innerHTML = currentProduct.images.map((_, i) => `
+                <div class="carousel-dot ${i === 0 ? 'active' : ''}" data-index="${i}"></div>
+            `).join('');
+            
+            carouselIndex = 0;
+            selectedSizeIndex = -1;
+            updateCarouselPosition();
+            startCarousel();
+        }
+
+        function updateCarouselPosition() {
+            const track = document.getElementById('carouselTrack');
+            track.style.transform = `translateX(-${carouselIndex * 100}%)`;
+            
+            document.querySelectorAll('.carousel-dot').forEach((dot, i) => {
+                dot.classList.toggle('active', i === carouselIndex);
+            });
+            
+            document.getElementById('carouselLabel').textContent = carouselLabels[carouselIndex];
+        }
+
+        function goToSlide(index) {
+            if (!currentProduct) return;
+            carouselIndex = Math.max(0, Math.min(index, currentProduct.images.length - 1));
+            updateCarouselPosition();
+        }
+
+        function nextSlide() {
+            if (!currentProduct || isZoomOpen || selectedSizeIndex !== -1) return;
+            carouselIndex = (carouselIndex + 1) % currentProduct.images.length;
+            updateCarouselPosition();
+        }
+
+        function startCarousel() {
+            stopCarousel();
+            if (!isZoomOpen && selectedSizeIndex === -1) {
+                carouselTimer = setInterval(nextSlide, CAROUSEL_INTERVAL);
+            }
+        }
+
+        function stopCarousel() {
+            if (carouselTimer) {
+                clearInterval(carouselTimer);
+                carouselTimer = null;
+            }
+        }
+
+        // ==================== ZOOM ====================
+        function openZoom(imageSrc, caption) {
+            isZoomOpen = true;
+            stopCarousel();
+            document.getElementById('zoomImage').src = imageSrc;
+            document.getElementById('zoomCaption').textContent = caption || '';
+            document.getElementById('zoomOverlay').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeZoom() {
+            if (!isZoomOpen) return;
+            isZoomOpen = false;
+            document.getElementById('zoomOverlay').classList.remove('active');
+            document.body.style.overflow = '';
+            // 缩小后重新计时
+            if (currentProduct && selectedSizeIndex === -1) {
+                startCarousel();
+            }
         }
 
         // ==================== MODAL ====================
@@ -1872,26 +2355,35 @@
             if (!p) return;
             currentProduct = p;
 
-            document.getElementById('modalImage').src = p.image;
             document.getElementById('modalSeries').textContent = seriesConfig[p.series].name;
             document.getElementById('modalTitle').textContent = `${p.style} · ${p.color}`;
             document.getElementById('modalSubtitle').textContent = p.concept.substring(0, 40) + '...';
             document.getElementById('modalConcept').textContent = p.concept;
             document.getElementById('modalMaterial').textContent = p.material;
             document.getElementById('modalQty').value = 1;
-            document.getElementById('modalSizes').innerHTML = p.sizes.map(s =>
-                `<span class="modal-size-chip">${s}</span>`
-            ).join('');
+            
+            // Render sizes with data-index
+            document.getElementById('modalSizes').innerHTML = p.sizes.map((s, i) => `
+                <button class="modal-size-chip" data-size-index="${i}">
+                    ${s}
+                    <span class="size-label">${carouselLabels[i + 2]}</span>
+                </button>
+            `).join('');
 
+            initCarousel();
+            
             document.getElementById('productModal').classList.add('active');
             document.body.style.overflow = 'hidden';
         }
 
         function closeModal(e) {
             if (e && e.target !== e.currentTarget && e.target.id !== 'productModal') return;
+            stopCarousel();
             document.getElementById('productModal').classList.remove('active');
             document.body.style.overflow = '';
             currentProduct = null;
+            carouselIndex = 0;
+            selectedSizeIndex = -1;
         }
 
         function addFromModal() {
@@ -1981,7 +2473,6 @@
                 alert('请先添加商品到意向单');
                 return;
             }
-            // 关键修复：隐藏产品页底部栏
             document.getElementById('bottomBar').style.display = 'none';
             navStack.push('browseScreen');
             renderCartConfirm();
@@ -2004,7 +2495,7 @@
             document.getElementById('cartConfirmNextBtn').disabled = false;
             container.innerHTML = cart.map(item => `
                 <div class="cart-confirm-item" data-cart-id="${item.id}">
-                    <img class="cart-confirm-img" src="${item.product.image}" loading="lazy">
+                    <img class="cart-confirm-img" src="${item.product.images[0]}" loading="lazy">
                     <div class="cart-confirm-info">
                         <div class="cart-confirm-name">${item.product.style}</div>
                         <div class="cart-confirm-color">
@@ -2261,6 +2752,57 @@
             document.getElementById('productModal').addEventListener('click', closeModal);
             document.getElementById('modalAddBtn').addEventListener('click', addFromModal);
 
+            // Carousel click to zoom
+            document.getElementById('modalCarousel').addEventListener('click', e => {
+                if (!currentProduct) return;
+                const slide = e.target.closest('.carousel-slide');
+                if (!slide) return;
+                const img = slide.querySelector('img');
+                const label = carouselLabels[carouselIndex];
+                openZoom(img.src, label);
+            });
+
+            // Carousel indicators
+            document.getElementById('carouselIndicators').addEventListener('click', e => {
+                const dot = e.target.closest('.carousel-dot');
+                if (!dot) return;
+                const index = parseInt(dot.dataset.index);
+                if (!isNaN(index)) {
+                    selectedSizeIndex = -1; // 手动切换取消尺寸锁定
+                    document.querySelectorAll('.modal-size-chip').forEach(chip => chip.classList.remove('selected'));
+                    goToSlide(index);
+                    startCarousel();
+                }
+            });
+
+            // Size chips
+            document.getElementById('modalSizes').addEventListener('click', e => {
+                const chip = e.target.closest('.modal-size-chip');
+                if (!chip) return;
+                
+                const index = parseInt(chip.dataset.sizeIndex);
+                const isSelected = chip.classList.contains('selected');
+                
+                // 清除所有选中
+                document.querySelectorAll('.modal-size-chip').forEach(c => c.classList.remove('selected'));
+                
+                if (!isSelected) {
+                    // 选中：固定显示对应尺寸图片，轮播停止
+                    chip.classList.add('selected');
+                    selectedSizeIndex = index;
+                    goToSlide(index + 2); // +2 因为 images[0] 是全尺寸合照, images[1] 是包装展示
+                    stopCarousel();
+                } else {
+                    // 取消选中：恢复轮播
+                    selectedSizeIndex = -1;
+                    startCarousel();
+                }
+            });
+
+            // Zoom
+            document.getElementById('zoomOverlay').addEventListener('click', closeZoom);
+            document.getElementById('zoomCloseBtn').addEventListener('click', closeZoom);
+
             // Qty modal
             document.getElementById('qtyModalOverlay').addEventListener('click', closeQtyModal);
             document.getElementById('qtyMinusBtn').addEventListener('click', () => updateQty(-1));
@@ -2315,6 +2857,7 @@
                 if (e.key === 'Escape') {
                     closeModal();
                     closeQtyModal();
+                    closeZoom();
                 }
             });
         }
