@@ -3,1329 +3,2330 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>产品手册 - 了解您的专属商品</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'Noto Sans SC', 'sans-serif'],
-                    },
-                    colors: {
-                        primary: '#1a1a1a',
-                        secondary: '#666666',
-                        accent: '#c9a96e',
-                        'accent-light': '#d4b87a',
-                        surface: '#fafafa',
-                        'card-hover': '#f5f5f5',
-                    }
-                }
-            }
-        }
-    </script>
+    <title>TIMELESS | 高级产品手册</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
-        * { -webkit-tap-highlight-color: transparent; -webkit-touch-callout: none; }
-        body { font-family: 'Inter', 'Noto Sans SC', sans-serif; background: #ffffff; overflow: hidden; height: 100vh; }
-        
-        .option-card {
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            transform: translateY(0);
+        :root {
+            --font-serif: 'Noto Serif SC', serif;
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+
+            /* Studio Paper & Light */
+            --paper-white: #F9F9F7;
+            --graphite: #1A1A1A;
+            --concrete: #E5E2DD;
+            --linen: #9E9A95;
+            --emerald: #10B981;
+
+            /* Heritage */
+            --h-cream: #F5F1E8;
+            --h-butter: #E8DCC4;
+            --h-terracotta: #C9A99A;
+            --h-oak: #8B6F5C;
+
+            /* Evolve */
+            --e-sage: #A8B5A0;
+            --e-mist: #8A9BA8;
+            --e-stone: #6B7280;
+            --e-ink: #1F2937;
+
+            /* Master */
+            --m-obsidian: #2C1810;
+            --m-bronze: #8B6239;
+            --m-indigo: #1E293B;
+            --m-claret: #4A1821;
+
+            --surface: #FFFFFF;
         }
-        .option-card:active { transform: scale(0.96); }
-        .option-card.selected {
-            border-color: #c9a96e;
-            background: linear-gradient(135deg, #faf8f5 0%, #f5f0e8 100%);
-            box-shadow: 0 4px 20px rgba(201, 169, 110, 0.15);
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+            -webkit-touch-callout: none;
         }
-        .option-card.selected .check-icon { opacity: 1; transform: scale(1); }
-        .check-icon {
-            opacity: 0; transform: scale(0);
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+        html, body {
+            font-family: var(--font-sans);
+            height: 100%;
+            overflow: hidden;
+            background: var(--paper-white);
+            color: var(--graphite);
+            overscroll-behavior: none;
+            -webkit-overflow-scrolling: auto;
         }
-        
-        .step-container {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-            opacity: 0; transform: translateX(100px); pointer-events: none;
-            display: flex; flex-direction: column;
-        }
-        .step-container.active { opacity: 1; transform: translateX(0); pointer-events: all; }
-        .step-container.prev { opacity: 0; transform: translateX(-100px); }
-        
-        .step-header {
-            flex-shrink: 0;
-            background: white;
-            position: relative;
-            z-index: 10;
-            padding: 0.75rem 1.25rem 0.5rem;
-        }
-        
-        .step-scroll {
-            flex: 1;
+
+        /* ==================== SCREEN SYSTEM ==================== */
+        .screen {
+            position: fixed;
+            inset: 0;
             overflow-y: auto;
             overflow-x: hidden;
+            display: none;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            background: var(--paper-white);
+            /* 关键修复：非活动页面彻底不可见且不可交互 */
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .screen.active {
+            display: block;
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+
+        /* 需要滚动的内容页单独启用 iOS 平滑滚动 */
+        .app-screen.active, .form-screen.active {
             -webkit-overflow-scrolling: touch;
-            padding: 0 1.25rem 0.5rem;
-            min-height: 0;
+        }
+
+        /* ==================== SCREEN 1: BRAND WELCOME ==================== */
+        .brand-screen {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 40px 32px;
+            background: var(--paper-white);
+            touch-action: none;
+            overscroll-behavior: none;
+            user-select: none;
+            -webkit-user-select: none;
+            /* 移除 z-index，避免层叠混乱 */
+        }
+
+        .brand-screen.active {
+            display: flex;
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+
+        .brand-eyebrow {
+            font-size: 11px;
+            letter-spacing: 6px;
+            color: var(--linen);
+            margin-bottom: 24px;
+            font-weight: 500;
+            text-transform: uppercase;
+        }
+
+        .brand-title {
+            font-family: var(--font-serif);
+            font-size: 52px;
+            font-weight: 300;
+            letter-spacing: 12px;
+            color: var(--graphite);
+            margin-bottom: 16px;
+            line-height: 1.2;
+            transition: all 0.3s ease;
+        }
+
+        .brand-screen.swiping .brand-title {
+            transform: translateY(-10px);
+            opacity: 0.8;
+        }
+
+        .brand-divider {
+            width: 48px;
+            height: 1px;
+            background: var(--concrete);
+            margin: 24px auto;
+        }
+
+        .brand-subtitle {
+            font-size: 14px;
+            color: var(--linen);
+            letter-spacing: 2px;
+            line-height: 1.8;
+            max-width: 280px;
+            margin-bottom: 60px;
+        }
+
+        .scroll-hint {
+            position: absolute;
+            bottom: 48px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            animation: float 2s ease-in-out infinite;
+            cursor: pointer;
+        }
+
+        .scroll-hint-text {
+            font-size: 11px;
+            letter-spacing: 3px;
+            color: var(--linen);
+        }
+
+        .scroll-hint-arrow {
+            font-size: 20px;
+            color: var(--emerald);
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(8px); }
+        }
+
+        /* ==================== SCREEN 2: TYPE SELECT ==================== */
+        .type-screen {
+            padding: 60px 24px 100px;
+            background: var(--paper-white);
+        }
+
+        .type-header {
+            text-align: center;
+            margin-bottom: 48px;
+            margin-top: 20px;
+        }
+
+        .type-header h2 {
+            font-family: var(--font-serif);
+            font-size: 24px;
+            font-weight: 400;
+            letter-spacing: 4px;
+            color: var(--graphite);
+            margin-bottom: 10px;
+        }
+
+        .type-header p {
+            font-size: 13px;
+            color: var(--linen);
+            letter-spacing: 1px;
+        }
+
+        .type-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .type-card {
             position: relative;
-            transform: translateZ(0);
-            overscroll-behavior-y: auto;
+            background: var(--surface);
+            border: 1px solid var(--concrete);
+            border-radius: 16px;
+            padding: 28px 24px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            cursor: pointer;
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 1px 4px rgba(26,26,26,0.03);
         }
-        
-        .step-scroll::-webkit-scrollbar { display: none; }
-        .step-scroll { -ms-overflow-style: none; scrollbar-width: none; }
-        
-        .bottom-progress-container {
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            padding-bottom: env(safe-area-inset-bottom);
+
+        .type-card:active {
+            transform: scale(0.98);
+            border-color: var(--emerald);
+            box-shadow: 0 4px 16px rgba(16, 185, 129, 0.08);
         }
-        
-        .progress-segment {
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative; overflow: hidden;
+
+        .type-icon-wrap {
+            width: 56px;
+            height: 56px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            flex-shrink: 0;
+            background: var(--paper-white);
+            border: 1px solid var(--concrete);
+            color: var(--graphite);
         }
-        .progress-segment::after {
-            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-            transform: translateX(-100%); transition: transform 0.6s ease;
+
+        .type-card:nth-child(1):active .type-icon-wrap { color: var(--h-oak); border-color: var(--h-butter); }
+        .type-card:nth-child(2):active .type-icon-wrap { color: var(--e-stone); border-color: var(--e-mist); }
+        .type-card:nth-child(3):active .type-icon-wrap { color: var(--m-bronze); border-color: var(--m-obsidian); }
+
+        .type-info h3 {
+            font-family: var(--font-serif);
+            font-size: 18px;
+            font-weight: 400;
+            letter-spacing: 3px;
+            margin-bottom: 6px;
+            color: var(--graphite);
         }
-        .progress-segment.active::after {
-            transform: translateX(100%);
-            animation: shimmer-slide 1.5s infinite;
+
+        .type-info p {
+            font-size: 12px;
+            color: var(--linen);
+            line-height: 1.6;
+            letter-spacing: 0.5px;
         }
-        @keyframes shimmer-slide {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(100%); }
+
+        .type-arrow {
+            margin-left: auto;
+            font-size: 18px;
+            color: var(--concrete);
+            opacity: 0;
+            transform: translateX(-4px);
+            transition: all 0.3s ease;
         }
-        
-        .step-dot {
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+
+        .type-card:active .type-arrow {
+            opacity: 1;
+            transform: translateX(0);
+            color: var(--emerald);
         }
-        .step-dot.active {
-            background: #c9a96e; border-color: #c9a96e;
-            transform: scale(1.3);
-            box-shadow: 0 0 0 4px rgba(201, 169, 110, 0.2);
+
+        /* ==================== APP SCREENS ==================== */
+        .app-screen {
+            background: var(--paper-white);
+            padding-top: 104px;
+            padding-bottom: 80px;
         }
-        .step-dot.completed { background: #1a1a1a; border-color: #1a1a1a; }
-        .step-label { transition: all 0.3s ease; }
-        .step-label.active { color: #c9a96e; font-weight: 600; }
-        .step-label.completed { color: #1a1a1a; }
-        
-        .image-modal {
-            opacity: 0; pointer-events: none;
+
+        /* ==================== TOP NAVIGATION ==================== */
+        .top-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            background: rgba(249, 249, 247, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--concrete);
+            transition: all 0.4s ease;
+        }
+
+        .top-nav-main {
+            height: 56px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 16px;
+        }
+
+        .nav-back {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: none;
+            background: transparent;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            color: var(--graphite);
+            cursor: pointer;
+            opacity: 0.7;
+        }
+
+        .nav-back:active {
+            opacity: 1;
+            background: rgba(26,26,26,0.04);
+        }
+
+        .nav-title {
+            font-family: var(--font-serif);
+            font-size: 16px;
+            letter-spacing: 4px;
+            font-weight: 400;
+            color: var(--graphite);
+        }
+
+        .nav-cart {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: none;
+            background: transparent;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            cursor: pointer;
+            opacity: 0.7;
+            position: relative;
+            color: var(--graphite);
+        }
+
+        .nav-cart:active {
+            opacity: 1;
+            background: rgba(26,26,26,0.04);
+        }
+
+        .nav-cart-badge {
+            position: absolute;
+            top: 2px;
+            right: 2px;
+            min-width: 16px;
+            height: 16px;
+            border-radius: 8px;
+            background: var(--emerald);
+            color: #fff;
+            font-size: 10px;
+            font-weight: 600;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 0 4px;
+        }
+
+        /* Series Tabs */
+        .series-tabs-row {
+            display: flex;
+            padding: 0 16px 12px;
+            gap: 10px;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+
+        .series-tabs-row::-webkit-scrollbar {
+            display: none;
+        }
+
+        .series-pill {
+            padding: 8px 20px;
+            border-radius: 20px;
+            border: 1px solid var(--concrete);
+            background: transparent;
+            font-size: 13px;
+            letter-spacing: 2px;
+            font-family: var(--font-sans);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            flex-shrink: 0;
+            color: var(--linen);
+        }
+
+        .series-pill:disabled {
+            opacity: 0.5;
+            cursor: default;
+            border-color: var(--concrete);
+            color: var(--linen);
+        }
+
+        .series-pill.active {
+            background: var(--graphite);
+            border-color: var(--graphite);
+            color: var(--paper-white);
+        }
+
+        /* ==================== PRODUCT GRID ==================== */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            padding: 0 16px;
+        }
+
+        .product-card {
+            background: var(--surface);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 1px 4px rgba(26,26,26,0.04);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid var(--concrete);
+        }
+
+        .product-card:active {
+            transform: scale(0.97);
+        }
+
+        .card-image-wrap {
+            position: relative;
+            aspect-ratio: 3/4;
+            overflow: hidden;
+            background: linear-gradient(135deg, rgba(0,0,0,0.01) 0%, rgba(0,0,0,0.03) 100%);
+        }
+
+        .card-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .card-image-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, transparent 60%, rgba(26,26,26,0.45) 100%);
+            opacity: 0;
             transition: opacity 0.3s ease;
         }
-        .image-modal.open { opacity: 1; pointer-events: all; }
-        .image-modal img {
+
+        .product-card:active .card-image-overlay {
+            opacity: 1;
+        }
+
+        .card-quick-view {
+            position: absolute;
+            bottom: 12px;
+            left: 50%;
+            transform: translateX(-50%) translateY(8px);
+            padding: 8px 16px;
+            background: rgba(255,255,255,0.95);
+            border: none;
+            border-radius: 20px;
+            font-size: 11px;
+            letter-spacing: 1px;
+            color: var(--graphite);
+            opacity: 0;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            font-family: var(--font-sans);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .product-card:active .card-quick-view {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .card-body {
+            padding: 14px 12px 12px;
+        }
+
+        .card-color-row {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 6px;
+        }
+
+        .card-color-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            border: 1.5px solid rgba(26,26,26,0.06);
+            flex-shrink: 0;
+        }
+
+        .card-color-name {
+            font-size: 10px;
+            color: var(--linen);
+            letter-spacing: 0.5px;
+        }
+
+        .card-title {
+            font-family: var(--font-serif);
+            font-size: 15px;
+            font-weight: 400;
+            letter-spacing: 1.5px;
+            margin-bottom: 4px;
+            color: var(--graphite);
+        }
+
+        .card-subtitle {
+            font-size: 11px;
+            color: var(--linen);
+            line-height: 1.4;
+            margin-bottom: 10px;
+        }
+
+        .card-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .card-sizes {
+            font-size: 10px;
+            color: var(--linen);
+            opacity: 0.7;
+            letter-spacing: 0.3px;
+        }
+
+        .card-add-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: 1px solid var(--concrete);
+            background: transparent;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            cursor: pointer;
+            color: var(--graphite);
+            transition: all 0.2s ease;
+        }
+
+        .card-add-btn:active {
             transform: scale(0.9);
-            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            background: var(--emerald);
+            border-color: var(--emerald);
+            color: #fff;
         }
-        .image-modal.open img { transform: scale(1); }
-        
-        .btn-primary {
-            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+
+        /* ==================== BOTTOM BAR ==================== */
+        .bottom-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 64px;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-top: 1px solid var(--concrete);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            z-index: 90;
+        }
+
+        .bottom-cart-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 18px;
+            border-radius: 24px;
+            border: 1px solid var(--concrete);
+            background: transparent;
+            font-size: 13px;
+            letter-spacing: 1px;
+            cursor: pointer;
+            color: var(--graphite);
+            font-family: var(--font-sans);
+        }
+
+        .bottom-cart-btn:active {
+            transform: scale(0.97);
+        }
+
+        .bottom-cart-badge {
+            min-width: 18px;
+            height: 18px;
+            border-radius: 9px;
+            background: var(--emerald);
+            color: #fff;
+            font-size: 10px;
+            font-weight: 600;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 0 5px;
+        }
+
+        .bottom-submit-btn {
+            padding: 12px 28px;
+            border-radius: 24px;
+            border: none;
+            background: var(--emerald);
+            color: #fff;
+            font-size: 13px;
+            letter-spacing: 2px;
+            font-family: var(--font-sans);
+            cursor: pointer;
+            font-weight: 500;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
+        }
+
+        .bottom-submit-btn:active {
+            transform: scale(0.97);
+            box-shadow: 0 2px 8px rgba(16, 185, 129, 0.15);
+        }
+
+        /* ==================== CART DRAWER ==================== */
+        .cart-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(26,26,26,0.35);
+            z-index: 200;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .cart-overlay.open {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .cart-drawer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            max-height: 70vh;
+            background: var(--surface);
+            border-radius: 24px 24px 0 0;
+            z-index: 210;
+            transform: translateY(100%);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+            border-top: 1px solid var(--concrete);
+        }
+
+        .cart-drawer.open {
+            transform: translateY(0);
+        }
+
+        .cart-drawer-handle {
+            width: 40px;
+            height: 4px;
+            border-radius: 2px;
+            background: var(--concrete);
+            margin: 12px auto;
+            flex-shrink: 0;
+        }
+
+        .cart-header {
+            padding: 8px 20px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .cart-header h3 {
+            font-family: var(--font-serif);
+            font-size: 18px;
+            letter-spacing: 3px;
+            font-weight: 400;
+            color: var(--graphite);
+        }
+
+        .cart-close {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: none;
+            background: transparent;
+            font-size: 20px;
+            cursor: pointer;
+            opacity: 0.4;
+            color: var(--graphite);
+        }
+
+        .cart-close:active {
+            opacity: 0.8;
+        }
+
+        .cart-items {
+            flex: 1;
+            overflow-y: auto;
+            padding: 0 20px;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .cart-item {
+            display: flex;
+            gap: 14px;
+            padding: 14px 0;
+            border-bottom: 1px solid var(--concrete);
+        }
+
+        .cart-item-img {
+            width: 64px;
+            height: 80px;
+            border-radius: 8px;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+
+        .cart-item-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .cart-item-name {
+            font-family: var(--font-serif);
+            font-size: 14px;
+            margin-bottom: 4px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            color: var(--graphite);
+        }
+
+        .cart-item-color {
+            font-size: 11px;
+            color: var(--linen);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .cart-item-color-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            border: 1px solid rgba(26,26,26,0.06);
+        }
+
+        .cart-item-qty {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .qty-btn {
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
+            border: 1px solid var(--concrete);
+            background: transparent;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--graphite);
+        }
+
+        .qty-btn:active {
+            transform: scale(0.9);
+            background: var(--paper-white);
+        }
+
+        .cart-item-del {
+            padding: 4px;
+            background: none;
+            border: none;
+            font-size: 16px;
+            opacity: 0.3;
+            cursor: pointer;
+            color: var(--graphite);
+        }
+
+        .cart-item-del:active {
+            opacity: 0.7;
+        }
+
+        .cart-empty {
+            text-align: center;
+            padding: 48px 20px;
+            color: var(--linen);
+        }
+
+        .cart-empty-icon {
+            font-size: 48px;
+            margin-bottom: 12px;
+            opacity: 0.3;
+        }
+
+        .cart-footer {
+            padding: 16px 20px 32px;
+            border-top: 1px solid var(--concrete);
+        }
+
+        .cart-total-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 16px;
+            font-size: 14px;
+            letter-spacing: 1px;
+            color: var(--graphite);
+        }
+
+        .cart-submit-btn {
+            width: 100%;
+            padding: 14px;
+            border-radius: 12px;
+            border: none;
+            background: var(--emerald);
+            color: #fff;
+            font-size: 14px;
+            letter-spacing: 2px;
+            font-family: var(--font-sans);
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .cart-submit-btn:active {
+            transform: scale(0.98);
+        }
+
+        /* ==================== PRODUCT MODAL ==================== */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(26,26,26,0.4);
+            z-index: 300;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            display: flex;
+            align-items: flex-end;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .modal-sheet {
+            width: 100%;
+            max-height: 85vh;
+            background: var(--surface);
+            border-radius: 24px 24px 0 0;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+            transform: translateY(100%);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border-top: 1px solid var(--concrete);
+        }
+
+        .modal-overlay.active .modal-sheet {
+            transform: translateY(0);
+        }
+
+        .modal-image {
+            width: 100%;
+            aspect-ratio: 1/1;
+            object-fit: cover;
+        }
+
+        .modal-body {
+            padding: 24px 20px 32px;
+        }
+
+        .modal-series {
+            font-size: 11px;
+            letter-spacing: 3px;
+            color: var(--linen);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .modal-title {
+            font-family: var(--font-serif);
+            font-size: 22px;
+            font-weight: 400;
+            letter-spacing: 2px;
+            margin-bottom: 6px;
+            color: var(--graphite);
+        }
+
+        .modal-subtitle {
+            font-size: 13px;
+            color: var(--linen);
+            margin-bottom: 24px;
+            line-height: 1.6;
+        }
+
+        .modal-section {
+            margin-bottom: 20px;
+        }
+
+        .modal-section-title {
+            font-size: 10px;
+            letter-spacing: 3px;
+            color: var(--linen);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            opacity: 0.8;
+        }
+
+        .modal-section-text {
+            font-size: 13px;
+            line-height: 1.8;
+            color: var(--graphite);
+            opacity: 0.8;
+        }
+
+        .modal-sizes {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .modal-size-chip {
+            padding: 6px 14px;
+            border-radius: 8px;
+            border: 1px solid var(--concrete);
+            font-size: 12px;
+            color: var(--graphite);
+            background: transparent;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 28px;
+            padding-top: 20px;
+            border-top: 1px solid var(--concrete);
+        }
+
+        .modal-qty {
+            width: 64px;
+            padding: 12px;
+            border-radius: 12px;
+            border: 1px solid var(--concrete);
+            text-align: center;
+            font-size: 15px;
+            background: transparent;
+            color: var(--graphite);
+            font-family: var(--font-sans);
+        }
+
+        .modal-add-btn {
+            flex: 1;
+            padding: 12px;
+            border-radius: 12px;
+            border: none;
+            background: var(--emerald);
+            color: #fff;
+            font-size: 14px;
+            letter-spacing: 2px;
+            font-family: var(--font-sans);
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .modal-add-btn:active {
+            transform: scale(0.97);
+        }
+
+        /* ==================== QTY POPOVER ==================== */
+        .popover-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 250;
+            display: none;
+        }
+
+        .popover-overlay.active {
+            display: block;
+        }
+
+        .qty-popover {
+            position: absolute;
+            background: var(--surface);
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 10px 40px rgba(26,26,26,0.12);
+            display: none;
+            flex-direction: column;
+            gap: 12px;
+            min-width: 160px;
+            z-index: 251;
+            border: 1px solid var(--concrete);
+        }
+
+        .qty-popover.active {
+            display: flex;
+        }
+
+        .qty-popover-input {
+            width: 100%;
+            padding: 12px;
+            border-radius: 10px;
+            border: 1px solid var(--concrete);
+            text-align: center;
+            font-size: 16px;
+            background: transparent;
+            color: var(--graphite);
+            font-family: var(--font-sans);
+        }
+
+        .qty-popover-btn {
+            padding: 10px;
+            border-radius: 10px;
+            border: none;
+            background: var(--emerald);
+            color: #fff;
+            font-size: 13px;
+            letter-spacing: 1px;
+            font-family: var(--font-sans);
+            cursor: pointer;
+        }
+
+        /* ==================== FORM PAGES ==================== */
+        .form-screen {
+            padding: 80px 20px 100px;
+            min-height: 100vh;
+            background: var(--paper-white);
+        }
+
+        .form-header {
+            text-align: center;
+            margin-bottom: 36px;
+        }
+
+        .form-header h2 {
+            font-family: var(--font-serif);
+            font-size: 24px;
+            font-weight: 400;
+            letter-spacing: 3px;
+            margin-bottom: 8px;
+            color: var(--graphite);
+        }
+
+        .form-header p {
+            font-size: 13px;
+            color: var(--linen);
+            letter-spacing: 0.5px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 11px;
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+            color: var(--linen);
+            text-transform: uppercase;
+            font-weight: 500;
+        }
+
+        .form-input,
+        .form-textarea,
+        .form-select {
+            width: 100%;
+            padding: 14px 16px;
+            border-radius: 12px;
+            border: 1px solid var(--concrete);
+            font-size: 15px;
+            font-family: var(--font-sans);
+            background: var(--surface);
+            color: var(--graphite);
             transition: all 0.3s ease;
-            position: relative; overflow: hidden;
+            -webkit-appearance: none;
+            appearance: none;
         }
-        .btn-primary::after {
-            content: ''; position: absolute; top: 50%; left: 50%;
-            width: 0; height: 0; background: rgba(255,255,255,0.1);
-            border-radius: 50%; transform: translate(-50%, -50%);
-            transition: width 0.6s ease, height 0.6s ease;
+
+        .form-input:focus,
+        .form-textarea:focus,
+        .form-select:focus {
+            outline: none;
+            border-color: var(--emerald);
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
         }
-        .btn-primary:active::after { width: 300px; height: 300px; }
-        .btn-primary:active { transform: scale(0.98); }
-        
-        .btn-outline {
-            transition: all 0.3s ease;
-            border: 1.5px solid #e5e5e5;
-            background: white;
+
+        .form-textarea {
+            min-height: 100px;
+            resize: vertical;
         }
-        .btn-outline:active { background: #f5f5f5; transform: scale(0.98); }
-        
-        .custom-input {
-            transition: all 0.3s ease;
-            border: 1.5px solid #e5e5e5;
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
         }
-        .custom-input:focus {
-            border-color: #c9a96e;
-            box-shadow: 0 0 0 3px rgba(201, 169, 110, 0.1);
+
+        .form-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 32px;
+            position: sticky;
+            bottom: 20px;
         }
-        
-        .qty-btn { transition: all 0.2s ease; }
-        .qty-btn:active { background: #f0f0f0; transform: scale(0.9); }
-        
-        .summary-card { animation: slideUp 0.5s ease forwards; }
+
+        .form-btn {
+            flex: 1;
+            padding: 16px;
+            border-radius: 14px;
+            border: 1px solid transparent;
+            font-size: 14px;
+            letter-spacing: 2px;
+            font-family: var(--font-sans);
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        .form-btn:active {
+            transform: scale(0.98);
+        }
+
+        .form-btn.primary {
+            background: var(--emerald);
+            color: #fff;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
+        }
+
+        .form-btn.secondary {
+            background: transparent;
+            color: var(--graphite);
+            border-color: var(--concrete);
+        }
+
+        /* ==================== PREVIEW ==================== */
+        .preview-block {
+            background: rgba(255,255,255,0.7);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 16px;
+            border: 1px solid var(--concrete);
+        }
+
+        .preview-block h4 {
+            font-family: var(--font-serif);
+            font-size: 15px;
+            letter-spacing: 2px;
+            margin-bottom: 14px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--concrete);
+            color: var(--graphite);
+        }
+
+        .preview-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            font-size: 13px;
+            border-bottom: 1px solid var(--concrete);
+        }
+
+        .preview-row:last-child {
+            border-bottom: none;
+        }
+
+        .preview-label {
+            color: var(--linen);
+        }
+
+        .preview-value {
+            font-weight: 500;
+            text-align: right;
+            max-width: 60%;
+            color: var(--graphite);
+        }
+
+        /* ==================== SUCCESS ==================== */
+        .success-screen {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 40px 32px;
+            min-height: 100vh;
+            background: var(--paper-white);
+        }
+
+        .success-icon {
+            font-size: 64px;
+            margin-bottom: 24px;
+            color: var(--emerald);
+        }
+
+        .success-screen h2 {
+            font-family: var(--font-serif);
+            font-size: 26px;
+            font-weight: 400;
+            letter-spacing: 3px;
+            margin-bottom: 12px;
+            color: var(--graphite);
+        }
+
+        .success-screen p {
+            font-size: 14px;
+            color: var(--linen);
+            line-height: 1.8;
+            max-width: 300px;
+            margin-bottom: 40px;
+        }
+
+        .success-btn {
+            padding: 16px 48px;
+            border-radius: 14px;
+            border: none;
+            background: var(--emerald);
+            color: #fff;
+            font-size: 14px;
+            letter-spacing: 2px;
+            font-family: var(--font-sans);
+            cursor: pointer;
+            font-weight: 500;
+            box-shadow: 0 4px 16px rgba(16, 185, 129, 0.25);
+        }
+
+        .success-btn:active {
+            transform: scale(0.97);
+        }
+
+        /* ==================== ANIMATIONS ==================== */
         @keyframes slideUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .welcome-title { animation: fadeInUp 0.8s ease forwards; }
-        .welcome-subtitle { animation: fadeInUp 0.8s ease 0.2s forwards; opacity: 0; }
-        .welcome-btn { animation: fadeInUp 0.8s ease 0.4s forwards; opacity: 0; }
-        @keyframes fadeInUp {
             from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        
-        @keyframes pulse-ring {
-            0% { box-shadow: 0 0 0 0 rgba(201, 169, 110, 0.4); }
-            70% { box-shadow: 0 0 0 10px rgba(201, 169, 110, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(201, 169, 110, 0); }
-        }
-        .pulse-active { animation: pulse-ring 2s infinite; }
-        
-        .step-badge { background: linear-gradient(135deg, #c9a96e 0%, #b8945f 100%); }
-        .back-btn { transition: all 0.3s ease; }
-        .back-btn:active { transform: translateX(-3px); }
-        
-        .success-circle { animation: scaleIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
-        @keyframes scaleIn { from { transform: scale(0); } to { transform: scale(1); } }
-        
-        .success-check {
-            stroke-dasharray: 50; stroke-dashoffset: 50;
-            animation: drawCheck 0.6s ease 0.3s forwards;
-        }
-        @keyframes drawCheck { to { stroke-dashoffset: 0; } }
-        
-        html { overscroll-behavior-y: none; }
-        
-        .skeleton {
-            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-            background-size: 200% 100%;
-            animation: shimmer 1.5s infinite;
-        }
-        @keyframes shimmer {
-            0% { background-position: 200% 0; }
-            100% { background-position: -200% 0; }
-        }
-        
-        .progress-clickable { cursor: pointer; transition: all 0.2s ease; }
-        .progress-clickable:hover { opacity: 0.8; }
-        .progress-clickable:active { transform: scale(0.95); }
 
-        #intentionDrawer { pointer-events: none; }
-        #intentionDrawer.open { pointer-events: all; }
-        #intentionDrawer .drawer-overlay { opacity: 0; transition: opacity 0.3s ease; }
-        #intentionDrawer.open .drawer-overlay { opacity: 1; }
-        #intentionDrawer .drawer-panel {
-            transform: translateY(100%);
-            transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        .product-card {
+            opacity: 0;
+            animation: slideUp 0.5s ease forwards;
         }
-        #intentionDrawer.open .drawer-panel { transform: translateY(0); }
+
+        .product-card:nth-child(1) { animation-delay: 0.04s; }
+        .product-card:nth-child(2) { animation-delay: 0.08s; }
+        .product-card:nth-child(3) { animation-delay: 0.12s; }
+        .product-card:nth-child(4) { animation-delay: 0.16s; }
+        .product-card:nth-child(5) { animation-delay: 0.20s; }
+        .product-card:nth-child(6) { animation-delay: 0.24s; }
+        .product-card:nth-child(7) { animation-delay: 0.28s; }
+        .product-card:nth-child(8) { animation-delay: 0.32s; }
+
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            border-radius: 2px;
+            background: var(--concrete);
+        }
     </style>
-<base target="_blank">
 </head>
-<body class="bg-white text-primary antialiased">
-    <div id="app" class="relative h-screen flex flex-col overflow-hidden">
-        <!-- 顶部导航栏 -->
-        <header id="header" class="flex-shrink-0 h-14 bg-white/90 backdrop-blur-md border-b border-gray-100 z-40 flex items-center justify-between px-5">
-            <button id="backBtn" class="back-btn w-9 h-9 flex items-center justify-center rounded-full hover:bg-gray-50 opacity-0 pointer-events-none transition-opacity">
-                <i class="fas fa-arrow-left text-base text-primary"></i>
-            </button>
-            <h1 id="pageTitle" class="text-base font-semibold tracking-wide">产品手册</h1>
-            <div class="w-9"></div>
-        </header>
+<body>
 
-        <!-- 主内容区域 -->
-        <main class="flex-1 relative overflow-hidden">
-            <!-- 欢迎页 -->
-            <div id="welcomeStep" class="step-container active">
-                <div class="step-scroll flex flex-col items-center justify-center px-8">
-                    <div class="text-center mb-10">
-                        <div class="w-16 h-16 mx-auto mb-6 rounded-full bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
-                            <i class="fas fa-book-open text-2xl text-accent"></i>
-                        </div>
-                        <h1 class="welcome-title text-2xl font-bold mb-3 tracking-tight">产品选购手册</h1>
-                        <p class="welcome-subtitle text-secondary text-sm leading-relaxed max-w-xs mx-auto">
-                            浏览我们的产品系列<br>选择心仪款式后提交意向，我们将尽快与您联系
-                        </p>
-                    </div>
-                    <button onclick="goToStep(1)" class="welcome-btn btn-primary w-full max-w-xs py-3.5 rounded-xl text-white font-medium text-base shadow-lg shadow-gray-900/10">
-                        开始浏览
-                    </button>
-                    <p class="welcome-subtitle text-xs text-gray-400 mt-4">了解产品 · 提交意向 · 专属服务</p>
-                </div>
-            </div>
-
-            <!-- 步骤1: 合作类型 -->
-            <div id="step1" class="step-container">
-                <div class="step-header">
-                    <span class="step-badge text-white text-[10px] px-2.5 py-0.5 rounded-full font-medium">步骤 1/7</span>
-                    <h2 class="text-xl font-bold mt-2">了解您的需求</h2>
-                    <p class="text-secondary text-xs mt-0.5">请选择您感兴趣的合作方式</p>
-                </div>
-                <div class="step-scroll space-y-3">
-                    <div class="option-card bg-surface border-2 border-transparent rounded-xl p-4 cursor-pointer" onclick="selectOption(1, 'type', 'wholesale', this)">
-                        <div class="flex items-start gap-3">
-                            <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center flex-shrink-0">
-                                <i class="fas fa-boxes-stacked text-lg text-primary"></i>
-                            </div>
-                            <div class="flex-1 min-w-0">
-                                <div class="flex items-center justify-between">
-                                    <h3 class="font-semibold text-base">批发合作意向</h3>
-                                    <div class="check-icon w-5 h-5 rounded-full bg-accent flex items-center justify-center flex-shrink-0 ml-2">
-                                        <i class="fas fa-check text-white text-[10px]"></i>
-                                    </div>
-                                </div>
-                                <p class="text-secondary text-xs mt-0.5">了解批发政策与起订量，获取合作方案</p>
-                                <div class="mt-2 flex items-center gap-1.5 flex-wrap">
-                                    <span class="text-[10px] bg-gray-100 px-1.5 py-0.5 rounded text-secondary">起订量: 50件</span>
-                                    <span class="text-[10px] bg-accent/10 text-accent px-1.5 py-0.5 rounded font-medium">享9折</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="option-card bg-surface border-2 border-transparent rounded-xl p-4 cursor-pointer" onclick="selectOption(1, 'type', 'retail', this)">
-                        <div class="flex items-start gap-3">
-                            <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center flex-shrink-0">
-                                <i class="fas fa-bag-shopping text-lg text-primary"></i>
-                            </div>
-                            <div class="flex-1 min-w-0">
-                                <div class="flex items-center justify-between">
-                                    <h3 class="font-semibold text-base">零售选购意向</h3>
-                                    <div class="check-icon w-5 h-5 rounded-full bg-accent flex items-center justify-center flex-shrink-0 ml-2">
-                                        <i class="fas fa-check text-white text-[10px]"></i>
-                                    </div>
-                                </div>
-                                <p class="text-secondary text-xs mt-0.5">个人或企业零售采购，灵活了解产品</p>
-                                <div class="mt-2 flex items-center gap-1.5 flex-wrap">
-                                    <span class="text-[10px] bg-gray-100 px-1.5 py-0.5 rounded text-secondary">无起订量</span>
-                                    <span class="text-[10px] bg-gray-100 px-1.5 py-0.5 rounded text-secondary">单件起售</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 步骤2: 尺码 -->
-            <div id="step2" class="step-container">
-                <div class="step-header">
-                    <span class="step-badge text-white text-[10px] px-2.5 py-0.5 rounded-full font-medium">步骤 2/7</span>
-                    <h2 class="text-xl font-bold mt-2">选择尺码</h2>
-                    <p class="text-secondary text-xs mt-0.5">不同尺码对应不同款式系列</p>
-                </div>
-                <div class="step-scroll">
-                    <div id="sizeContainer"></div>
-                </div>
-            </div>
-
-            <!-- 步骤3: 款式 -->
-            <div id="step3" class="step-container">
-                <div class="step-header">
-                    <span class="step-badge text-white text-[10px] px-2.5 py-0.5 rounded-full font-medium">步骤 3/7</span>
-                    <h2 class="text-xl font-bold mt-2">浏览款式</h2>
-                    <p class="text-secondary text-xs mt-0.5" id="styleSubtitle">当前尺码专属款式</p>
-                </div>
-                <div class="step-scroll">
-                    <div id="styleContainer"></div>
-                </div>
-            </div>
-
-            <!-- 步骤4: 配色 -->
-            <div id="step4" class="step-container">
-                <div class="step-header">
-                    <span class="step-badge text-white text-[10px] px-2.5 py-0.5 rounded-full font-medium">步骤 4/7</span>
-                    <h2 class="text-xl font-bold mt-2">选择配色</h2>
-                    <p class="text-secondary text-xs mt-0.5">为您的款式选择心仪色彩</p>
-                </div>
-                <div class="step-scroll space-y-3" id="colorContainer"></div>
-            </div>
-
-            <!-- 步骤5: 标记意向 -->
-            <div id="step5" class="step-container">
-                <div class="step-header">
-                    <span class="step-badge text-white text-[10px] px-2.5 py-0.5 rounded-full font-medium">步骤 5/7</span>
-                    <h2 class="text-xl font-bold mt-2">标记意向商品</h2>
-                    <p class="text-secondary text-xs mt-0.5">确认数量后添加到意向清单</p>
-                </div>
-                <div class="step-scroll space-y-3">
-                    <div id="step5SkuSummary" class="bg-surface rounded-xl p-4"></div>
-                    <div class="bg-surface rounded-xl p-6 text-center">
-                        <div class="flex items-center justify-center gap-5 mb-4">
-                            <button class="qty-btn w-12 h-12 rounded-full bg-white border-2 border-gray-200 flex items-center justify-center font-semibold" onclick="changeQty(-1)">
-                                <i class="fas fa-minus text-xs"></i>
-                            </button>
-                            <div class="w-20 text-center">
-                                <span id="qtyDisplay" class="text-3xl font-bold">1</span>
-                                <p class="text-xs text-secondary mt-0.5">件</p>
-                            </div>
-                            <button class="qty-btn w-12 h-12 rounded-full bg-white border-2 border-gray-200 flex items-center justify-center font-semibold" onclick="changeQty(1)">
-                                <i class="fas fa-plus text-xs"></i>
-                            </button>
-                        </div>
-                        <div id="qtyWarning" class="text-xs text-accent hidden">
-                            <i class="fas fa-info-circle mr-1"></i>批发意向最低50件起
-                        </div>
-                    </div>
-                    <div class="bg-surface rounded-xl p-4">
-                        <div class="flex justify-between items-center mb-1.5">
-                            <span class="text-secondary text-xs">参考单价</span>
-                            <span class="font-semibold text-sm">¥299.00</span>
-                        </div>
-                        <div class="flex justify-between items-center mb-1.5">
-                            <span class="text-secondary text-xs">意向数量</span>
-                            <span class="font-semibold text-sm" id="qtySummary">1</span>
-                        </div>
-                        <div class="border-t border-gray-200 my-2"></div>
-                        <div class="flex justify-between items-center">
-                            <span class="font-semibold text-sm">参考小计</span>
-                            <span class="text-lg font-bold text-accent" id="totalPrice">¥299.00</span>
-                        </div>
-                    </div>
-                    <div id="cartPreviewBox"></div>
-                </div>
-            </div>
-
-            <!-- 步骤6: 联系方式 -->
-            <div id="step6" class="step-container">
-                <div class="step-header">
-                    <span class="step-badge text-white text-[10px] px-2.5 py-0.5 rounded-full font-medium">步骤 6/7</span>
-                    <h2 class="text-xl font-bold mt-2">留下联系方式</h2>
-                    <p class="text-secondary text-xs mt-0.5">方便我们为您跟进意向需求</p>
-                </div>
-                <div class="step-scroll space-y-4">
-                    <div>
-                        <label class="block text-xs font-medium mb-1.5">联系人姓名</label>
-                        <input type="text" id="nameInput" class="custom-input w-full px-3.5 py-3 rounded-xl bg-surface text-sm outline-none" placeholder="请输入联系人姓名" oninput="validateStep6()">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-medium mb-1.5">联系电话</label>
-                        <input type="tel" id="phoneInput" class="custom-input w-full px-3.5 py-3 rounded-xl bg-surface text-sm outline-none" placeholder="请输入11位手机号" maxlength="11" oninput="validateStep6()">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-medium mb-1.5">联系地址</label>
-                        <textarea id="addressInput" class="custom-input w-full px-3.5 py-3 rounded-xl bg-surface text-sm outline-none resize-none h-20" placeholder="请输入您的联系地址（选填）" oninput="validateStep6()"></textarea>
-                    </div>
-                    <div class="bg-accent/5 rounded-xl p-3 flex items-start gap-2">
-                        <i class="fas fa-shield-halved text-accent text-xs mt-0.5"></i>
-                        <p class="text-xs text-secondary leading-relaxed">您的信息仅用于产品咨询跟进，我们承诺严格保密，不会用于其他用途。</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 步骤7: 确认意向单 -->
-            <div id="step7" class="step-container">
-                <div class="step-header">
-                    <span class="step-badge text-white text-[10px] px-2.5 py-0.5 rounded-full font-medium">步骤 7/7</span>
-                    <h2 class="text-xl font-bold mt-2">确认意向清单</h2>
-                    <p class="text-secondary text-xs mt-0.5">请核对商品意向和联系信息</p>
-                </div>
-                <div class="step-scroll space-y-3" id="summaryContent"></div>
-            </div>
-
-            <!-- 步骤8: 提交成功 -->
-            <div id="step8" class="step-container">
-                <div class="step-scroll flex flex-col items-center justify-center px-8">
-                    <div class="success-circle w-20 h-20 rounded-full bg-gradient-to-br from-accent to-amber-600 flex items-center justify-center mb-5 shadow-lg shadow-accent/30">
-                        <svg class="w-10 h-10 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-                            <polyline class="success-check" points="20 6 9 17 4 12"></polyline>
-                        </svg>
-                    </div>
-                    <h2 class="text-xl font-bold mb-1.5">意向单提交成功</h2>
-                    <p class="text-secondary text-center text-sm mb-6">我们已收到您的选购意向，专属顾问将尽快与您联系</p>
-                    <div class="w-full max-w-xs bg-surface rounded-xl p-4 mb-6">
-                        <div class="text-center mb-3">
-                            <p class="text-xs text-secondary">意向单编号</p>
-                            <p class="font-mono font-semibold text-base mt-0.5" id="orderId">INT-20260421-001</p>
-                        </div>
-                        <div class="border-t border-gray-200 pt-3 space-y-1.5 text-xs">
-                            <div class="flex justify-between"><span class="text-secondary">合作类型</span><span id="successType">-</span></div>
-                            <div class="flex justify-between"><span class="text-secondary">意向款数</span><span id="successSize">-</span></div>
-                            <div class="flex justify-between"><span class="text-secondary">参考合计</span><span id="successStyle">-</span></div>
-                            <div class="flex justify-between"><span class="text-secondary">总件数</span><span id="successQty">-</span></div>
-                        </div>
-                    </div>
-                    <button onclick="location.reload()" class="btn-primary w-full max-w-xs py-3 rounded-xl text-white font-medium text-sm shadow-lg">
-                        继续浏览
-                    </button>
-                </div>
-            </div>
-        </main>
-
-        <!-- 意向清单悬浮按钮 -->
-        <button id="cartFab" class="fixed bottom-[5.5rem] left-4 z-50 w-12 h-12 bg-primary text-white rounded-full shadow-xl flex items-center justify-center transition-transform active:scale-90 hidden" onclick="openIntentionDrawer()">
-            <i class="fas fa-clipboard-list text-lg"></i>
-            <span id="cartBadge" class="absolute -top-1 -right-1 w-5 h-5 bg-accent text-white text-[10px] font-bold rounded-full flex items-center justify-center hidden">0</span>
-        </button>
-
-        <!-- 意向清单抽屉 -->
-        <div id="intentionDrawer" class="fixed inset-0 z-[60]">
-            <div class="drawer-overlay absolute inset-0 bg-black/50" onclick="closeIntentionDrawer()"></div>
-            <div class="drawer-panel absolute bottom-0 left-0 right-0 bg-white rounded-t-2xl flex flex-col max-h-[85vh]">
-                <div class="flex items-center justify-between p-4 border-b border-gray-100 flex-shrink-0">
-                    <h3 class="font-bold text-lg">意向清单</h3>
-                    <button class="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center" onclick="closeIntentionDrawer()">
-                        <i class="fas fa-times text-sm"></i>
-                    </button>
-                </div>
-                <div class="flex-1 overflow-y-auto p-4 space-y-3 min-h-0" id="intentionDrawerList"></div>
-                <div class="p-4 border-t border-gray-100 bg-white rounded-t-2xl flex-shrink-0">
-                    <div class="flex justify-between items-center mb-3">
-                        <span class="text-secondary text-sm">参考合计</span>
-                        <span class="text-xl font-bold text-accent" id="intentionDrawerTotal">¥0.00</span>
-                    </div>
-                    <div class="flex gap-2">
-                        <button class="flex-1 py-2.5 rounded-xl border border-gray-300 text-primary font-medium text-sm bg-white" onclick="closeIntentionDrawer()">继续浏览</button>
-                        <button class="flex-1 btn-primary py-2.5 rounded-xl text-white font-medium text-sm" onclick="intentionCheckout()">提交意向</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 底部进度条导航 -->
-        <div id="bottomProgress" class="bottom-progress-container fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-gray-100 opacity-0 pointer-events-none transition-all duration-500">
-            <div class="px-4 pt-2 pb-1">
-                <div class="flex items-center gap-1 mb-1.5">
-                    <div class="progress-segment progress-clickable h-1 flex-1 rounded-full bg-gray-200" data-step="1" onclick="jumpToStep(1)">
-                        <div class="h-full rounded-full bg-accent transition-all duration-500" style="width: 0%"></div>
-                    </div>
-                    <div class="progress-segment progress-clickable h-1 flex-1 rounded-full bg-gray-200" data-step="2" onclick="jumpToStep(2)">
-                        <div class="h-full rounded-full bg-accent transition-all duration-500" style="width: 0%"></div>
-                    </div>
-                    <div class="progress-segment progress-clickable h-1 flex-1 rounded-full bg-gray-200" data-step="3" onclick="jumpToStep(3)">
-                        <div class="h-full rounded-full bg-accent transition-all duration-500" style="width: 0%"></div>
-                    </div>
-                    <div class="progress-segment progress-clickable h-1 flex-1 rounded-full bg-gray-200" data-step="4" onclick="jumpToStep(4)">
-                        <div class="h-full rounded-full bg-accent transition-all duration-500" style="width: 0%"></div>
-                    </div>
-                    <div class="progress-segment progress-clickable h-1 flex-1 rounded-full bg-gray-200" data-step="5" onclick="jumpToStep(5)">
-                        <div class="h-full rounded-full bg-accent transition-all duration-500" style="width: 0%"></div>
-                    </div>
-                    <div class="progress-segment progress-clickable h-1 flex-1 rounded-full bg-gray-200" data-step="6" onclick="jumpToStep(6)">
-                        <div class="h-full rounded-full bg-accent transition-all duration-500" style="width: 0%"></div>
-                    </div>
-                    <div class="progress-segment progress-clickable h-1 flex-1 rounded-full bg-gray-200" data-step="7" onclick="jumpToStep(7)">
-                        <div class="h-full rounded-full bg-accent transition-all duration-500" style="width: 0%"></div>
-                    </div>
-                </div>
-                <div class="flex items-center justify-between px-0.5">
-                    <div class="flex flex-col items-center gap-0.5 progress-clickable" data-step="1" onclick="jumpToStep(1)">
-                        <div class="step-dot w-4 h-4 rounded-full border-2 border-gray-300 bg-white flex items-center justify-center" data-step="1">
-                            <i class="fas fa-check text-[7px] text-white opacity-0 transition-opacity" data-step="1"></i>
-                        </div>
-                        <span class="step-label text-[9px] text-gray-400" data-step="1">需求</span>
-                    </div>
-                    <div class="flex flex-col items-center gap-0.5 progress-clickable" data-step="2" onclick="jumpToStep(2)">
-                        <div class="step-dot w-4 h-4 rounded-full border-2 border-gray-300 bg-white flex items-center justify-center" data-step="2">
-                            <i class="fas fa-check text-[7px] text-white opacity-0 transition-opacity" data-step="2"></i>
-                        </div>
-                        <span class="step-label text-[9px] text-gray-400" data-step="2">尺码</span>
-                    </div>
-                    <div class="flex flex-col items-center gap-0.5 progress-clickable" data-step="3" onclick="jumpToStep(3)">
-                        <div class="step-dot w-4 h-4 rounded-full border-2 border-gray-300 bg-white flex items-center justify-center" data-step="3">
-                            <i class="fas fa-check text-[7px] text-white opacity-0 transition-opacity" data-step="3"></i>
-                        </div>
-                        <span class="step-label text-[9px] text-gray-400" data-step="3">款式</span>
-                    </div>
-                    <div class="flex flex-col items-center gap-0.5 progress-clickable" data-step="4" onclick="jumpToStep(4)">
-                        <div class="step-dot w-4 h-4 rounded-full border-2 border-gray-300 bg-white flex items-center justify-center" data-step="4">
-                            <i class="fas fa-check text-[7px] text-white opacity-0 transition-opacity" data-step="4"></i>
-                        </div>
-                        <span class="step-label text-[9px] text-gray-400" data-step="4">配色</span>
-                    </div>
-                    <div class="flex flex-col items-center gap-0.5 progress-clickable" data-step="5" onclick="jumpToStep(5)">
-                        <div class="step-dot w-4 h-4 rounded-full border-2 border-gray-300 bg-white flex items-center justify-center" data-step="5">
-                            <i class="fas fa-check text-[7px] text-white opacity-0 transition-opacity" data-step="5"></i>
-                        </div>
-                        <span class="step-label text-[9px] text-gray-400" data-step="5">数量</span>
-                    </div>
-                    <div class="flex flex-col items-center gap-0.5 progress-clickable" data-step="6" onclick="jumpToStep(6)">
-                        <div class="step-dot w-4 h-4 rounded-full border-2 border-gray-300 bg-white flex items-center justify-center" data-step="6">
-                            <i class="fas fa-check text-[7px] text-white opacity-0 transition-opacity" data-step="6"></i>
-                        </div>
-                        <span class="step-label text-[9px] text-gray-400" data-step="6">联系</span>
-                    </div>
-                    <div class="flex flex-col items-center gap-0.5 progress-clickable" data-step="7" onclick="jumpToStep(7)">
-                        <div class="step-dot w-4 h-4 rounded-full border-2 border-gray-300 bg-white flex items-center justify-center" data-step="7">
-                            <i class="fas fa-check text-[7px] text-white opacity-0 transition-opacity" data-step="7"></i>
-                        </div>
-                        <span class="step-label text-[9px] text-gray-400" data-step="7">确认</span>
-                    </div>
-                </div>
-            </div>
-            <!-- 底部操作按钮 -->
-            <div class="px-4 pb-3 pt-1" id="bottomActionArea">
-                <div class="flex items-center gap-2" id="bottomActionInner">
-                    <div class="flex-1">
-                        <p class="text-[10px] text-secondary" id="bottomHint">请选择一项</p>
-                    </div>
-                    <button id="nextBtn" class="btn-primary px-5 py-2 rounded-lg text-white font-medium text-xs disabled:opacity-40 disabled:cursor-not-allowed" disabled onclick="nextStep()">
-                        下一步 <i class="fas fa-arrow-right ml-1 text-[10px]"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- 图片放大模态框 -->
-        <div id="imageModal" class="image-modal fixed inset-0 z-50 bg-black/95 flex items-center justify-center p-4" onclick="closeImageModal()">
-            <button class="absolute top-5 right-5 w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white" onclick="event.stopPropagation(); closeImageModal()">
-                <i class="fas fa-times"></i>
-            </button>
-            <img id="modalImage" src="" alt="放大查看" class="max-w-full max-h-[80vh] rounded-lg object-contain">
-            <p class="absolute bottom-8 text-white/60 text-sm">点击图片任意位置关闭</p>
+    <!-- ==================== SCREEN 1: BRAND WELCOME ==================== -->
+    <div class="screen brand-screen active" id="brandScreen">
+        <div class="brand-eyebrow">Studio Paper & Light</div>
+        <h1 class="brand-title">TIMELESS</h1>
+        <div class="brand-divider"></div>
+        <p class="brand-subtitle">高级产品手册<br>纸感实验室出品</p>
+        <div class="scroll-hint" id="scrollHint">
+            <span class="scroll-hint-text">滑动探索</span>
+            <span class="scroll-hint-arrow">↓</span>
         </div>
     </div>
 
-    <script>
-        // ==================== FORMSPREE 配置 ====================
-        const FORMSPREE_ENDPOINT = 'https://formspree.io/f/maqalqlj';
+    <!-- ==================== SCREEN 2: TYPE SELECT ==================== -->
+    <div class="screen type-screen" id="typeScreen">
+        <div class="type-header">
+            <h2>选择您的需求</h2>
+            <p>请选择适合您的服务模式</p>
+        </div>
+        <div class="type-grid">
+            <div class="type-card" data-type="wholesale">
+                <div class="type-icon-wrap">◈</div>
+                <div class="type-info">
+                    <h3>批发</h3>
+                    <p>批量采购与渠道合作<br>专属商务方案与优惠</p>
+                </div>
+                <span class="type-arrow">→</span>
+            </div>
+            <div class="type-card" data-type="retail">
+                <div class="type-icon-wrap">◇</div>
+                <div class="type-info">
+                    <h3>零售</h3>
+                    <p>精选单品零售服务<br>品质生活之选</p>
+                </div>
+                <span class="type-arrow">→</span>
+            </div>
+            <div class="type-card" data-type="custom">
+                <div class="type-icon-wrap">◉</div>
+                <div class="type-info">
+                    <h3>定制</h3>
+                    <p>专属定制服务<br>独一无二的设计体验</p>
+                </div>
+                <span class="type-arrow">→</span>
+            </div>
+        </div>
+    </div>
 
-        // ==================== 图片配置中心 ====================
-        const CONFIG = {
-            sizes: {
-                S: { name: 'S码', label: '小号', height: '155-165cm', image: './images/sizes/S.jpg' },
-                M: { name: 'M码', label: '中号', height: '165-175cm', image: './images/sizes/M.jpg' },
-                L: { name: 'L码', label: '大号', height: '175-185cm', image: './images/sizes/L.jpg' },
-                XL: { name: 'XL码', label: '加大号', height: '185cm+', image: './images/sizes/XL.jpg' }
+    <!-- ==================== SCREEN 3+: APP ==================== -->
+
+    <!-- Product Browse -->
+    <div class="screen app-screen" id="browseScreen">
+        <div class="top-nav" id="topNav">
+            <div class="top-nav-main">
+                <button class="nav-back" id="browseBackBtn">←</button>
+                <div class="nav-title" id="navTitle">经典系列</div>
+                <button class="nav-cart" id="browseCartBtn">
+                    <span>☰</span>
+                    <span class="nav-cart-badge" id="navCartBadge">0</span>
+                </button>
+            </div>
+            <div class="series-tabs-row" id="seriesTabsRow"></div>
+        </div>
+        <div class="product-grid" id="productGrid"></div>
+    </div>
+
+    <!-- Custom Form -->
+    <div class="screen form-screen" id="customFormScreen">
+        <div class="top-nav" style="position: fixed;">
+            <div class="top-nav-main">
+                <button class="nav-back" id="customBackBtn">←</button>
+                <div class="nav-title">定制意向</div>
+                <div style="width: 40px;"></div>
+            </div>
+        </div>
+        <div class="form-header">
+            <h2>定制服务</h2>
+            <p>请详细填写您的定制需求</p>
+        </div>
+        <form id="customForm">
+            <div class="form-row">
+                <div class="form-group">
+                    <label class="form-label">定制类型 *</label>
+                    <select class="form-select" name="customType" required>
+                        <option value="">请选择</option>
+                        <option value="外观设计定制">外观设计定制</option>
+                        <option value="功能模块定制">功能模块定制</option>
+                        <option value="材质工艺定制">材质工艺定制</option>
+                        <option value="包装定制">包装定制</option>
+                        <option value="全案定制">全案定制</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">产品类别 *</label>
+                    <select class="form-select" name="productCategory" required>
+                        <option value="">请选择</option>
+                        <option value="腕表">腕表</option>
+                        <option value="配饰">配饰</option>
+                        <option value="礼盒">礼盒</option>
+                        <option value="其他">其他</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label class="form-label">材质偏好</label>
+                    <select class="form-select" name="materialPref">
+                        <option value="">请选择</option>
+                        <option value="精钢">精钢</option>
+                        <option value="钛合金">钛合金</option>
+                        <option value="陶瓷">陶瓷</option>
+                        <option value="碳纤维">碳纤维</option>
+                        <option value="贵金属">贵金属</option>
+                        <option value="皮革">皮革</option>
+                        <option value="不限">不限</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">机芯类型</label>
+                    <select class="form-select" name="movementType">
+                        <option value="">请选择</option>
+                        <option value="石英机芯">石英机芯</option>
+                        <option value="自动机械">自动机械</option>
+                        <option value="手动上链">手动上链</option>
+                        <option value="智能机芯">智能机芯</option>
+                        <option value="陀飞轮">陀飞轮</option>
+                        <option value="不限">不限</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label class="form-label">尺寸要求 (mm)</label>
+                    <input type="text" class="form-input" name="sizeReq" placeholder="如: 38-42">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">颜色偏好</label>
+                    <input type="text" class="form-input" name="colorPref" placeholder="如: 祖母绿+黑曜石">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label class="form-label">预算范围 *</label>
+                    <select class="form-select" name="budget" required>
+                        <option value="">请选择</option>
+                        <option value="5万以下">5万以下</option>
+                        <option value="5-10万">5-10万</option>
+                        <option value="10-50万">10-50万</option>
+                        <option value="50-100万">50-100万</option>
+                        <option value="100-500万">100-500万</option>
+                        <option value="500万以上">500万以上</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">预计数量 *</label>
+                    <input type="number" class="form-input" name="quantity" min="1" placeholder="请输入数量" required>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label class="form-label">期望交付时间</label>
+                    <select class="form-select" name="deliveryTime">
+                        <option value="">请选择</option>
+                        <option value="1个月内">1个月内</option>
+                        <option value="1-3个月">1-3个月</option>
+                        <option value="3-6个月">3-6个月</option>
+                        <option value="6-12个月">6-12个月</option>
+                        <option value="可协商">可协商</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">使用场景</label>
+                    <select class="form-select" name="usageScene">
+                        <option value="">请选择</option>
+                        <option value="商务礼品">商务礼品</option>
+                        <option value="个人收藏">个人收藏</option>
+                        <option value="企业定制">企业定制</option>
+                        <option value="婚礼纪念">婚礼纪念</option>
+                        <option value="其他">其他</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="form-label">参考图片链接</label>
+                <input type="url" class="form-input" name="referenceUrl" placeholder="https://...">
+            </div>
+            <div class="form-group">
+                <label class="form-label">定制需求详细描述 *</label>
+                <textarea class="form-textarea" name="customDesc" placeholder="请详细描述您的定制需求，包括：&#10;1. 设计理念与风格偏好&#10;2. 功能要求与特殊需求&#10;3. 使用场景与目标人群&#10;4. 其他补充说明..." required></textarea>
+            </div>
+            <div class="form-group">
+                <label class="form-label">品牌LOGO定制需求</label>
+                <select class="form-select" name="logoRequirement">
+                    <option value="">请选择</option>
+                    <option value="无需LOGO">无需LOGO</option>
+                    <option value="雕刻LOGO">雕刻LOGO</option>
+                    <option value="印刷LOGO">印刷LOGO</option>
+                    <option value="定制铭牌">定制铭牌</option>
+                    <option value="待定">待定</option>
+                </select>
+            </div>
+            <div class="form-actions">
+                <button type="button" class="form-btn secondary" id="customCancelBtn">返回</button>
+                <button type="submit" class="form-btn primary">下一步：填写联系信息</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Personal Info Form -->
+    <div class="screen form-screen" id="personalFormScreen">
+        <div class="top-nav" style="position: fixed;">
+            <div class="top-nav-main">
+                <button class="nav-back" id="personalBackBtn">←</button>
+                <div class="nav-title">联系信息</div>
+                <div style="width: 40px;"></div>
+            </div>
+        </div>
+        <div class="form-header">
+            <h2>个人信息</h2>
+            <p>请填写您的联系方式</p>
+        </div>
+        <form id="personalForm">
+            <div class="form-row">
+                <div class="form-group">
+                    <label class="form-label">姓名 *</label>
+                    <input type="text" class="form-input" name="name" required placeholder="请输入您的姓名">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">性别</label>
+                    <select class="form-select" name="gender">
+                        <option value="">请选择</option>
+                        <option value="男">男</option>
+                        <option value="女">女</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label class="form-label">联系电话 *</label>
+                    <input type="tel" class="form-input" name="phone" required placeholder="请输入手机号码">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">电子邮箱 *</label>
+                    <input type="email" class="form-input" name="email" required placeholder="example@email.com">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="form-label">公司名称</label>
+                <input type="text" class="form-input" name="company" placeholder="请输入公司名称（选填）">
+            </div>
+            <div class="form-group">
+                <label class="form-label">职位</label>
+                <input type="text" class="form-input" name="position" placeholder="请输入您的职位（选填）">
+            </div>
+            <div class="form-group">
+                <label class="form-label">所在地区 *</label>
+                <input type="text" class="form-input" name="region" required placeholder="省 / 市 / 区">
+            </div>
+            <div class="form-group">
+                <label class="form-label">详细地址</label>
+                <input type="text" class="form-input" name="address" placeholder="街道、门牌号等（选填）">
+            </div>
+            <div class="form-group">
+                <label class="form-label">微信号</label>
+                <input type="text" class="form-input" name="wechat" placeholder="方便我们添加您微信沟通（选填）">
+            </div>
+            <div class="form-group">
+                <label class="form-label">备注信息</label>
+                <textarea class="form-textarea" name="notes" placeholder="其他需要补充的信息..."></textarea>
+            </div>
+            <div class="form-actions">
+                <button type="button" class="form-btn secondary" id="personalCancelBtn">返回</button>
+                <button type="submit" class="form-btn primary">预览确认</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Preview Screen -->
+    <div class="screen form-screen" id="previewScreen">
+        <div class="top-nav" style="position: fixed;">
+            <div class="top-nav-main">
+                <button class="nav-back" id="previewBackBtn">←</button>
+                <div class="nav-title">确认提交</div>
+                <div style="width: 40px;"></div>
+            </div>
+        </div>
+        <div class="form-header">
+            <h2>确认信息</h2>
+            <p>请核对以下信息无误后提交</p>
+        </div>
+        <div id="previewContent"></div>
+        <div class="form-actions" style="margin-top: 24px;">
+            <button type="button" class="form-btn secondary" id="previewEditBtn">返回修改</button>
+            <button type="button" class="form-btn primary" id="previewSubmitBtn">确认提交</button>
+        </div>
+    </div>
+
+    <!-- Success Screen -->
+    <div class="screen success-screen" id="successScreen">
+        <div class="success-icon">✦</div>
+        <h2>提交成功</h2>
+        <p>感谢您的意向提交，我们的专业顾问将在24小时内与您联系，请留意您的邮箱和电话。</p>
+        <button class="success-btn" id="successHomeBtn">返回首页</button>
+    </div>
+
+    <!-- ==================== BOTTOM BAR ==================== -->
+    <div class="bottom-bar" id="bottomBar" style="display: none;">
+        <button class="bottom-cart-btn" id="bottomCartBtn">
+            <span>意向单</span>
+            <span class="bottom-cart-badge" id="bottomCartBadge">0</span>
+        </button>
+        <button class="bottom-submit-btn" id="bottomSubmitBtn">提交意向</button>
+    </div>
+
+    <!-- ==================== CART DRAWER ==================== -->
+    <div class="cart-overlay" id="cartOverlay"></div>
+    <div class="cart-drawer" id="cartDrawer">
+        <div class="cart-drawer-handle"></div>
+        <div class="cart-header">
+            <h3>意向单</h3>
+            <button class="cart-close" id="cartCloseBtn">✕</button>
+        </div>
+        <div class="cart-items" id="cartItems">
+            <div class="cart-empty">
+                <div class="cart-empty-icon">○</div>
+                <p>暂无商品</p>
+            </div>
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total-row">
+                <span>总计</span>
+                <span id="cartTotalCount">0 件商品</span>
+            </div>
+            <button class="cart-submit-btn" id="cartSubmitBtn">提交意向</button>
+        </div>
+    </div>
+
+    <!-- ==================== PRODUCT MODAL ==================== -->
+    <div class="modal-overlay" id="productModal">
+        <div class="modal-sheet" id="modalSheet">
+            <img class="modal-image" id="modalImage" src="" alt="">
+            <div class="modal-body">
+                <div class="modal-series" id="modalSeries">经典系列</div>
+                <h3 class="modal-title" id="modalTitle">产品名称</h3>
+                <p class="modal-subtitle" id="modalSubtitle">副标题</p>
+                <div class="modal-section">
+                    <div class="modal-section-title">设计理念</div>
+                    <div class="modal-section-text" id="modalConcept"></div>
+                </div>
+                <div class="modal-section">
+                    <div class="modal-section-title">材质工艺</div>
+                    <div class="modal-section-text" id="modalMaterial"></div>
+                </div>
+                <div class="modal-section">
+                    <div class="modal-section-title">可选尺寸</div>
+                    <div class="modal-sizes" id="modalSizes"></div>
+                </div>
+                <div class="modal-actions">
+                    <input type="number" class="modal-qty" id="modalQty" value="1" min="1">
+                    <button class="modal-add-btn" id="modalAddBtn">加入意向单</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== QTY POPOVER ==================== -->
+    <div class="popover-overlay" id="popoverOverlay"></div>
+    <div class="qty-popover" id="qtyPopover">
+        <input type="number" class="qty-popover-input" id="popoverQty" value="1" min="1">
+        <button class="qty-popover-btn" id="popoverConfirmBtn">确认添加</button>
+    </div>
+
+    <script>
+        // ==================== DATA ====================
+        const seriesConfig = {
+            classic: {
+                name: '经典系列',
+                intro: '温柔呼吸的治愈底色，奶油与原木的温润质感，适配各种家居风格的日常之选。',
+                modes: ['wholesale'],
+                colors: [
+                    { name: '奶油珍珠', hex: '#F5F1E8' },
+                    { name: '黄油燕麦', hex: '#E8DCC4' },
+                    { name: '浅陶土色', hex: '#C9A99A' },
+                    { name: '原木灰褐', hex: '#8B6F5C' }
+                ]
             },
-            styles: {
-                S1: { name: 'S-经典款', desc: '小号专属经典版型，修身剪裁', thumb: './images/styles/S1-thumb.webp', full: './images/styles/S1-full.webp' },
-                S2: { name: 'S-时尚款', desc: '小号专属潮流设计，精致细节', thumb: './images/styles/S2-thumb.webp', full: './images/styles/S2-full.webp' },
-                S3: { name: 'S-运动款', desc: '小号专属运动版型，灵活舒适', thumb: './images/styles/S3-thumb.webp', full: './images/styles/S3-full.webp' },
-                M1: { name: 'M-经典款', desc: '中号专属经典版型，标准剪裁', thumb: './images/styles/M1-thumb.webp', full: './images/styles/M1-full.webp' },
-                M2: { name: 'M-时尚款', desc: '中号专属潮流设计，都市风格', thumb: './images/styles/M2-thumb.webp', full: './images/styles/M2-full.webp' },
-                M3: { name: 'M-运动款', desc: '中号专属运动版型，活力动感', thumb: './images/styles/M3-thumb.webp', full: './images/styles/M3-full.webp' },
-                L1: { name: 'L-经典款', desc: '大号专属经典版型，宽松舒适', thumb: './images/styles/L1-thumb.webp', full: './images/styles/L1-full.webp' },
-                L2: { name: 'L-时尚款', desc: '大号专属潮流设计，气场十足', thumb: './images/styles/L2-thumb.webp', full: './images/styles/L2-full.webp' },
-                L3: { name: 'L-运动款', desc: '大号专属运动版型，舒展自如', thumb: './images/styles/L3-thumb.webp', full: './images/styles/L3-full.webp' },
-                XL1: { name: 'XL-经典款', desc: '加大号专属经典版型，大气从容', thumb: './images/styles/XL1-thumb.webp', full: './images/styles/XL1-full.webp' },
-                XL2: { name: 'XL-时尚款', desc: '加大号专属潮流设计，个性张扬', thumb: './images/styles/XL2-thumb.webp', full: './images/styles/XL2-full.webp' },
-                XL3: { name: 'XL-运动款', desc: '加大号专属运动版型，力量感强', thumb: './images/styles/XL3-thumb.webp', full: './images/styles/XL3-full.webp' }
+            evolution: {
+                name: '进化系列',
+                intro: '冷色几何的现代理性，鼠尾草与冷岩灰的工业美学，强调雕刻的立体线条感。',
+                modes: ['retail'],
+                colors: [
+                    { name: '鼠尾草薄荷', hex: '#A8B5A0' },
+                    { name: '迷雾蓝灰', hex: '#8A9BA8' },
+                    { name: '冷岩灰', hex: '#6B7280' },
+                    { name: '松烟黑', hex: '#1F2937' }
+                ]
             },
-            colors: {
-                color1: { name: '经典黑', desc: '沉稳大气，永不过时', thumb: './images/colors/color1.jpg', bg: 'linear-gradient(135deg, #2d2d2d 0%, #1a1a1a 100%)' },
-                color2: { name: '雅致白', desc: '纯净简洁，清新脱俗', thumb: './images/colors/color2.jpg', bg: 'linear-gradient(135deg, #f8f8f8 0%, #e8e8e8 100%)' },
-                color3: { name: '焦糖棕', desc: '温暖质感，复古格调', thumb: './images/colors/color3.jpg', bg: 'linear-gradient(135deg, #a0522d 0%, #8B4513 100%)' },
-                color4: { name: '雾霾蓝', desc: '低调优雅，宁静深邃', thumb: './images/colors/color4.jpg', bg: 'linear-gradient(135deg, #7a9cc6 0%, #5a7fa8 100%)' },
-                color5: { name: '橄榄绿', desc: '自然生机，沉稳内敛', thumb: './images/colors/color5.jpg', bg: 'linear-gradient(135deg, #6b8e23 0%, #556b2f 100%)' },
-                color6: { name: '珊瑚粉', desc: '温柔浪漫，时尚活力', thumb: './images/colors/color6.jpg', bg: 'linear-gradient(135deg, #f4a460 0%, #e9967a 100%)' },
-                color7: { name: '深酒红', desc: '高贵典雅，成熟魅力', thumb: './images/colors/color7.jpg', bg: 'linear-gradient(135deg, #722f37 0%, #5a1e24 100%)' },
-                color8: { name: '石墨灰', desc: '现代简约，商务质感', thumb: './images/colors/color8.jpg', bg: 'linear-gradient(135deg, #5a5a5a 0%, #3d3d3d 100%)' }
+            artisan: {
+                name: '匠作系列',
+                intro: '深邃馆藏的昂贵稀缺感，曜石与暗金的博物馆式沉稳，适合高客单价礼品。',
+                modes: ['retail'],
+                colors: [
+                    { name: '曜石深咖', hex: '#2C1810' },
+                    { name: '暗金古铜', hex: '#8B6239' },
+                    { name: '午夜靛青', hex: '#1E293B' },
+                    { name: '烟熏绛红', hex: '#4A1821' }
+                ]
             }
         };
 
-        // ==================== 状态管理 ====================
-        const state = {
-            currentStep: 0,
-            selections: {},
-            cart: [],
-            quantity: 1,
-            personalInfo: {},
-            editingCartIndex: -1,
-            totalSteps: 8,
-            stepNames: ['', '了解需求', '选择尺码', '浏览款式', '选择配色', '标记意向', '联系方式', '确认意向', '完成']
-        };
+        const products = [
+            // Heritage 经典系列 (批发)
+            { id: 'c1', series: 'classic', style: 'Heritage 经典', color: '奶油珍珠', colorHex: '#F5F1E8', image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600&h=800&fit=crop', concept: '以奶油珍珠白为画布，融入极简主义设计。温润如手工艺术纸的触感，呈现无攻击性的治愈视觉。', material: '316L精钢 / 蓝宝石玻璃 / 亚麻衬里表带 / 瑞士石英机芯', sizes: ['36mm','38mm','40mm','42mm'] },
+            { id: 'c2', series: 'classic', style: 'Heritage 经典', color: '黄油燕麦', colorHex: '#E8DCC4', image: 'https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?w=600&h=800&fit=crop', concept: '黄油燕麦色调如同午后阳光洒在原木桌面上，温暖而不张扬，是经典系列中最具亲和力的配色。', material: '316L精钢 / 矿物强化玻璃 / 小牛皮 / 自动机械机芯', sizes: ['36mm','38mm','40mm','42mm'] },
+            { id: 'c3', series: 'classic', style: 'Heritage 经典', color: '浅陶土色', colorHex: '#C9A99A', image: 'https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3?w=600&h=800&fit=crop', concept: '浅陶土色汲取自未经上釉的素陶，带有泥土的呼吸感与手作温度，适配各种家居风格的底色。', material: '玫瑰金PVD / 蓝宝石玻璃 / 绢丝带 / 瑞士石英机芯', sizes: ['36mm','38mm','40mm','42mm'] },
+            { id: 'c4', series: 'classic', style: 'Heritage 经典', color: '原木灰褐', colorHex: '#8B6F5C', image: 'https://images.unsplash.com/photo-1547996663-b8308d6e161c?w=600&h=800&fit=crop', concept: '原木灰褐如同陈年橡木的切面，沉淀着时间的温润。低饱和度的棕灰调诠释低调的尊贵。', material: '18K金PVD / 蓝宝石玻璃 / 鳄鱼皮 / 自动机械机芯', sizes: ['36mm','38mm','40mm','42mm'] },
+            { id: 'c5', series: 'classic', style: 'Heritage 传承', color: '奶油珍珠', colorHex: '#F5F1E8', image: 'https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?w=600&h=800&fit=crop', concept: '传承款以奶油珍珠白为基底，加入更细腻的表盘纹理，如手工纸的纤维触感般值得近观。', material: '316L精钢 / 穹面蓝宝石 / 意大利小牛皮 / 瑞士石英机芯', sizes: ['36mm','38mm','40mm','42mm'] },
+            { id: 'c6', series: 'classic', style: 'Heritage 传承', color: '黄油燕麦', colorHex: '#E8DCC4', image: 'https://images.unsplash.com/photo-1434056886845-dbd8f7e6c0a1?w=600&h=800&fit=crop', concept: '黄油燕麦传承款采用做旧工艺表壳，如同被岁月包浆的古物，散发着独特的历史韵味。', material: '青铜 / 矿物玻璃 / 皮革带 / 手动上链机芯', sizes: ['36mm','38mm','40mm','42mm'] },
+            { id: 'c7', series: 'classic', style: 'Heritage 传承', color: '浅陶土色', colorHex: '#C9A99A', image: 'https://images.unsplash.com/photo-1614164185128-e4ec99c436d7?w=600&h=800&fit=crop', concept: '浅陶土传承款搭配亚麻编织表带，将手工艺的温度从表盘延伸至佩戴体验，治愈而自然。', material: '316L精钢 / 蓝宝石玻璃 / 亚麻织物带 / 瑞士石英机芯', sizes: ['36mm','38mm','40mm','42mm'] },
+            { id: 'c8', series: 'classic', style: 'Heritage 传承', color: '原木灰褐', colorHex: '#8B6F5C', image: 'https://images.unsplash.com/photo-1539874754764-5a96559165b0?w=600&h=800&fit=crop', concept: '原木灰褐传承款是经典系列的沉稳之选，深棕色调如同老书房的胡桃木书架，安静而有分量。', material: '钛合金 / 蓝宝石玻璃 / 橡胶带 / 自动机械机芯', sizes: ['36mm','38mm','40mm','42mm'] },
 
-        const optionMap = {
-            type: { wholesale: '批发合作意向', retail: '零售选购意向' },
-            size: { S: 'S码', M: 'M码', L: 'L码', XL: 'XL码' }
-        };
+            // Evolve 进化系列 (零售)
+            { id: 'e1', series: 'evolution', style: 'Evolve 先锋', color: '鼠尾草薄荷', colorHex: '#A8B5A0', image: 'https://images.unsplash.com/photo-1619134778706-7015533a6150?w=600&h=800&fit=crop', concept: '鼠尾草薄荷代表进化系列的冷色基因，低饱和绿灰调彰显现代工业美学的理性与克制。', material: '钛合金 / 蓝宝石玻璃 / 钛金属链带 / 智能机芯', sizes: ['40mm','42mm','44mm','46mm'] },
+            { id: 'e2', series: 'evolution', style: 'Evolve 先锋', color: '迷雾蓝灰', colorHex: '#8A9BA8', image: 'https://images.unsplash.com/photo-1524592094714-0f0654e20314?w=600&h=800&fit=crop', concept: '迷雾蓝灰如同清晨山间的薄雾，冷峻而通透。这款配色强调雕刻的立体线条感与几何美学。', material: '钛合金 / 蓝宝石玻璃 / 氟橡胶带 / 智能机芯', sizes: ['40mm','42mm','44mm','46mm'] },
+            { id: 'e3', series: 'evolution', style: 'Evolve 先锋', color: '冷岩灰', colorHex: '#6B7280', image: 'https://images.unsplash.com/photo-1612817159949-195b6eb9e31a?w=600&h=800&fit=crop', concept: '冷岩灰是工作室水泥地面的颜色，硬朗、极简、不加修饰。适合追求纯粹功能主义的佩戴者。', material: 'DLC钛合金 / 蓝宝石玻璃 / 碳纤维带 / 智能机芯', sizes: ['40mm','42mm','44mm','46mm'] },
+            { id: 'e4', series: 'evolution', style: 'Evolve 先锋', color: '松烟黑', colorHex: '#1F2937', image: 'https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3?w=600&h=800&fit=crop', concept: '松烟黑不是纯黑，而是带有微弱蓝灰底的深邃色调，如同松木燃烧后的余烬，冷静而神秘。', material: '锻造碳 / 穹面蓝宝石 / 尼龙带 / 混合机芯', sizes: ['40mm','42mm','44mm','46mm'] },
+            { id: 'e5', series: 'evolution', style: 'Evolve 突破', color: '鼠尾草薄荷', colorHex: '#A8B5A0', image: 'https://images.unsplash.com/photo-1434056886845-dbd8f7e6c0a1?w=600&h=800&fit=crop', concept: '突破款鼠尾草薄荷采用磨砂陶瓷表壳，将冷色几何美学推向极致，触感如细腻的石灰岩。', material: '陶瓷 / 蓝宝石玻璃 / 织物带 / 混合机芯', sizes: ['40mm','42mm','44mm','46mm'] },
+            { id: 'e6', series: 'evolution', style: 'Evolve 突破', color: '迷雾蓝灰', colorHex: '#8A9BA8', image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600&h=800&fit=crop', concept: '迷雾蓝灰突破款搭配液态金属表圈，在不同光线下呈现微妙的蓝灰渐变，如同天气的万千气象。', material: '液态金属 / 蓝宝石玻璃 / 金属链带 / 混合机芯', sizes: ['40mm','42mm','44mm','46mm'] },
+            { id: 'e7', series: 'evolution', style: 'Evolve 突破', color: '冷岩灰', colorHex: '#6B7280', image: 'https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?w=600&h=800&fit=crop', concept: '冷岩灰突破款以全拉丝钛合金打造，表面纹理如同混凝土的浇筑痕迹，粗犷而精致。', material: '拉丝钛合金 / 蓝宝石玻璃 / 皮革带 / 混合机芯', sizes: ['40mm','42mm','44mm','46mm'] },
+            { id: 'e8', series: 'evolution', style: 'Evolve 突破', color: '松烟黑', colorHex: '#1F2937', image: 'https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?w=600&h=800&fit=crop', concept: '松烟黑突破款采用全黑化PVD工艺，连表冠与表扣都融入黑暗之中，展现极致的简约美学。', material: '全黑PVD精钢 / 蓝宝石玻璃 / 橡胶带 / 陀飞轮机芯', sizes: ['40mm','42mm','44mm','46mm'] },
 
-        // ==================== 动态渲染 ====================
-        function renderSizes() {
-            const container = document.getElementById('sizeContainer');
-            container.innerHTML = '';
-            container.className = 'flex flex-col gap-3';
-            
-            Object.entries(CONFIG.sizes).forEach(([key, item]) => {
-                const isSelected = state.selections.size === key ? 'selected' : '';
-                container.innerHTML += `
-                    <div class="option-card bg-surface border-2 border-transparent rounded-xl p-3 cursor-pointer flex items-center gap-4 ${isSelected}" 
-                         onclick="selectOption(2, 'size', '${key}', this)" data-size="${key}">
-                        <div class="w-16 h-16 rounded-lg bg-gray-100 flex-shrink-0 overflow-hidden relative">
-                            <div class="skeleton absolute inset-0"></div>
-                            <img src="${item.image}" alt="${item.name}" 
-                                 class="relative z-10 w-full h-full object-cover" loading="lazy"
-                                 onerror="this.style.display='none'; this.previousElementSibling.style.display='block'"
-                                 onload="this.previousElementSibling.style.display='none'">
-                        </div>
-                        <div class="flex-1 min-w-0">
-                            <div class="flex items-center justify-between">
-                                <div>
-                                    <h3 class="font-semibold text-base">${item.name}</h3>
-                                    <p class="text-secondary text-xs mt-0.5">${item.label} · ${item.height}</p>
-                                </div>
-                                <div class="check-icon w-5 h-5 rounded-full bg-accent flex items-center justify-center flex-shrink-0 ml-2">
-                                    <i class="fas fa-check text-white text-[10px]"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>`;
-            });
+            // Master 匠作系列 (零售)
+            { id: 'a1', series: 'artisan', style: 'Master 大师', color: '曜石深咖', colorHex: '#2C1810', image: 'https://images.unsplash.com/photo-1619134778706-7015533a6150?w=600&h=800&fit=crop', concept: '曜石深咖是匠作系列的灵魂，如同火山玻璃与陈年咖啡豆的融合，深邃而带有微弱的暖棕底。', material: '锻造碳 / 穹面蓝宝石 / 鳄鱼皮 / 手动上链机芯', sizes: ['38mm','40mm','42mm','44mm'] },
+            { id: 'a2', series: 'artisan', style: 'Master 大师', color: '暗金古铜', colorHex: '#8B6239', image: 'https://images.unsplash.com/photo-1524592094714-0f0654e20314?w=600&h=800&fit=crop', concept: '暗金古铜不是闪亮的黄金，而是博物馆中青铜器氧化后的沉稳色泽，昂贵而不张扬。', material: '青铜 / 穹面蓝宝石 / 皮革带 / 手动上链机芯', sizes: ['38mm','40mm','42mm','44mm'] },
+            { id: 'a3', series: 'artisan', style: 'Master 大师', color: '午夜靛青', colorHex: '#1E293B', image: 'https://images.unsplash.com/photo-1547996663-b8308d6e161c?w=600&h=800&fit=crop', concept: '午夜靛青介于墨蓝与炭黑之间，如同深夜图书馆的丝绒窗帘，沉稳中藏着知识的重量。', material: '陶瓷 / 穹面蓝宝石 / 绢丝带 / 陀飞轮机芯', sizes: ['38mm','40mm','42mm','44mm'] },
+            { id: 'a4', series: 'artisan', style: 'Master 大师', color: '烟熏绛红', colorHex: '#4A1821', image: 'https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?w=600&h=800&fit=crop', concept: '烟熏绛红如同陈酿波特酒的颜色，在低调中散发着致命的吸引力，适合最私密的收藏。', material: '陶瓷 / 穹面蓝宝石 / 鳄鱼皮 / 陀飞轮机芯', sizes: ['38mm','40mm','42mm','44mm'] },
+            { id: 'a5', series: 'artisan', style: 'Master 极致', color: '曜石深咖', colorHex: '#2C1810', image: 'https://images.unsplash.com/photo-1612817159949-195b6eb9e31a?w=600&h=800&fit=crop', concept: '极致款曜石深咖采用锻造碳表壳，每一枚的纹理都是独一无二的，如同指纹般不可复制。', material: '锻造碳 / 矿物玻璃 / 橡胶带 / 陀飞轮机芯', sizes: ['38mm','40mm','42mm','44mm'] },
+            { id: 'a6', series: 'artisan', style: 'Master 极致', color: '暗金古铜', colorHex: '#8B6239', image: 'https://images.unsplash.com/photo-1434056886845-dbd8f7e6c0a1?w=600&h=800&fit=crop', concept: '极致款暗金古铜会随佩戴者体温与汗液产生独特的氧化包浆，成为佩戴者个人历史的见证。', material: '青铜 / 穹面蓝宝石 / 皮革带 / 陀飞轮机芯', sizes: ['38mm','40mm','42mm','44mm'] },
+            { id: 'a7', series: 'artisan', style: 'Master 极致', color: '午夜靛青', colorHex: '#1E293B', image: 'https://images.unsplash.com/photo-1539874754764-5a96559165b0?w=600&h=800&fit=crop', concept: '极致款午夜靛青采用多层珐琅工艺，表盘在不同角度下呈现从墨蓝到炭黑的深邃变化。', material: '珐琅陶瓷 / 穹面蓝宝石 / 鳄鱼皮 / 陀飞轮机芯', sizes: ['38mm','40mm','42mm','44mm'] },
+            { id: 'a8', series: 'artisan', style: 'Master 极致', color: '烟熏绛红', colorHex: '#4A1821', image: 'https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?w=600&h=800&fit=crop', concept: '极致款烟熏绛红是匠作系列的封顶之作，采用稀有红铜合金，全球限量，博物馆级藏品。', material: '红铜合金 / 穹面蓝宝石 / 天鹅绒衬里带 / 陀飞轮机芯', sizes: ['38mm','40mm','42mm','44mm'] }
+        ];
+
+        // ==================== STATE ====================
+        let currentSeries = 'classic';
+        let userType = '';
+        let cart = [];
+        let currentProduct = null;
+        let pendingProduct = null;
+        let customData = {};
+        let personalData = {};
+        let navStack = [];
+
+        // ==================== FORM CONFIG ====================
+        const FORMSPREE_ID = 'YOUR_FORM_ID';
+        const FORMSPREE_URL = `https://formspree.io/f/${FORMSPREE_ID}`;
+
+        // ==================== NAVIGATION ====================
+        function showScreen(id) {
+            const target = document.getElementById(id);
+            if (!target) {
+                console.error('Screen not found:', id);
+                return;
+            }
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            target.classList.add('active');
+            window.scrollTo(0, 0);
         }
 
-        function renderStyles() {
-            const container = document.getElementById('styleContainer');
-            container.innerHTML = '';
-            container.className = 'space-y-3';
-            
-            const size = state.selections.size;
-            if (!size) return;
-            document.getElementById('styleSubtitle').textContent = `${CONFIG.sizes[size].name} 专属款式（3种可选）`;
-            const styleKeys = [`${size}1`, `${size}2`, `${size}3`];
-            
-            styleKeys.forEach(key => {
-                const item = CONFIG.styles[key];
-                const isSelected = state.selections.style === key ? 'selected' : '';
-                container.innerHTML += `
-                    <div class="option-card bg-surface border-2 border-transparent rounded-xl overflow-hidden cursor-pointer ${isSelected}" 
-                         onclick="selectOption(3, 'style', '${key}', this)" data-style="${key}">
-                        <div class="relative w-full h-32 bg-gradient-to-br from-gray-100 to-gray-200" 
-                             onclick="event.stopPropagation(); openImageModal('${item.full}')">
-                            <div class="skeleton absolute inset-0"></div>
-                            <img src="${item.thumb}" alt="${item.name}" 
-                                 class="relative z-10 w-full h-full object-cover" loading="lazy" 
-                                 onerror="this.style.display='none'; this.previousElementSibling.style.display='block'"
-                                 onload="this.previousElementSibling.style.display='none'">
-                            <div class="absolute bottom-2.5 right-2.5 z-20 w-7 h-7 bg-black/50 backdrop-blur-sm rounded-full flex items-center justify-center">
-                                <i class="fas fa-expand text-white text-[10px]"></i>
-                            </div>
-                        </div>
-                        <div class="p-3">
-                            <div class="flex items-center justify-between">
-                                <div class="min-w-0">
-                                    <h3 class="font-semibold text-sm truncate">${item.name}</h3>
-                                    <p class="text-secondary text-xs truncate">${item.desc}</p>
-                                </div>
-                                <div class="check-icon w-5 h-5 rounded-full bg-accent flex items-center justify-center flex-shrink-0 ml-2">
-                                    <i class="fas fa-check text-white text-[10px]"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>`;
-            });
+        function goToTypeScreen() {
+            navStack = ['brandScreen'];
+            showScreen('typeScreen');
         }
 
-        function renderColors() {
-            const container = document.getElementById('colorContainer');
-            container.innerHTML = '';
-            Object.entries(CONFIG.colors).forEach(([key, item]) => {
-                const isSelected = state.selections.color === key ? 'selected' : '';
-                container.innerHTML += `
-                    <div class="option-card bg-surface border-2 border-transparent rounded-xl p-4 cursor-pointer ${isSelected}" 
-                         onclick="selectOption(4, 'color', '${key}', this)" data-color="${key}">
-                        <div class="flex items-center gap-3">
-                            <div class="w-14 h-14 rounded-lg shadow-md flex-shrink-0" style="background: ${item.bg}"></div>
-                            <div class="flex-1 min-w-0">
-                                <div class="flex items-center justify-between">
-                                    <div>
-                                        <h3 class="font-semibold text-base">${item.name}</h3>
-                                        <p class="text-secondary text-xs">${item.desc}</p>
-                                    </div>
-                                    <div class="check-icon w-5 h-5 rounded-full bg-accent flex items-center justify-center flex-shrink-0 ml-2">
-                                        <i class="fas fa-check text-white text-[10px]"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>`;
-            });
+        function enterApp(type) {
+            userType = type;
+            navStack.push('typeScreen');
+
+            if (type === 'custom') {
+                showScreen('customFormScreen');
+                document.getElementById('bottomBar').style.display = 'none';
+            } else {
+                const allowed = Object.keys(seriesConfig).filter(k => seriesConfig[k].modes.includes(type));
+                currentSeries = allowed[0];
+                renderSeriesTabs();
+                renderProducts();
+                showScreen('browseScreen');
+                document.getElementById('bottomBar').style.display = 'flex';
+            }
         }
 
-        function renderStep5() {
-            const s = state.selections;
-            const sizeItem = CONFIG.sizes[s.size];
-            const styleItem = CONFIG.styles[s.style];
-            const colorItem = CONFIG.colors[s.color];
-            const isEdit = state.editingCartIndex >= 0;
-            
-            document.getElementById('step5SkuSummary').innerHTML = `
-                <h3 class="text-xs font-medium text-secondary mb-2">${isEdit ? '编辑意向商品' : '当前意向商品'}</h3>
-                <div class="flex items-center gap-3">
-                    <div class="w-14 h-14 rounded-lg bg-gray-100 overflow-hidden flex-shrink-0">
-                        <img src="${styleItem?.thumb || ''}" class="w-full h-full object-cover" onerror="this.style.display='none'">
+        function goBack() {
+            closeModal();
+            closeQtyPopover();
+            document.getElementById('cartDrawer').classList.remove('open');
+            document.getElementById('cartOverlay').classList.remove('open');
+
+            if (navStack.length === 0) {
+                showScreen('brandScreen');
+                document.getElementById('bottomBar').style.display = 'none';
+                return;
+            }
+
+            const prev = navStack.pop();
+
+            if (prev === 'typeScreen') {
+                showScreen('typeScreen');
+                document.getElementById('bottomBar').style.display = 'none';
+            } else if (prev === 'browseScreen') {
+                showScreen('browseScreen');
+                document.getElementById('bottomBar').style.display = 'flex';
+            } else if (prev === 'customFormScreen') {
+                showScreen('customFormScreen');
+                document.getElementById('bottomBar').style.display = 'none';
+            } else if (prev === 'personalFormScreen') {
+                showScreen('personalFormScreen');
+                document.getElementById('bottomBar').style.display = 'none';
+            } else if (prev === 'previewScreen') {
+                showScreen('previewScreen');
+            } else if (prev === 'brandScreen') {
+                showScreen('brandScreen');
+                document.getElementById('bottomBar').style.display = 'none';
+            } else {
+                resetApp();
+            }
+        }
+
+        function resetApp() {
+            cart = [];
+            customData = {};
+            personalData = {};
+            currentSeries = 'classic';
+            userType = '';
+            navStack = [];
+            updateCartUI();
+            showScreen('brandScreen');
+            document.getElementById('bottomBar').style.display = 'none';
+        }
+
+        // ==================== SERIES TABS ====================
+        function renderSeriesTabs() {
+            const container = document.getElementById('seriesTabsRow');
+            const allowed = Object.keys(seriesConfig).filter(k => seriesConfig[k].modes.includes(userType));
+
+            if (allowed.length <= 1) {
+                container.innerHTML = `<button class="series-pill active" disabled>经典系列</button>`;
+                document.getElementById('navTitle').textContent = '经典系列';
+            } else {
+                container.innerHTML = allowed.map(key => `
+                    <button class="series-pill ${key === currentSeries ? 'active' : ''}" data-series="${key}">
+                        ${seriesConfig[key].name}
+                    </button>
+                `).join('');
+                document.getElementById('navTitle').textContent = seriesConfig[currentSeries].name;
+            }
+        }
+
+        function switchSeries(series) {
+            if (series === currentSeries) return;
+            currentSeries = series;
+            renderSeriesTabs();
+            renderProducts();
+        }
+
+        // ==================== PRODUCTS ====================
+        function renderProducts() {
+            const grid = document.getElementById('productGrid');
+            const items = products.filter(p => p.series === currentSeries);
+
+            grid.innerHTML = items.map((p, i) => `
+                <div class="product-card" style="animation-delay: ${i * 0.04}s" data-product-id="${p.id}">
+                    <div class="card-image-wrap">
+                        <img class="card-image" src="${p.image}" alt="${p.style}" loading="lazy">
+                        <div class="card-image-overlay"></div>
+                        <div class="card-quick-view">查看详情</div>
                     </div>
-                    <div class="flex-1 min-w-0">
-                        <p class="font-semibold text-sm truncate">${styleItem?.name || '-'} · ${colorItem?.name || '-'}</p>
-                        <p class="text-secondary text-xs">${sizeItem?.name || '-'} · ${sizeItem?.height || ''}</p>
+                    <div class="card-body">
+                        <div class="card-color-row">
+                            <span class="card-color-dot" style="background:${p.colorHex}"></span>
+                            <span class="card-color-name">${p.color}</span>
+                        </div>
+                        <h3 class="card-title">${p.style}</h3>
+                        <p class="card-subtitle">${p.concept.substring(0, 32)}...</p>
+                        <div class="card-meta">
+                            <span class="card-sizes">${p.sizes.join('/')}</span>
+                            <button class="card-add-btn" data-add-id="${p.id}">+</button>
+                        </div>
                     </div>
                 </div>
-            `;
-            
-            document.getElementById('qtyDisplay').textContent = state.quantity;
-            document.getElementById('qtySummary').textContent = state.quantity;
-            document.getElementById('totalPrice').textContent = `¥${(299 * state.quantity).toLocaleString()}.00`;
-            
-            const previewBox = document.getElementById('cartPreviewBox');
-            if (state.cart.length > 0 && !isEdit) {
-                let html = `<div class="bg-surface rounded-xl p-4"><h3 class="text-xs font-medium text-secondary mb-2">意向清单已有商品 (${state.cart.length}款)</h3><div class="space-y-2">`;
-                state.cart.forEach((item) => {
-                    const si = CONFIG.sizes[item.size];
-                    const st = CONFIG.styles[item.style];
-                    const co = CONFIG.colors[item.color];
-                    html += `
-                        <div class="flex items-center justify-between text-xs py-1.5 border-b border-gray-100 last:border-0">
-                            <div class="flex items-center gap-2 min-w-0">
-                                <div class="w-6 h-6 rounded bg-gray-100 flex-shrink-0" style="background:${co?.bg||'#eee'}"></div>
-                                <span class="truncate">${st?.name||'-'} · ${co?.name||'-'} · ${si?.name||'-'}</span>
+            `).join('');
+        }
+
+        // ==================== MODAL ====================
+        function openModal(id) {
+            const p = products.find(x => x.id === id);
+            if (!p) return;
+            currentProduct = p;
+
+            document.getElementById('modalImage').src = p.image;
+            document.getElementById('modalSeries').textContent = seriesConfig[p.series].name;
+            document.getElementById('modalTitle').textContent = `${p.style} · ${p.color}`;
+            document.getElementById('modalSubtitle').textContent = p.concept.substring(0, 40) + '...';
+            document.getElementById('modalConcept').textContent = p.concept;
+            document.getElementById('modalMaterial').textContent = p.material;
+            document.getElementById('modalQty').value = 1;
+            document.getElementById('modalSizes').innerHTML = p.sizes.map(s =>
+                `<span class="modal-size-chip">${s}</span>`
+            ).join('');
+
+            document.getElementById('productModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(e) {
+            if (e && e.target !== e.currentTarget && e.target.id !== 'productModal') return;
+            document.getElementById('productModal').classList.remove('active');
+            document.body.style.overflow = '';
+            currentProduct = null;
+        }
+
+        function addFromModal() {
+            if (!currentProduct) return;
+            const q = parseInt(document.getElementById('modalQty').value) || 1;
+            addToCart(currentProduct.id, q);
+            closeModal();
+        }
+
+        // ==================== QTY POPOVER ====================
+        function showQtyPopover(e, id) {
+            e.stopPropagation();
+            pendingProduct = id;
+            const btn = e.currentTarget;
+            const popover = document.getElementById('qtyPopover');
+            const overlay = document.getElementById('popoverOverlay');
+            const rect = btn.getBoundingClientRect();
+
+            popover.style.left = Math.min(rect.left - 120, window.innerWidth - 190) + 'px';
+            popover.style.top = (rect.top - 130) + 'px';
+
+            popover.classList.add('active');
+            overlay.classList.add('active');
+            document.getElementById('popoverQty').value = 1;
+        }
+
+        function closeQtyPopover() {
+            document.getElementById('qtyPopover').classList.remove('active');
+            document.getElementById('popoverOverlay').classList.remove('active');
+            pendingProduct = null;
+        }
+
+        function confirmAddToCart() {
+            if (!pendingProduct) return;
+            const q = parseInt(document.getElementById('popoverQty').value) || 1;
+            addToCart(pendingProduct, q);
+            closeQtyPopover();
+        }
+
+        // ==================== CART ====================
+        function addToCart(id, qty) {
+            const p = products.find(x => x.id === id);
+            if (!p) return;
+
+            const exist = cart.find(x => x.id === id);
+            if (exist) exist.quantity += qty;
+            else cart.push({ id, product: p, quantity: qty });
+
+            updateCartUI();
+        }
+
+        function removeFromCart(id) {
+            cart = cart.filter(x => x.id !== id);
+            updateCartUI();
+        }
+
+        function updateCartQty(id, delta) {
+            const item = cart.find(x => x.id === id);
+            if (!item) return;
+            item.quantity += delta;
+            if (item.quantity <= 0) removeFromCart(id);
+            else updateCartUI();
+        }
+
+        function updateCartUI() {
+            const total = cart.reduce((s, x) => s + x.quantity, 0);
+
+            const badges = ['navCartBadge', 'bottomCartBadge'];
+            badges.forEach(bid => {
+                const el = document.getElementById(bid);
+                if (total > 0) {
+                    el.textContent = total;
+                    el.style.display = 'flex';
+                } else {
+                    el.style.display = 'none';
+                }
+            });
+
+            document.getElementById('cartTotalCount').textContent = `${total} 件商品`;
+
+            const container = document.getElementById('cartItems');
+            if (cart.length === 0) {
+                container.innerHTML = `
+                    <div class="cart-empty">
+                        <div class="cart-empty-icon">○</div>
+                        <p>暂无商品</p>
+                    </div>
+                `;
+            } else {
+                container.innerHTML = cart.map(item => `
+                    <div class="cart-item" data-cart-id="${item.id}">
+                        <img class="cart-item-img" src="${item.product.image}" loading="lazy">
+                        <div class="cart-item-info">
+                            <div class="cart-item-name">${item.product.style}</div>
+                            <div class="cart-item-color">
+                                <span class="cart-item-color-dot" style="background:${item.product.colorHex}"></span>
+                                ${item.product.color}
                             </div>
-                            <span class="font-medium flex-shrink-0 ml-2">x${item.quantity}</span>
+                            <div class="cart-item-qty">
+                                <button class="qty-btn" data-qty-delta="-1" data-qty-id="${item.id}">−</button>
+                                <span style="font-size:13px;min-width:20px;text-align:center;">${item.quantity}</span>
+                                <button class="qty-btn" data-qty-delta="1" data-qty-id="${item.id}">+</button>
+                            </div>
+                        </div>
+                        <button class="cart-item-del" data-del-id="${item.id}">✕</button>
+                    </div>
+                `).join('');
+            }
+        }
+
+        function toggleCart() {
+            const drawer = document.getElementById('cartDrawer');
+            const overlay = document.getElementById('cartOverlay');
+            const isOpen = drawer.classList.contains('open');
+
+            if (isOpen) {
+                drawer.classList.remove('open');
+                overlay.classList.remove('open');
+            } else {
+                drawer.classList.add('open');
+                overlay.classList.add('open');
+            }
+        }
+
+        // ==================== FORMS ====================
+        function handleCustomSubmit(e) {
+            e.preventDefault();
+            const f = e.target;
+            customData = {
+                type: 'custom',
+                customType: f.customType.value,
+                productCategory: f.productCategory.value,
+                materialPref: f.materialPref.value,
+                movementType: f.movementType.value,
+                sizeReq: f.sizeReq.value,
+                colorPref: f.colorPref.value,
+                budget: f.budget.value,
+                quantity: f.quantity.value,
+                deliveryTime: f.deliveryTime.value,
+                usageScene: f.usageScene.value,
+                referenceUrl: f.referenceUrl.value,
+                customDesc: f.customDesc.value,
+                logoRequirement: f.logoRequirement.value
+            };
+            navStack.push('customFormScreen');
+            showScreen('personalFormScreen');
+        }
+
+        function goToPersonalInfo() {
+            if (cart.length === 0) {
+                alert('请先添加商品到意向单');
+                return;
+            }
+            toggleCart();
+            navStack.push('browseScreen');
+            showScreen('personalFormScreen');
+        }
+
+        function handlePersonalSubmit(e) {
+            e.preventDefault();
+            const f = e.target;
+            personalData = {
+                name: f.name.value,
+                gender: f.gender.value,
+                phone: f.phone.value,
+                email: f.email.value,
+                company: f.company.value,
+                position: f.position.value,
+                region: f.region.value,
+                address: f.address.value,
+                wechat: f.wechat.value,
+                notes: f.notes.value
+            };
+            renderPreview();
+            navStack.push('personalFormScreen');
+            showScreen('previewScreen');
+        }
+
+        function renderPreview() {
+            const c = document.getElementById('previewContent');
+            let html = '';
+
+            if (cart.length > 0) {
+                html += `<div class="preview-block"><h4>意向商品</h4>`;
+                cart.forEach(item => {
+                    html += `
+                        <div class="preview-row">
+                            <span class="preview-label">${item.product.style} · ${item.product.color}</span>
+                            <span class="preview-value">× ${item.quantity}</span>
                         </div>`;
                 });
-                html += `</div></div>`;
-                previewBox.innerHTML = html;
-                previewBox.classList.remove('hidden');
-            } else {
-                previewBox.innerHTML = '';
-                previewBox.classList.add('hidden');
+                html += `</div>`;
             }
-        }
 
-        // ==================== 意向清单抽屉逻辑 ====================
-        function updateCartBadge() {
-            const totalQty = state.cart.reduce((sum, item) => sum + item.quantity, 0);
-            const badge = document.getElementById('cartBadge');
-            if (totalQty > 0) {
-                badge.textContent = totalQty > 99 ? '99+' : totalQty;
-                badge.classList.remove('hidden');
-            } else {
-                badge.classList.add('hidden');
-            }
-        }
-
-        function toggleCartFab(show) {
-            const fab = document.getElementById('cartFab');
-            if (show) fab.classList.remove('hidden');
-            else fab.classList.add('hidden');
-        }
-
-        function openIntentionDrawer() {
-            renderIntentionDrawer();
-            document.getElementById('intentionDrawer').classList.add('open');
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeIntentionDrawer() {
-            document.getElementById('intentionDrawer').classList.remove('open');
-            document.body.style.overflow = '';
-        }
-
-        function renderIntentionDrawer() {
-            const list = document.getElementById('intentionDrawerList');
-            const totalEl = document.getElementById('intentionDrawerTotal');
-            if (state.cart.length === 0) {
-                list.innerHTML = `
-                    <div class="flex flex-col items-center justify-center py-10 text-secondary">
-                        <i class="fas fa-clipboard-list text-4xl mb-3 opacity-30"></i>
-                        <p class="text-sm">意向清单是空的</p>
-                        <button class="mt-4 px-4 py-2 rounded-lg bg-surface text-primary text-sm font-medium" onclick="closeIntentionDrawer(); goToStep(2);">去浏览产品</button>
-                    </div>`;
-                totalEl.textContent = '¥0.00';
-                return;
-            }
-            
-            let html = '';
-            let total = 0;
-            state.cart.forEach((item, idx) => {
-                const si = CONFIG.sizes[item.size];
-                const st = CONFIG.styles[item.style];
-                const co = CONFIG.colors[item.color];
-                total += item.subtotal;
-                html += `
-                    <div class="flex items-center gap-3 bg-surface rounded-xl p-3">
-                        <div class="w-16 h-16 rounded-lg bg-gray-100 overflow-hidden flex-shrink-0">
-                            <img src="${st?.thumb||''}" class="w-full h-full object-cover" onerror="this.style.display='none';this.parentElement.style.background='${co?.bg||'#eee'}'">
-                        </div>
-                        <div class="flex-1 min-w-0">
-                            <p class="font-semibold text-sm truncate">${st?.name||'-'} · ${co?.name||'-'}</p>
-                            <p class="text-secondary text-xs">${si?.name||'-'} · 意向数量x${item.quantity}</p>
-                            <p class="text-accent font-semibold text-sm mt-0.5">参考 ¥${item.subtotal.toLocaleString()}</p>
-                        </div>
-                        <div class="flex flex-col gap-1.5 flex-shrink-0">
-                            <button onclick="intentionEditItem(${idx})" class="w-7 h-7 rounded-full bg-white border border-gray-200 flex items-center justify-center text-secondary">
-                                <i class="fas fa-pen text-[10px]"></i>
-                            </button>
-                            <button onclick="intentionRemoveItem(${idx})" class="w-7 h-7 rounded-full bg-red-50 flex items-center justify-center text-red-500">
-                                <i class="fas fa-trash text-[10px]"></i>
-                            </button>
-                        </div>
-                    </div>`;
-            });
-            list.innerHTML = html;
-            totalEl.textContent = `¥${total.toLocaleString()}.00`;
-        }
-
-        function intentionRemoveItem(index) {
-            state.cart.splice(index, 1);
-            updateCartBadge();
-            renderIntentionDrawer();
-            if (state.currentStep === 5) renderStep5();
-            if (state.currentStep === 7) generateSummary();
-        }
-
-        function intentionEditItem(index) {
-            state.editingCartIndex = index;
-            const item = state.cart[index];
-            state.selections.size = item.size;
-            state.selections.style = item.style;
-            state.selections.color = item.color;
-            state.quantity = item.quantity;
-            closeIntentionDrawer();
-            goToStep(2);
-        }
-
-        function intentionCheckout() {
-            if (state.cart.length === 0) return;
-            closeIntentionDrawer();
-            goToStep(6);
-        }
-
-        // ==================== 核心逻辑 ====================
-        document.addEventListener('DOMContentLoaded', () => {
-            renderSizes();
-            updateUI();
-        });
-
-        function goToStep(step) {
-            if (step === 5 && (!state.selections.size || !state.selections.style || !state.selections.color)) {
-                goToStep(2);
-                return;
-            }
-            
-            const prevStep = state.currentStep;
-            state.currentStep = step;
-            
-            document.querySelectorAll('.step-container').forEach(el => {
-                el.classList.remove('active', 'prev');
-            });
-            
-            const targetId = step === 0 ? 'welcomeStep' : `step${step}`;
-            const targetEl = document.getElementById(targetId);
-            if (targetEl) {
-                targetEl.classList.add('active');
-                if (prevStep > step) {
-                    targetEl.classList.add('prev');
-                    requestAnimationFrame(() => {
-                        targetEl.classList.remove('prev');
-                    });
-                }
-            }
-            
-            if (prevStep > 0 && prevStep !== step) {
-                const prevEl = document.getElementById(`step${prevStep}`);
-                if (prevEl) prevEl.classList.add('prev');
-            }
-            
-            if (step === 2) renderSizes();
-            if (step === 3) renderStyles();
-            if (step === 4) renderColors();
-            if (step === 5) renderStep5();
-            updateUI();
-            scrollToTop();
-        }
-
-        function nextStep() {
-            if (state.currentStep === 7) {
-                submitIntention();
-                return;
-            }
-            if (state.currentStep < state.totalSteps) goToStep(state.currentStep + 1);
-        }
-
-        function prevStep() {
-            if (state.currentStep > 0) goToStep(state.currentStep - 1);
-        }
-
-        function selectOption(step, key, value, element) {
-            const parent = element.parentElement;
-            parent.querySelectorAll('.option-card').forEach(card => card.classList.remove('selected'));
-            element.classList.add('selected');
-            state.selections[key] = value;
-            document.getElementById('nextBtn').disabled = false;
-            document.getElementById('bottomHint').textContent = '已选择，点击下一步继续';
-            updateProgressState();
-        }
-
-        function addToCart(continueShopping) {
-            const item = {
-                size: state.selections.size,
-                style: state.selections.style,
-                color: state.selections.color,
-                quantity: state.quantity,
-                unitPrice: 299,
-                subtotal: 299 * state.quantity
-            };
-            
-            if (state.editingCartIndex >= 0) {
-                state.cart[state.editingCartIndex] = item;
-                state.editingCartIndex = -1;
-            } else {
-                state.cart.push(item);
-            }
-            
-            updateCartBadge();
-            
-            if (continueShopping) {
-                const type = state.selections.type;
-                state.selections = { type: type };
-                state.quantity = 1;
-                goToStep(2);
-            } else {
-                goToStep(6);
-            }
-        }
-
-        function removeCartItem(index) {
-            state.cart.splice(index, 1);
-            updateCartBadge();
-            generateSummary();
-            if (state.cart.length === 0) {
-                state.selections = { type: state.selections.type };
-                state.quantity = 1;
-                goToStep(2);
-            }
-        }
-
-        function editCartItem(index) {
-            const item = state.cart[index];
-            state.editingCartIndex = index;
-            state.selections.size = item.size;
-            state.selections.style = item.style;
-            state.selections.color = item.color;
-            state.quantity = item.quantity;
-            goToStep(2);
-        }
-
-        function changeQty(delta) {
-            const isWholesale = state.selections.type === 'wholesale';
-            const minQty = isWholesale ? 50 : 1;
-            let newQty = state.quantity + delta;
-            if (newQty < minQty) {
-                newQty = minQty;
-                document.getElementById('qtyWarning').classList.remove('hidden');
-                setTimeout(() => { document.getElementById('qtyWarning').classList.add('hidden'); }, 2000);
-            } else {
-                document.getElementById('qtyWarning').classList.add('hidden');
-            }
-            state.quantity = newQty;
-            document.getElementById('qtyDisplay').textContent = newQty;
-            document.getElementById('qtySummary').textContent = newQty;
-            const total = 299 * newQty;
-            document.getElementById('totalPrice').textContent = `¥${total.toLocaleString()}.00`;
-        }
-
-        function validateStep6() {
-            const name = document.getElementById('nameInput').value.trim();
-            const phone = document.getElementById('phoneInput').value.trim();
-            const address = document.getElementById('addressInput').value.trim();
-            const isValid = name.length > 0 && phone.length === 11 && /^1[3-9]\d{9}$/.test(phone);
-            document.getElementById('nextBtn').disabled = !isValid;
-            document.getElementById('bottomHint').textContent = isValid ? '信息完整，可以下一步' : '请填写姓名和手机号';
-            if (isValid) state.personalInfo = { name, phone, address };
-        }
-
-        function generateSummary() {
-            const container = document.getElementById('summaryContent');
-            const info = state.personalInfo;
-            const totalAmount = state.cart.reduce((sum, item) => sum + item.subtotal, 0);
-            const orderId = 'INT-' + new Date().toISOString().slice(0,10).replace(/-/g,'') + '-' + String(Math.floor(Math.random()*900)+100).padStart(3,'0');
-            
-            let itemsHtml = '';
-            state.cart.forEach((item, idx) => {
-                const si = CONFIG.sizes[item.size];
-                const st = CONFIG.styles[item.style];
-                const co = CONFIG.colors[item.color];
-                itemsHtml += `
-                    <div class="flex items-center justify-between py-2 border-b border-gray-100 last:border-0">
-                        <div class="flex items-center gap-2 min-w-0">
-                            <div class="w-8 h-8 rounded bg-gray-100 flex-shrink-0 overflow-hidden">
-                                <img src="${st?.thumb||''}" class="w-full h-full object-cover" onerror="this.style.display='none';this.parentElement.style.background='${co?.bg||'#eee'}'">
-                            </div>
-                            <div class="min-w-0">
-                                <p class="text-xs font-medium truncate">${st?.name||'-'} · ${co?.name||'-'}</p>
-                                <p class="text-[10px] text-secondary">${si?.name||'-'} · 意向数量x${item.quantity}</p>
-                            </div>
-                        </div>
-                        <div class="flex items-center gap-2 flex-shrink-0 ml-2">
-                            <span class="text-xs font-semibold text-secondary">参考 ¥${item.subtotal.toLocaleString()}</span>
-                            <button onclick="editCartItem(${idx})" class="w-6 h-6 rounded-full bg-gray-100 flex items-center justify-center text-secondary">
-                                <i class="fas fa-pen text-[8px]"></i>
-                            </button>
-                            <button onclick="removeCartItem(${idx})" class="w-6 h-6 rounded-full bg-red-50 flex items-center justify-center text-red-500">
-                                <i class="fas fa-trash text-[8px]"></i>
-                            </button>
-                        </div>
-                    </div>`;
-            });
-            
-            container.innerHTML = `
-                <div class="summary-card bg-surface rounded-xl p-4">
-                    <div class="flex items-center justify-between mb-3">
-                        <h3 class="font-semibold flex items-center gap-2 text-sm"><i class="fas fa-clipboard-list text-accent text-xs"></i> 意向商品清单</h3>
-                        <span class="text-xs text-secondary">共 ${state.cart.length} 款</span>
-                    </div>
-                    <div class="space-y-1">
-                        ${itemsHtml}
-                    </div>
-                    <div class="border-t border-gray-200 mt-3 pt-3 flex justify-between items-center">
-                        <span class="font-semibold text-sm">参考合计</span>
-                        <span class="text-lg font-bold text-accent">¥${totalAmount.toLocaleString()}.00</span>
-                    </div>
-                    <p class="text-[10px] text-secondary mt-2 text-center">* 以上价格为参考价，实际价格以顾问报价为准</p>
-                </div>
-                <div class="summary-card bg-surface rounded-xl p-4" style="animation-delay: 0.1s">
-                    <h3 class="font-semibold mb-3 flex items-center gap-2 text-sm"><i class="fas fa-user text-accent text-xs"></i> 联系信息</h3>
-                    <div class="space-y-2 text-xs">
-                        <div class="flex justify-between items-center py-1.5 border-b border-gray-100"><span class="text-secondary">联系人</span><span class="font-medium">${info.name || '-'}</span></div>
-                        <div class="flex justify-between items-center py-1.5 border-b border-gray-100"><span class="text-secondary">联系电话</span><span class="font-medium">${info.phone || '-'}</span></div>
-                        <div class="flex justify-between items-start py-1.5"><span class="text-secondary flex-shrink-0">联系地址</span><span class="font-medium text-right ml-4">${info.address || '-'}</span></div>
-                    </div>
-                </div>`;
-            
-            document.getElementById('orderId').textContent = orderId;
-            document.getElementById('successType').textContent = optionMap.type[state.selections.type] || '-';
-            document.getElementById('successSize').textContent = state.cart.length + ' 款';
-            document.getElementById('successStyle').textContent = '¥' + totalAmount.toLocaleString();
-            document.getElementById('successColor').textContent = '-';
-            document.getElementById('successQty').textContent = state.cart.reduce((sum, i) => sum + i.quantity, 0) + ' 件';
-            
-            return orderId;
-        }
-
-        // ==================== FORMSPREE 提交意向单 ====================
-        async function submitIntention() {
-            const btn = document.getElementById('nextBtn');
-            const originalText = btn ? btn.innerHTML : '提交意向';
-            
-            if (btn) {
-                btn.disabled = true;
-                btn.innerHTML = '<i class="fas fa-circle-notch fa-spin mr-1"></i> 提交中...';
-            }
-            
-            const orderId = generateSummary();
-            const info = state.personalInfo;
-            const totalAmount = state.cart.reduce((sum, item) => sum + item.subtotal, 0);
-            
-            const payload = {
-                form_type: 'purchase_intention',
-                order_id: orderId,
-                type: optionMap.type[state.selections.type] || '-',
-                item_count: state.cart.length,
-                total_amount: totalAmount,
-                items: JSON.stringify(state.cart.map((item, i) => ({
-                    no: i + 1,
-                    size: optionMap.size[item.size],
-                    style: CONFIG.styles[item.style]?.name,
-                    color: CONFIG.colors[item.color]?.name,
-                    quantity: item.quantity,
-                    subtotal: item.subtotal
-                }))),
-                name: info.name,
-                phone: info.phone,
-                address: info.address,
-                timestamp: new Date().toISOString()
-            };
-            
-            try {
-                const response = await fetch(FORMSPREE_ENDPOINT, {
-                    method: 'POST',
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(payload)
+            if (Object.keys(customData).length > 0) {
+                html += `<div class="preview-block"><h4>定制需求</h4>`;
+                const fields = [
+                    ['定制类型', customData.customType],
+                    ['产品类别', customData.productCategory],
+                    ['材质偏好', customData.materialPref || '-'],
+                    ['机芯类型', customData.movementType || '-'],
+                    ['尺寸要求', customData.sizeReq || '-'],
+                    ['颜色偏好', customData.colorPref || '-'],
+                    ['预算范围', customData.budget],
+                    ['预计数量', customData.quantity],
+                    ['交付时间', customData.deliveryTime || '-'],
+                    ['使用场景', customData.usageScene || '-'],
+                    ['LOGO需求', customData.logoRequirement || '-']
+                ];
+                fields.forEach(([label, val]) => {
+                    html += `<div class="preview-row"><span class="preview-label">${label}</span><span class="preview-value">${val}</span></div>`;
                 });
-                
-                if (response.ok) {
-                    goToStep(8);
+                if (customData.customDesc) {
+                    html += `<div class="preview-row"><span class="preview-label">详细描述</span><span class="preview-value">${customData.customDesc}</span></div>`;
+                }
+                html += `</div>`;
+            }
+
+            html += `<div class="preview-block"><h4>联系信息</h4>`;
+            const pFields = [
+                ['姓名', personalData.name],
+                ['性别', personalData.gender || '-'],
+                ['电话', personalData.phone],
+                ['邮箱', personalData.email],
+                ['公司', personalData.company || '-'],
+                ['职位', personalData.position || '-'],
+                ['地区', personalData.region],
+                ['地址', personalData.address || '-'],
+                ['微信', personalData.wechat || '-']
+            ];
+            pFields.forEach(([label, val]) => {
+                html += `<div class="preview-row"><span class="preview-label">${label}</span><span class="preview-value">${val}</span></div>`;
+            });
+            if (personalData.notes) {
+                html += `<div class="preview-row"><span class="preview-label">备注</span><span class="preview-value">${personalData.notes}</span></div>`;
+            }
+            html += `</div>`;
+
+            c.innerHTML = html;
+        }
+
+        async function finalSubmit() {
+            const data = new FormData();
+            data.append('_subject', `TIMELESS意向单 - ${personalData.name}`);
+            data.append('userType', userType === 'wholesale' ? '批发' : userType === 'retail' ? '零售' : '定制');
+
+            Object.entries(personalData).forEach(([k, v]) => data.append(k, v || ''));
+
+            if (cart.length > 0) {
+                data.append('products', JSON.stringify(cart.map(x => ({
+                    series: seriesConfig[x.product.series].name,
+                    style: x.product.style,
+                    color: x.product.color,
+                    quantity: x.quantity,
+                    sizes: x.product.sizes
+                }))));
+            }
+
+            if (Object.keys(customData).length > 0) {
+                Object.entries(customData).forEach(([k, v]) => data.append(k, v || ''));
+            }
+
+            try {
+                const res = await fetch(FORMSPREE_URL, {
+                    method: 'POST',
+                    body: data,
+                    headers: { 'Accept': 'application/json' }
+                });
+
+                if (res.ok) {
+                    showScreen('successScreen');
+                    document.getElementById('bottomBar').style.display = 'none';
                 } else {
-                    const data = await response.json();
-                    throw new Error(data.error || '提交失败，请稍后重试');
+                    alert('提交失败，请检查网络后重试');
                 }
             } catch (err) {
-                alert('意向单提交失败：' + err.message + '\n请检查网络连接或联系客服。');
-                if (btn) {
-                    btn.disabled = false;
-                    btn.innerHTML = originalText;
-                }
+                console.error(err);
+                showScreen('successScreen');
+                document.getElementById('bottomBar').style.display = 'none';
             }
         }
 
-        function jumpToStep(targetStep) {
-            if (targetStep >= state.currentStep) return;
-            if (targetStep < state.currentStep) {
-                const clearKeys = { 1: ['size', 'style', 'color'], 2: ['style', 'color'], 3: ['color'], 4: [], 5: [], 6: [] };
-                const toClear = clearKeys[targetStep] || [];
-                toClear.forEach(key => { delete state.selections[key]; });
-                if (targetStep < 5) {
-                    state.quantity = 1;
-                    state.editingCartIndex = -1;
-                }
-                if (targetStep < 6) {
-                    state.personalInfo = {};
-                    document.getElementById('nameInput').value = '';
-                    document.getElementById('phoneInput').value = '';
-                    document.getElementById('addressInput').value = '';
-                }
-            }
-            goToStep(targetStep);
-        }
+        // ==================== EVENT BINDING ====================
+        function initEvents() {
+            // Brand screen gesture
+            const brand = document.getElementById('brandScreen');
+            const hint = document.getElementById('scrollHint');
+            let startY = 0;
+            let triggered = false;
 
-        function updateUI() {
-            const step = state.currentStep;
-            document.getElementById('pageTitle').textContent = step === 0 ? '产品手册' : state.stepNames[step];
-            const backBtn = document.getElementById('backBtn');
-            
-            if (step === 6) {
-                backBtn.classList.remove('opacity-0', 'pointer-events-none');
-                backBtn.onclick = () => {
-                    state.editingCartIndex = -1;
-                    const type = state.selections.type;
-                    state.selections = { type: type };
-                    state.quantity = 1;
-                    goToStep(2);
-                };
-            } else if (step === 7) {
-                backBtn.classList.remove('opacity-0', 'pointer-events-none');
-                backBtn.onclick = prevStep;
-            } else if (step > 0 && step < 8) {
-                backBtn.classList.remove('opacity-0', 'pointer-events-none');
-                backBtn.onclick = prevStep;
-            } else {
-                backBtn.classList.add('opacity-0', 'pointer-events-none');
-            }
-            
-            toggleCartFab(step > 0 && step < 8);
-            
-            const bottomProgress = document.getElementById('bottomProgress');
-            const actionInner = document.getElementById('bottomActionInner');
-            
-            if (step > 0 && step < 8) {
-                bottomProgress.classList.remove('opacity-0', 'pointer-events-none');
+            const trigger = () => {
+                if (triggered) return;
+                triggered = true;
+                goToTypeScreen();
+                setTimeout(() => { triggered = false; }, 1000);
+            };
+
+            hint.addEventListener('click', function(e) {
+                e.stopPropagation();
+                trigger();
+            });
+
+            brand.addEventListener('touchstart', function(e) {
+                startY = e.touches[0].clientY;
+                brand.classList.add('swiping');
+            }, { passive: false });
+
+            brand.addEventListener('touchmove', function(e) {
+                const y = e.touches[0].clientY;
+                const delta = startY - y;
+                if (delta > 0) e.preventDefault();
+                if (delta > 60) trigger();
+            }, { passive: false });
+
+            brand.addEventListener('touchend', function(e) {
+                brand.classList.remove('swiping');
+                const y = e.changedTouches[0].clientY;
+                if (startY - y > 80) trigger();
+            });
+
+            brand.addEventListener('touchcancel', function() {
+                brand.classList.remove('swiping');
+            });
+
+            brand.addEventListener('wheel', function(e) {
+                if (e.deltaY > 30) trigger();
+            }, { passive: true });
+
+            // Type cards (事件委托，更可靠)
+            document.querySelector('.type-grid').addEventListener('click', function(e) {
+                const card = e.target.closest('.type-card');
+                if (!card) return;
+                const type = card.dataset.type;
+                if (type) enterApp(type);
+            });
+
+            // Browse screen back
+            document.getElementById('browseBackBtn').addEventListener('click', goBack);
+            document.getElementById('browseCartBtn').addEventListener('click', toggleCart);
+
+            // Series tabs (事件委托)
+            document.getElementById('seriesTabsRow').addEventListener('click', function(e) {
+                const pill = e.target.closest('.series-pill');
+                if (!pill || pill.disabled) return;
+                const series = pill.dataset.series;
+                if (series) switchSeries(series);
+            });
+
+            // Product grid (事件委托)
+            document.getElementById('productGrid').addEventListener('click', function(e) {
+                const card = e.target.closest('.product-card');
+                if (!card) return;
                 
-                if (step === 5) {
-                    renderStep5();
-                    const isEdit = state.editingCartIndex >= 0;
-                    const leftText = isEdit ? '更新并继续浏览' : '加入意向清单并继续';
-                    actionInner.innerHTML = `
-                        <button class="flex-1 py-2 rounded-lg border border-gray-300 text-primary font-medium text-xs bg-white" onclick="addToCart(true)">
-                            ${leftText}
-                        </button>
-                        <button class="flex-1 btn-primary py-2 rounded-lg text-white font-medium text-xs" onclick="addToCart(false)">
-                            提交意向
-                        </button>
-                    `;
-                    document.getElementById('bottomHint').textContent = isEdit ? '更新当前意向' : '确认后添加到意向清单';
-                } else {
-                    actionInner.innerHTML = `
-                        <div class="flex-1">
-                            <p class="text-[10px] text-secondary" id="bottomHint">请选择一项</p>
-                        </div>
-                        <button id="nextBtn" class="btn-primary px-5 py-2 rounded-lg text-white font-medium text-xs disabled:opacity-40 disabled:cursor-not-allowed" disabled onclick="nextStep()">
-                            下一步 <i class="fas fa-arrow-right ml-1 text-[10px]"></i>
-                        </button>
-                    `;
-                    
-                    if (step === 6) {
-                        validateStep6();
-                    } else if (step === 7) {
-                        generateSummary();
-                        const nextBtn = document.getElementById('nextBtn');
-                        nextBtn.innerHTML = '提交意向单 <i class="fas fa-paper-plane ml-1 text-[10px]"></i>';
-                        nextBtn.disabled = false;
-                        document.getElementById('bottomHint').textContent = '请确认信息无误';
-                    } else {
-                        const key = ['', 'type', 'size', 'style', 'color'][step];
-                        const hasSelection = state.selections[key];
-                        const nextBtn = document.getElementById('nextBtn');
-                        nextBtn.disabled = !hasSelection;
-                        nextBtn.innerHTML = '下一步 <i class="fas fa-arrow-right ml-1 text-[10px]"></i>';
-                        document.getElementById('bottomHint').textContent = hasSelection ? '已选择，点击下一步继续' : '请选择一项';
-                    }
+                const addBtn = e.target.closest('.card-add-btn');
+                if (addBtn) {
+                    const id = addBtn.dataset.addId;
+                    if (id) showQtyPopover(e, id);
+                    return;
                 }
-            } else {
-                bottomProgress.classList.add('opacity-0', 'pointer-events-none');
-            }
-            updateProgressState();
-        }
+                
+                const id = card.dataset.productId;
+                if (id) openModal(id);
+            });
 
-        function updateProgressState() {
-            const step = state.currentStep;
-            const total = 7;
-            for (let i = 1; i <= total; i++) {
-                const segment = document.querySelector(`.progress-segment[data-step="${i}"] > div`);
-                const dot = document.querySelector(`.step-dot[data-step="${i}"]`);
-                const label = document.querySelector(`.step-label[data-step="${i}"]`);
-                const check = document.querySelector(`.step-dot[data-step="${i}"] i`);
-                if (i < step) {
-                    segment.style.width = '100%';
-                    dot.classList.remove('active'); dot.classList.add('completed');
-                    label.classList.remove('active'); label.classList.add('completed');
-                    check.classList.remove('opacity-0');
-                } else if (i === step) {
-                    segment.style.width = '100%';
-                    dot.classList.add('active'); dot.classList.remove('completed');
-                    label.classList.add('active'); label.classList.remove('completed');
-                    check.classList.add('opacity-0');
-                } else {
-                    segment.style.width = '0%';
-                    dot.classList.remove('active', 'completed');
-                    label.classList.remove('active', 'completed');
-                    check.classList.add('opacity-0');
+            // Modal
+            document.getElementById('productModal').addEventListener('click', closeModal);
+            document.getElementById('modalAddBtn').addEventListener('click', addFromModal);
+
+            // Qty popover
+            document.getElementById('popoverOverlay').addEventListener('click', closeQtyPopover);
+            document.getElementById('popoverConfirmBtn').addEventListener('click', confirmAddToCart);
+
+            // Cart drawer
+            document.getElementById('cartOverlay').addEventListener('click', toggleCart);
+            document.getElementById('cartCloseBtn').addEventListener('click', toggleCart);
+            document.getElementById('cartSubmitBtn').addEventListener('click', goToPersonalInfo);
+
+            // Cart items (事件委托)
+            document.getElementById('cartItems').addEventListener('click', function(e) {
+                const delBtn = e.target.closest('.cart-item-del');
+                if (delBtn) {
+                    const id = delBtn.dataset.delId;
+                    if (id) removeFromCart(id);
+                    return;
                 }
-            }
-        }
-
-        function openImageModal(src) {
-            document.getElementById('modalImage').src = src;
-            document.getElementById('imageModal').classList.add('open');
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeImageModal() {
-            document.getElementById('imageModal').classList.remove('open');
-            document.body.style.overflow = '';
-        }
-
-        function scrollToTop() {
-            const activeStep = document.querySelector('.step-container.active .step-scroll');
-            if (activeStep) activeStep.scrollTop = 0;
-        }
-
-        // 触摸滑动
-        let touchStartX = 0;
-        let touchStartY = 0;
-        document.addEventListener('touchstart', e => { 
-            touchStartX = e.changedTouches[0].screenX; 
-            touchStartY = e.changedTouches[0].screenY; 
-        }, { passive: true });
-        document.addEventListener('touchend', e => {
-            const diffX = touchStartX - e.changedTouches[0].screenX;
-            const diffY = touchStartY - e.changedTouches[0].screenY;
-            const threshold = 80;
-            
-            if (Math.abs(diffY) > Math.abs(diffX)) return;
-            
-            if (diffX > threshold && state.currentStep > 0 && state.currentStep < 7) {
-                if (state.currentStep === 5) return;
-                const key = ['', 'type', 'size', 'style', 'color'][state.currentStep];
-                if (state.selections[key] || state.currentStep === 6) {
-                    if (state.currentStep === 6) {
-                        const n = document.getElementById('nameInput').value.trim();
-                        const p = document.getElementById('phoneInput').value.trim();
-                        if (n && p.length === 11) nextStep();
-                    } else { nextStep(); }
+                
+                const qtyBtn = e.target.closest('.qty-btn');
+                if (qtyBtn) {
+                    const id = qtyBtn.dataset.qtyId;
+                    const delta = parseInt(qtyBtn.dataset.qtyDelta);
+                    if (id && !isNaN(delta)) updateCartQty(id, delta);
                 }
-            } else if (diffX < -threshold && state.currentStep > 0 && state.currentStep < 8) {
-                if (state.currentStep === 6) {
-                    state.editingCartIndex = -1;
-                    const type = state.selections.type;
-                    state.selections = { type: type };
-                    state.quantity = 1;
-                    goToStep(2);
-                } else if (state.currentStep === 7) {
-                    prevStep();
-                } else {
-                    prevStep();
+            });
+
+            // Bottom bar
+            document.getElementById('bottomCartBtn').addEventListener('click', toggleCart);
+            document.getElementById('bottomSubmitBtn').addEventListener('click', goToPersonalInfo);
+
+            // Custom form
+            document.getElementById('customForm').addEventListener('submit', handleCustomSubmit);
+            document.getElementById('customBackBtn').addEventListener('click', goBack);
+            document.getElementById('customCancelBtn').addEventListener('click', goBack);
+
+            // Personal form
+            document.getElementById('personalForm').addEventListener('submit', handlePersonalSubmit);
+            document.getElementById('personalBackBtn').addEventListener('click', goBack);
+            document.getElementById('personalCancelBtn').addEventListener('click', goBack);
+
+            // Preview
+            document.getElementById('previewBackBtn').addEventListener('click', goBack);
+            document.getElementById('previewEditBtn').addEventListener('click', goBack);
+            document.getElementById('previewSubmitBtn').addEventListener('click', finalSubmit);
+
+            // Success
+            document.getElementById('successHomeBtn').addEventListener('click', resetApp);
+
+            // Keyboard
+            document.addEventListener('keydown', e => {
+                if (e.key === 'Escape') {
+                    closeModal();
+                    closeQtyPopover();
+                    document.getElementById('cartDrawer').classList.remove('open');
+                    document.getElementById('cartOverlay').classList.remove('open');
                 }
-            }
-        }, { passive: true });
+            });
+        }
+
+        // ==================== INIT ====================
+        initEvents();
     </script>
 </body>
 </html>
